@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="NUnit" Version="3.13.1" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.1.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\BuildingBlocks\Application\HelpLine.BuildingBlocks.Application.csproj" />
+      <ProjectReference Include="..\..\..\..\BuildingBlocks\Tests\IntegrationTests\HelpLine.BuildingBlocks.IntegrationTests.csproj" />
+      <ProjectReference Include="..\..\..\..\Services\Jobs\Implementation\HelpLine.Services.Jobs.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\HelpLine.Modules.UserAccess.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Roles" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="test.settings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+</Project>

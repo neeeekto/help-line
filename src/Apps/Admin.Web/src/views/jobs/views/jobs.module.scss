@@ -1,0 +1,107 @@
+.jobActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.jobList {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.jobCard {
+  width: 400px;
+  transition: all 0.3s;
+}
+.jobCardDisabled {
+  opacity: 0.6;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.jobFormData {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 15px 5px;
+}
+
+.jobFormCronEl :global {
+  .c-quartz {
+    .c-tabs {
+      padding: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .c-tab {
+      border: none;
+      background: none;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .c-tab.active {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .c-segment {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      transition: all 0.3s;
+    }
+
+    .c-segment.c-and,
+    .c-segment.c-and-monthday,
+    .c-segment.c-and-weekday {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .c-and-list,
+    .c-and-weekday-list,
+    .c-and-monthday-list {
+      margin-top: 10px;
+      width: 100%;
+      display: grid;
+    }
+
+    .c-and-list {
+      grid-template-columns: repeat(10, 1fr);
+    }
+
+    .c-and-weekday-list {
+      grid-template-columns: repeat(5, 1fr);
+    }
+    .c-and-monthday-list {
+      grid-template-columns: repeat(10, 1fr);
+    }
+    [tab-name="MONTH"] .c-and-list {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    [tab-name="YEAR"] .c-and-list {
+      grid-template-columns: repeat(8, 1fr);
+    }
+    .form-check {
+      display: flex;
+      align-items: center;
+    }
+    .form-group {
+      label {
+        margin-left: 10px;
+      }
+      select {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+      input {
+        cursor: pointer;
+      }
+    }
+  }
+}

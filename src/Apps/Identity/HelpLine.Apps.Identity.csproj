@@ -1,0 +1,222 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentValidation" Version="10.3.6" />
+        <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.4.0" />
+        <PackageReference Include="IdentityServer4" Version="4.1.2" />
+        <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
+        <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+        <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus.RabbitMQ\HelpLine.BuildingBlocks.Bus.RabbitMQ.csproj" />
+        <ProjectReference Include="..\..\BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus\HelpLine.BuildingBlocks.Bus.csproj" />
+        <ProjectReference Include="..\..\BuildingBlocks\Domain\HelpLine.BuildingBlocks.Domain.csproj" />
+        <ProjectReference Include="..\..\BuildingBlocks\Infrastructure\HelpLine.BuildingBlocks.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\BuildingBlocks\Application\HelpLine.BuildingBlocks.Application.csproj" />
+        <ProjectReference Include="..\..\Modules\Quality\Application\HelpLine.Modules.Quality.Application.csproj" />
+        <ProjectReference Include="..\..\Modules\Quality\Infrastructure\HelpLine.Modules.Quality.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\Modules\Helpdesk\Application\HelpLine.Modules.Helpdesk.Application.csproj" />
+        <ProjectReference Include="..\..\Modules\Helpdesk\Infrastructure\HelpLine.Modules.Helpdesk.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\Modules\UserAccess\Application\HelpLine.Modules.UserAccess.Application.csproj" />
+        <ProjectReference Include="..\..\Modules\UserAccess\Infrastructure\HelpLine.Modules.UserAccess.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\Services\Jobs\Implementation\HelpLine.Services.Jobs.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Account\AccessDenied.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\LoggedOut.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Account\Logout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Consent\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Device\Success.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Device\UserCodeCapture.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Device\UserCodeConfirmation.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Diagnostics\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Grants\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Error.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\Redirect.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_Nav.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_ScopeListItem.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Shared\_ValidationSummary.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\_ViewStart.cshtml" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\materialize.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\favicon.ico" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon.jpg" />
+      <_ContentIncludedByDefault Remove="wwwroot\icon.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\materialize.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\signin-redirect.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\signout-redirect.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\js\site.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\LICENSE" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\README.md" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\bootstrap-grid.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\bootstrap-reboot.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\bootstrap.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_alert.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_background-variant.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_badge.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_border-radius.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_box-shadow.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_breakpoints.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_buttons.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_caret.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_clearfix.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_deprecate.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_float.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_forms.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_gradients.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_grid-framework.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_grid.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_hover.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_image.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_list-group.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_lists.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_nav-divider.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_pagination.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_reset-text.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_resize.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_screen-reader.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_size.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_table-row.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_text-emphasis.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_text-hide.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_text-truncate.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_transition.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\mixins\_visibility.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_align.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_background.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_borders.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_clearfix.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_display.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_embed.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_flex.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_float.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_overflow.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_position.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_screenreaders.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_shadows.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_sizing.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_spacing.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_stretched-link.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_text.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\utilities\_visibility.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\vendor\_rfs.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_alert.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_badge.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_breadcrumb.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_button-group.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_buttons.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_card.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_carousel.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_close.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_code.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_custom-forms.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_dropdown.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_forms.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_functions.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_grid.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_images.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_input-group.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_jumbotron.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_list-group.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_media.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_mixins.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_modal.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_nav.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_navbar.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_pagination.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_popover.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_print.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_progress.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_reboot.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_root.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_spinners.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_tables.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_toasts.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_tooltip.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_transitions.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_type.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_utilities.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\scss\_variables.scss" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\LICENSE.md" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.slim.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.slim.min.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.slim.min.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
+      <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\README.md" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Account\AccessDenied.cshtml" />
+      <UpToDateCheckInput Remove="Views\Account\LoggedOut.cshtml" />
+      <UpToDateCheckInput Remove="Views\Account\Login.cshtml" />
+      <UpToDateCheckInput Remove="Views\Account\Logout.cshtml" />
+      <UpToDateCheckInput Remove="Views\Consent\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Device\Success.cshtml" />
+      <UpToDateCheckInput Remove="Views\Device\UserCodeCapture.cshtml" />
+      <UpToDateCheckInput Remove="Views\Device\UserCodeConfirmation.cshtml" />
+      <UpToDateCheckInput Remove="Views\Diagnostics\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Grants\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Home\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Shared\Error.cshtml" />
+      <UpToDateCheckInput Remove="Views\Shared\Redirect.cshtml" />
+      <UpToDateCheckInput Remove="Views\Shared\_Layout.cshtml" />
+      <UpToDateCheckInput Remove="Views\Shared\_Nav.cshtml" />
+      <UpToDateCheckInput Remove="Views\Shared\_ScopeListItem.cshtml" />
+      <UpToDateCheckInput Remove="Views\Shared\_ValidationSummary.cshtml" />
+      <UpToDateCheckInput Remove="Views\_ViewImports.cshtml" />
+      <UpToDateCheckInput Remove="Views\_ViewStart.cshtml" />
+      <UpToDateCheckInput Remove="Views\Grants\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Consent\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Device\Success.cshtml" />
+      <UpToDateCheckInput Remove="Views\Device\UserCodeCapture.cshtml" />
+      <UpToDateCheckInput Remove="Views\Device\UserCodeConfirmation.cshtml" />
+      <UpToDateCheckInput Remove="Views\Diagnostics\Index.cshtml" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus.RabbitMQ\HelpLine.BuildingBlocks.Bus.RabbitMQ.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\Infrastructure\HelpLine.BuildingBlocks.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\Services\HelpLine.BuildingBlocks.Services.csproj" />
+      <ProjectReference Include="..\Contracts\HelpLine.Services.Jobs.Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="6.3.0" />
+      <PackageReference Include="Autofac.Extras.Quartz" Version="7.3.0" />
+      <PackageReference Include="Quartz" Version="3.3.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Application\Validators" />
+    </ItemGroup>
+
+</Project>

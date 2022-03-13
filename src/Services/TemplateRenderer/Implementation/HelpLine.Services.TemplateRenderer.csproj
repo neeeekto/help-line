@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\Infrastructure\HelpLine.BuildingBlocks.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\Services\HelpLine.BuildingBlocks.Services.csproj" />
+      <ProjectReference Include="..\Contracts\HelpLine.Services.TemplateRenderer.Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Application\Contracts" />
+      <Folder Include="Application\Exceptions" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Handlebars.Net" Version="2.1.0" />
+    </ItemGroup>
+
+</Project>

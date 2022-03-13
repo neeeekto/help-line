@@ -1,0 +1,13 @@
+{
+  "name": "help-line.e2e",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Yaroslav Morozov",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.19.0",
+    "@storybook/addon-interactions": "^6.4.19",
+    "@storybook/testing-library": "^0.0.9"
+  },
+  "scripts": {}
+}

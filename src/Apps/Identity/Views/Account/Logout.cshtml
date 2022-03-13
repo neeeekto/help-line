@@ -1,0 +1,11 @@
+﻿@model HelpLine.Apps.Identity.Controllers.Account.Models.LogoutViewModel
+
+<div class="card-page card-page--h-auto">
+    <h2 style="margin: 0;">Logout</h2>
+    <p >Would you like to logout of IdentityServer?</p>
+    <form asp-action="Logout" style="justify-self: flex-end;">
+        <input type="hidden" name="logoutId" value="@Model.LogoutId"/>
+        <button class="btn btn-block red w--full">Yes</button>
+    </form>
+
+</div>

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\Infrastructure\HelpLine.BuildingBlocks.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\Services\HelpLine.BuildingBlocks.Services.csproj" />
+      <ProjectReference Include="..\Contracts\HelpLine.Services.Migrations.Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Application\Contracts" />
+      <Folder Include="Application\DTO" />
+      <Folder Include="Application\Events" />
+      <Folder Include="Application\Validators" />
+    </ItemGroup>
+
+</Project>

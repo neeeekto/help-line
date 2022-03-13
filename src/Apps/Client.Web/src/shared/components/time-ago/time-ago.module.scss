@@ -1,0 +1,19 @@
+.box {
+  display: inline-flex;
+}
+
+.relative {
+}
+
+.value {
+  display: none;
+}
+
+.box:hover {
+  .relative {
+    display: none;
+  }
+  .value {
+    display: inline;
+  }
+}

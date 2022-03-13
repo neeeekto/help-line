@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>10</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="10.3.6" />
+    <PackageReference Include="IdentityServer4" Version="4.1.2" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Application\HelpLine.BuildingBlocks.Application.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus\HelpLine.BuildingBlocks.Bus.csproj" />
+    <ProjectReference Include="..\..\..\Services\Jobs\Contracts\HelpLine.Services.Jobs.Contracts.csproj" />
+    <ProjectReference Include="..\..\Helpdesk\IntegrationEvents\HelpLine.Modules.Helpdesk.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\Domain\HelpLine.Modules.UserAccess.Domain.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\IntegrationEvents\HelpLine.Modules.UserAccess.IntegrationEvents.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\Jobs\HelpLine.Modules.UserAccess.Jobs.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Roles\DTO" />
+    <Folder Include="Users\Services" />
+  </ItemGroup>
+
+</Project>

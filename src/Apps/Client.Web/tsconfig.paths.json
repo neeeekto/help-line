@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@core/*": ["core/*"],
+      "@entities/*": ["entities/*"],
+      "@shared/*": ["shared/*"],
+      "@views/*": ["views/*"],
+      "@workspaces/*": ["workspaces/*"],
+      "@test-utils/*": ["__test-utils__/*"],
+      "@env": ["environment.ts"]
+    }
+  }
+}

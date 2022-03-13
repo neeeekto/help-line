@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>10</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Application\HelpLine.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus\HelpLine.BuildingBlocks.Bus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Infrastructure\HelpLine.BuildingBlocks.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Services\Jobs\Contracts\HelpLine.Services.Jobs.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\Services\Migrations\Contracts\HelpLine.Services.Migrations.Contracts.csproj" />
+    <ProjectReference Include="..\Application\HelpLine.Modules.Helpdesk.Application.csproj" />
+    <ProjectReference Include="..\Domain\HelpLine.Modules.Helpdesk.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

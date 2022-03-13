@@ -1,0 +1,32 @@
+.box {
+  background: #e8e8e8;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+.card {
+  padding: 10px;
+  border-radius: 4px;
+  width: 90%;
+}
+
+.cardRight {
+  margin-left: auto;
+}
+
+.createView {
+  background: #fff;
+}
+.createdByUser {
+}
+.createdByOperator {
+  background: #f0f8ff;
+}
+
+.info {
+  font-size: 12px;
+  color: var(--color-gray);
+  display: flex;
+}

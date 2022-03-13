@@ -1,0 +1,22 @@
+@model HelpLine.Apps.Identity.Controllers.Home.ErrorViewModel
+
+@{
+    var error = Model?.Error?.Error;
+    var errorDescription = Model?.Error?.ErrorDescription;
+    var request_id = Model?.Error?.RequestId;
+}
+
+<div class="card-page">
+    <h1>Uppps...</h1>
+    @if (error != null)
+    {
+        <h5>
+            @error
+        </h5>
+
+        if (errorDescription != null)
+        {
+            <h6>@errorDescription</h6>
+        }
+    }
+</div>

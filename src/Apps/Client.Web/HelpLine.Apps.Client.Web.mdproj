@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ItemType>GenericProject</ItemType>
+    <ProjectGuid>{A8AD0B61-CB19-4125-8EDB-AFAE855ED1FB}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
+    <OutputPath>.\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="*" />
+    <Content Include="public/**/*" />
+    <Content Include="src/**/*" />
+    <Content Include="tests/**/*" />
+    <Content Include=".storybook/**/*" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\views\tickets-filters\components" />
+    <Folder Include="src\__test-utils__\api" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.3.0" />
+        <PackageReference Include="JsonSubTypes" Version="1.8.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.11" NoWarn="NU1605" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.11" NoWarn="NU1605" />
+        <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.2.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\BuildingBlocks\Application\HelpLine.BuildingBlocks.Application.csproj" />
+      <ProjectReference Include="..\..\BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus.RabbitMQ\HelpLine.BuildingBlocks.Bus.RabbitMQ.csproj" />
+      <ProjectReference Include="..\..\Modules\Helpdesk\Application\HelpLine.Modules.Helpdesk.Application.csproj" />
+      <ProjectReference Include="..\..\Modules\Helpdesk\Infrastructure\HelpLine.Modules.Helpdesk.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\Services\Files\Implementation\HelpLine.Services.Files.csproj" />
+      <ProjectReference Include="..\..\Services\Jobs\Implementation\HelpLine.Services.Jobs.csproj" />
+      <ProjectReference Include="..\..\Services\TemplateRenderer\Implementation\HelpLine.Services.TemplateRenderer.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services" />
+    </ItemGroup>
+
+</Project>
