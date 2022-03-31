@@ -65,7 +65,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
         [HttpGet]
         [Route("filters")]
         public async Task<ActionResult<TicketFilter>> GetFilters([ProjectParam] string project,
-            [FromQuery] IEnumerable<TicketFilterFeatures>? features)
+            [FromQuery] IEnumerable<string>? features)
         {
             return Ok(await _helpdeskModule.ExecuteQueryAsync(new GetTicketFiltersQuery(project, _executionContextAccessor.UserId, features)));
         }
