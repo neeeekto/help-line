@@ -9,9 +9,9 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetTicketFil
     {
         public string ProjectId { get; }
         public Guid? ForOperatorId { get; }
-        public IEnumerable<TicketFilterFeatures>? Features { get; }
+        public IEnumerable<string>? Features { get; }
 
-        public GetTicketFiltersQuery(string projectId, Guid? forOperatorId = null, IEnumerable<TicketFilterFeatures>? features = null)
+        public GetTicketFiltersQuery(string projectId, Guid? forOperatorId = null, IEnumerable<string>? features = null)
         {
             Features = features;
             ProjectId = projectId;

@@ -32,7 +32,7 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
             {
                 Name = "test",
                 Filter = new ValueFilter(FieldFilterOperators.Equal, new ConstantFilterValue(TestStr), TestStr),
-                Features = new[] {TicketFilterFeatures.Important},
+                Features = new[] {"test"},
             }));
         }
 

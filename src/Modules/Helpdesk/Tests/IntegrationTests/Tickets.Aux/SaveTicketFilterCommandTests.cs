@@ -20,6 +20,7 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
     {
         protected override string NS => nameof(SaveTicketFilterCommandTests);
 
+        private const string TEST_FEAT = "test";
         [SetUp]
         public async Task Setup()
         {
@@ -31,7 +32,7 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
         {
             Name = TestStr,
             Filter = new ValueFilter(FieldFilterOperators.Equal, new ConstantFilterValue(TestStr), TestStr),
-            Features = new [] {TicketFilterFeatures.Important}
+            Features = new [] {TEST_FEAT}
         };
 
         [Test]
@@ -47,7 +48,7 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
             Assert.That(entity.ProjectId, Is.EqualTo(ProjectId));
             Assert.That(entity.Name, Is.EqualTo(data.Name));
             Assert.That(entity.Changed, Is.LessThan(DateTime.UtcNow));
-            Assert.That(entity.Features, Does.Contain(TicketFilterFeatures.Important));
+            Assert.That(entity.Features, Does.Contain(TEST_FEAT));
             Assert.That(entity.Filter, Is.TypeOf<ValueFilter>());
             Assert.That(entity.Share, Is.Null);
         }
@@ -75,7 +76,7 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
                 Name = TestStr;
                 Share = null;
                 Filter = new ValueFilter(FieldFilterOperators.Equal, new ConstantFilterValue(TestStr), TestStr);
-                Features = new[] {TicketFilterFeatures.Important};
+                Features = new[] {"test"};
             }
 
             public static IEnumerable<TestCaseData> Cases
