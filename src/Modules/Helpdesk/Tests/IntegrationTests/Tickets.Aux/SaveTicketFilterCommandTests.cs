@@ -32,7 +32,8 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
         {
             Name = TestStr,
             Filter = new ValueFilter(FieldFilterOperators.Equal, new ConstantFilterValue(TestStr), TestStr),
-            Features = new [] {TEST_FEAT}
+            Features = new [] {TEST_FEAT},
+            Order = 1
         };
 
         [Test]
@@ -51,6 +52,7 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
             Assert.That(entity.Features, Does.Contain(TEST_FEAT));
             Assert.That(entity.Filter, Is.TypeOf<ValueFilter>());
             Assert.That(entity.Share, Is.Null);
+            Assert.That(entity.Order, Is.EqualTo(data.Order));
         }
 
         [Test]

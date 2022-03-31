@@ -31,7 +31,8 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SaveTicketF
                 Id = request.FilterId ?? Guid.NewGuid(),
                 Name = request.Data.Name,
                 ProjectId = request.ProjectId,
-                Share = request.Data.Share
+                Share = request.Data.Share,
+                Order = request.Data.Order
             };
             await _repository.Update(filter, true);
             return filter.Id;

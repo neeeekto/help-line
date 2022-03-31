@@ -11,6 +11,7 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models
         public IFilter Filter { get; set; }
         public TicketFilterShareBase? Share { get; set; } // share model, null for me, other - see name of class
         public IEnumerable<string> Features { get; set; } // for client features, eg: default, important, any, backend doesnt know about it and doesnt use
+        public double Order { get; set; }
     }
     public class TicketFilter : TicketFilterData
     {

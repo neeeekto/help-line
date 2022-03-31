@@ -41,7 +41,7 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetTicketFil
             if (request.Features?.Any() == true)
                 filter &= fb.Where(x => x.Features.Any(f => request.Features.Contains(f)));
 
-            var result = await collection.Find(filter).ToListAsync(cancellationToken: cancellationToken);
+            var result = await collection.Find(filter).SortBy(x => x.Order).ToListAsync(cancellationToken: cancellationToken);
             return result;
         }
 
