@@ -66,20 +66,6 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
             Assert.That(entity.Name, Is.EqualTo(data.Name));
         }
 
-        [Test]
-        public async Task SaveTicketFilterCommand_DefaultWillBeGlobal_IsSuccessful()
-        {
-            var data = MakeData();
-            data.Features = new[] { TicketFilterFeatures.Default };
-            var entityId = await Module.ExecuteCommandAsync(new SaveTicketFilterCommand(ProjectId, data));
-
-            var entity = await Module.ExecuteQueryAsync(new GetTicketFilterQuery(entityId));
-
-            Assert.That(entity.Features, Does.Contain(TicketFilterFeatures.Default));
-            Assert.That(entity.Share, Is.Not.Null);
-            Assert.That(entity.Share, Is.TypeOf<TicketFilterShareGlobal>());
-        }
-
         public class InvalidSource : TicketFilterData
         {
             public string ProjectId = HelpdeskTestBase.ProjectId;
@@ -89,7 +75,7 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
                 Name = TestStr;
                 Share = null;
                 Filter = new ValueFilter(FieldFilterOperators.Equal, new ConstantFilterValue(TestStr), TestStr);
-                Features = new[] {TicketFilterFeatures.Default};
+                Features = new[] {TicketFilterFeatures.Important};
             }
 
             public static IEnumerable<TestCaseData> Cases

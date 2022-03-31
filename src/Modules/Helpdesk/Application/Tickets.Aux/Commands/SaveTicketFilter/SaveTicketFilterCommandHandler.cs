@@ -33,11 +33,6 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SaveTicketF
                 ProjectId = request.ProjectId,
                 Share = request.Data.Share
             };
-            if (filter.Features.Contains(TicketFilterFeatures.Default) && filter.Share is null)
-            {
-                // Default filter cannot be personal!
-                filter.Share = new TicketFilterShareGlobal();
-            }
             await _repository.Update(filter, true);
             return filter.Id;
         }
