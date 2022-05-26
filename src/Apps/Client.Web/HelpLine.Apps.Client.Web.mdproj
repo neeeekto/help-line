@@ -17,7 +17,6 @@
     <Content Include=".storybook/**/*" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="src\views\tickets-filters\components" />
     <Folder Include="src\__test-utils__\api" />
   </ItemGroup>
 </Project>

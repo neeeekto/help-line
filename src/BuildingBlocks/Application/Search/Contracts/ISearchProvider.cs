@@ -6,6 +6,7 @@ using HelpLine.BuildingBlocks.Application.Queries;
 
 namespace HelpLine.BuildingBlocks.Application.Search.Contracts
 {
+    // Good experiment but very difficult! I advice don't use it!
     public interface ISearchProvider<TModel, TContext>
     {
         Task<PagedResult<TModel>> Find(PageData pageData, IFilter filter, TContext context, IEnumerable<Sort> sorts);

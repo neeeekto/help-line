@@ -1,5 +1,6 @@
 import { HttpClient, httpClient, makeCrudApi } from "@core/http";
 import { TicketFilter, TicketFilterData } from "./types";
+import { makeUseHookForApi } from "@core/http/api.hooks";
 
 export const makeTicketsFilterApi = (http: HttpClient) => ({
   ...makeCrudApi<TicketFilter, TicketFilterData>(
@@ -18,4 +19,4 @@ export const makeTicketsFilterApi = (http: HttpClient) => ({
       .then((x) => x.data),
 });
 
-export const ticketsFilterApi = makeTicketsFilterApi(httpClient);
+export const useTicketsFilterApi = makeUseHookForApi(makeTicketsFilterApi);

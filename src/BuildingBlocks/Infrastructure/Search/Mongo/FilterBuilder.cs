@@ -15,6 +15,7 @@ using zSpec.Automation;
 
 namespace HelpLine.BuildingBlocks.Infrastructure.Search.Mongo
 {
+    // Good 
     internal class FilterBuilder<TModel>
     {
         private readonly IFilterValueGetter _filterValueGetter;

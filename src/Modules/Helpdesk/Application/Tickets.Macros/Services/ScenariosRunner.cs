@@ -78,6 +78,7 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Services
 
         private async Task CheckAndRunScenarios()
         {
+            // TODO: Run in internal queue
             var scenariosByTicket = new ConcurrentDictionary<TicketId, List<Scenario>>();
             await Task.WhenAll(_queue.Select(async x =>
             {

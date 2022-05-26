@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Project } from "@entities/helpdesk/projects";
-import { ticketsFilterApi } from "@entities/helpdesk/tickets/tickets-filters.api";
-import { Filter } from "@entities/filter";
+import { useTicketsFilterApi } from "@entities/helpdesk/tickets/tickets-filters.api";
 import {
   TicketFilter,
   TicketFilterData,
@@ -21,29 +20,30 @@ const namesKeyFactory = {
 export const useTicketsFiltersQuery = (
   projectId: Project["id"],
   features?: string[]
-) =>
-  useQuery([...namesKeyFactory.list(projectId), features], () =>
-    ticketsFilterApi.get(features)
+) => {
+  const api = useTicketsFilterApi();
+  return useQuery([...namesKeyFactory.list(projectId), features], () =>
+    api.get(features)
   );
+};
 
 export const useTicketsFilterQuery = (
   projectId: Project["id"],
   filterId: TicketFilter["id"]
-) =>
-  useQuery(namesKeyFactory.one(projectId, filterId), () =>
-    ticketsFilterApi.getById(filterId)
+) => {
+  const api = useTicketsFilterApi();
+  return useQuery(namesKeyFactory.one(projectId, filterId), () =>
+    api.getById(filterId)
   );
+};
 
 export const useCreateTicketFilterMutation = (projectId: Project["id"]) => {
+  const api = useTicketsFilterApi();
   const client = useQueryClient();
-  return useMutation(
-    [projectId, namesKeyFactory.root, "create"],
-    ticketsFilterApi.add,
-    {
-      onSuccess: (data, variables, context) =>
-        client.invalidateQueries(namesKeyFactory.list(projectId)),
-    }
-  );
+  return useMutation([projectId, namesKeyFactory.root, "create"], api.add, {
+    onSuccess: (data, variables, context) =>
+      client.invalidateQueries(namesKeyFactory.list(projectId)),
+  });
 };
 
 export const useUpdateTicketFilterMutation = (
@@ -51,9 +51,10 @@ export const useUpdateTicketFilterMutation = (
   filterId: TicketFilter["id"]
 ) => {
   const client = useQueryClient();
+  const api = useTicketsFilterApi();
   return useMutation(
     [projectId, namesKeyFactory.root, filterId, "update"],
-    (data: TicketFilterData) => ticketsFilterApi.update(filterId, data),
+    (data: TicketFilterData) => api.update(filterId, data),
     {
       onSuccess: (data, variables, context) =>
         Promise.all([
@@ -69,9 +70,10 @@ export const useDeleteTicketFilterMutation = (
   filterId: TicketFilter["id"]
 ) => {
   const client = useQueryClient();
+  const api = useTicketsFilterApi();
   return useMutation(
     [projectId, namesKeyFactory.root, filterId, "delete"],
-    () => ticketsFilterApi.delete(filterId),
+    () => api.delete(filterId),
     {
       onSuccess: (data, variables, context) => {
         client.removeQueries(namesKeyFactory.one(projectId, filterId));

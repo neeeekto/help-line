@@ -6,18 +6,19 @@ import {
   HelpLineUserProfile,
   HelpLineUserProfileProjectPermissions,
 } from "@core/auth";
-import { EN_LANGUAGE } from "../data/project-test-data";
+import { EN_LANGUAGE } from "../data/project.test-data";
 
 export const makeTestAuthStore = (
   profileData:
     | Partial<HelpLineUserProfile>
-    | Partial<HelpLineUserProfileProjectPermissions> = {}
+    | Partial<HelpLineUserProfileProjectPermissions> = {},
+  me?: Partial<HLUser> | null
 ): AuthStore => {
   const state = observable({
     loading: true,
     isAuth: false,
     user: null as User | null,
-    me: null as HLUser | null,
+    me: (me || null) as HLUser | null,
   });
 
   const profile = computed(

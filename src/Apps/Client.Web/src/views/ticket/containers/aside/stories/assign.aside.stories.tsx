@@ -3,21 +3,20 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import { TicketAssignAside } from "../assign.aside";
 import { Ticket } from "../../../index";
-import {AuthProvider} from "@core/auth";
+import { AuthProvider } from "@core/auth";
 
 const AsideStory: React.FC<{ readonly: boolean }> = ({ readonly }) => (
-    <AuthProvider>
-      <Ticket ticket={{} as any} readonly={readonly}>
-        <Ticket.Aside>
-          <Ticket.Aside.Assign />
-        </Ticket.Aside>
-      </Ticket>
-    </AuthProvider>
-
+  <AuthProvider>
+    <Ticket ticket={{} as any} readonly={readonly}>
+      <Ticket.Aside>
+        <Ticket.Aside.Assign />
+      </Ticket.Aside>
+    </Ticket>
+  </AuthProvider>
 );
 
 export default {
-  title: "Ticket/Aside/Assign",
+  title: "Views/Ticket/Aside/Assign",
   component: AsideStory,
   argTypes: {
     readonly: {

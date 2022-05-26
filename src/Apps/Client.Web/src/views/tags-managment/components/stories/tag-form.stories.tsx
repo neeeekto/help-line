@@ -5,7 +5,7 @@ import { Drawer } from "antd";
 import { Tag } from "@entities/helpdesk/tags";
 
 export default {
-  title: "Tag Management/Tags/Form",
+  title: "Views/Tag Management/Tags/Form",
   component: TagForm,
   argTypes: {
     loading: {
@@ -16,9 +16,9 @@ export default {
     tags: {
       defaultValue: [
         {
-          key: 'test',
-          enabled: true
-        } as Tag
+          key: "test",
+          enabled: true,
+        } as Tag,
       ],
       name: "Tags",
     },
@@ -27,7 +27,7 @@ export default {
 
 const Template: ComponentStory<typeof TagForm> = (args) => (
   <div>
-    <Drawer visible placement="left" getContainer={false} width="400px">
+    <Drawer visible placement="right" getContainer={false} width="400px">
       <TagForm {...args} />
     </Drawer>
   </div>

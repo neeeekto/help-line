@@ -5,7 +5,8 @@ import {
   OperatorRole,
   OperatorRoleData,
 } from "./types";
-import { Ticket } from "@entities/helpdesk/tickets";
+import {makeTicketsFilterApi, Ticket} from "@entities/helpdesk/tickets";
+import {makeUseHookForApi} from "@core/http/api.hooks";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const makeOperatorApi = (http: HttpClient) => ({
@@ -48,5 +49,5 @@ export const makeRoleApi = (http: HttpClient) => ({
       .then((x) => x.data),
 });
 
-export const operatorApi = makeOperatorApi(httpClient);
-export const operatorRoleApi = makeRoleApi(httpClient);
+export const useOperatorApi = makeUseHookForApi(makeOperatorApi);
+export const useOperatorRoleApi = makeUseHookForApi(makeRoleApi);

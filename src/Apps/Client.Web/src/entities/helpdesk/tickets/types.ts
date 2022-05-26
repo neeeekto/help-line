@@ -363,7 +363,6 @@ export interface TicketsSettings {
 }
 
 export enum TicketFilterFeatures {
-  Default = "Default",
   Important = "Important",
   Automations = "Automations",
 }
@@ -381,6 +380,7 @@ export interface TicketFilterData {
   filter: Filter;
   share?: TicketFilterShareGlobal | TicketFilterShareForOperators;
   features: TicketFilterFeatures[]; // for client features, eg: global, default, counters, important - server dont know about it
+  order: number; // View order in filters list
 }
 
 export interface TicketFilter extends TicketFilterData {

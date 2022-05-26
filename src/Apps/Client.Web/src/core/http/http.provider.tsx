@@ -10,6 +10,7 @@ import {
 import { useAuthStore$ } from "@core/auth";
 import { AuthEventContext } from "@core/auth/auth.context";
 import { useSystemStore$ } from "@core/system";
+import { ApiProvider } from "@core/http/api.provider";
 
 export const HttpProvider: React.FC = React.memo(({ children }) => {
   const authStore = useAuthStore$();
@@ -46,5 +47,5 @@ export const HttpProvider: React.FC = React.memo(({ children }) => {
     };
   }, [authEvents, authStore, systemStore]);
 
-  return <>{children}</>;
+  return <ApiProvider>{children}</ApiProvider>;
 });

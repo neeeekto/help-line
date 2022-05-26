@@ -1,0 +1,1 @@
+export const USER_LAZY_ATTENTION_DELAY = 0.7;
