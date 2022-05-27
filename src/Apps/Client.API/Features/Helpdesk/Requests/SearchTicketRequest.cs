@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using HelpLine.BuildingBlocks.Application.Search;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Sorts;
 
 namespace HelpLine.Apps.Client.API.Features.Helpdesk.Requests
 {
     public class SearchTicketRequest
     {
-        public IFilter? Filter { get; set; }
-        public IEnumerable<Sort> Sorts { get; set; }
+        public TicketFilterBase? Filter { get; set; }
+        public IEnumerable<TicketSortBase> Sorts { get; set; }
     }
 }

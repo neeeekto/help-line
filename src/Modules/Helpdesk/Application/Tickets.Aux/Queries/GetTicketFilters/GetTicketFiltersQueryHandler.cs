@@ -10,8 +10,8 @@ using MongoDB.Driver;
 
 namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetTicketFilters
 {
-    internal class GetTicketFiltersQueryHandler : IQueryHandler<GetTicketFiltersQuery, IEnumerable<TicketFilter>>,
-        IQueryHandler<GetTicketFilterQuery, TicketFilter?>
+    internal class GetTicketFiltersQueryHandler : IQueryHandler<GetTicketFiltersQuery, IEnumerable<TicketSavedFilter>>,
+        IQueryHandler<GetTicketFilterQuery, TicketSavedFilter?>
     {
         private readonly IMongoContext _context;
         private readonly IExecutionContextAccessor _accessor;
@@ -23,11 +23,11 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetTicketFil
             _accessor = accessor;
         }
 
-        public async Task<IEnumerable<TicketFilter>> Handle(GetTicketFiltersQuery request,
+        public async Task<IEnumerable<TicketSavedFilter>> Handle(GetTicketFiltersQuery request,
             CancellationToken cancellationToken)
         {
-            var collection = _context.GetCollection<TicketFilter>();
-            var fb = new FilterDefinitionBuilder<TicketFilter>();
+            var collection = _context.GetCollection<TicketSavedFilter>();
+            var fb = new FilterDefinitionBuilder<TicketSavedFilter>();
             var filter = fb.Eq(x => x.ProjectId, request.ProjectId);
             if (request.ForOperatorId != null)
             {
@@ -45,9 +45,9 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetTicketFil
             return result;
         }
 
-        public async Task<TicketFilter> Handle(GetTicketFilterQuery request, CancellationToken cancellationToken)
+        public async Task<TicketSavedFilter> Handle(GetTicketFilterQuery request, CancellationToken cancellationToken)
         {
-            var filter = await _context.GetCollection<TicketFilter>().Find(x => x.Id == request.FilterId)
+            var filter = await _context.GetCollection<TicketSavedFilter>().Find(x => x.Id == request.FilterId)
                 .FirstOrDefaultAsync(cancellationToken: cancellationToken)!;
             if (filter == null)
                 throw new NotFoundException(request.FilterId);

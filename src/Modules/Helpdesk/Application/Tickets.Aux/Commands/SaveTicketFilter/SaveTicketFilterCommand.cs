@@ -7,11 +7,11 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SaveTicketF
     public class SaveTicketFilterCommand : CommandBase<Guid>
     {
         public string ProjectId { get; }
-        public TicketFilterData Data { get; }
+        public TicketSavedFilterData Data { get; }
         public Guid? FilterId { get; }
 
 
-        public SaveTicketFilterCommand(string projectId, TicketFilterData data, Guid? filterId = null)
+        public SaveTicketFilterCommand(string projectId, TicketSavedFilterData data, Guid? filterId = null)
         {
             ProjectId = projectId;
             Data = data;

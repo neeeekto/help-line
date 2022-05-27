@@ -58,7 +58,7 @@ namespace HelpLine.BuildingBlocks.IntegrationTests
         {
             foreach (var queue in Queues)
             {
-                queue.Value.Add(evt);
+                queue.Value.Add(evt, 4);
                 await queue.Value.Emit();
             }
         }

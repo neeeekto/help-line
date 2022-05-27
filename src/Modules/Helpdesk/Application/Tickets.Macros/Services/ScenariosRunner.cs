@@ -142,7 +142,7 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Services
 
         private async Task<IEnumerable<TicketId>> ApplyFilters(IEnumerable<TicketId>? ids, Scenario scenario)
         {
-            var filterCollection = await _context.GetCollection<TicketFilter>()
+            var filterCollection = await _context.GetCollection<TicketSavedFilter>()
                 .Find(x => scenario.Filters.Contains(x.Id))
                 .ToListAsync();
             var filterDict = filterCollection.ToDictionary(x => x.Id, x => x);

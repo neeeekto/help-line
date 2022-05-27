@@ -45,7 +45,7 @@ namespace HelpLine.BuildingBlocks.Bus.RabbitMQ
             _consumerChannel?.Dispose();
         }
 
-        public void Publish<T>(T @event)
+        public void Publish<T>(T @event, byte priority = 4)
         {
             ReconnectIfNeeded();
 
@@ -73,6 +73,7 @@ namespace HelpLine.BuildingBlocks.Bus.RabbitMQ
             {
                 var properties = channel.CreateBasicProperties();
                 properties.Persistent = true;
+                properties.Priority = priority;
 
                 channel.BasicPublish(
                     exchange: _brokerName,

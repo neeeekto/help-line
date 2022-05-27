@@ -18,12 +18,13 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels
         public DateTime CreateDate { get; internal set; }
         public DateTime DateOfLastStatusChange { get; internal set; }
         public TicketDiscussionStateView DiscussionState { get; internal set; }
-        public string Title { get; internal set; }
+        public string Title { get; internal set; } // First message text
 
         public IEnumerable<FeedbackReviewView> Feedbacks { get; internal set; }
         public IEnumerable<UserIdInfoView> UserIds { get; internal set; }
         public Dictionary<string, string> UserMeta { get; internal set; }
         public IEnumerable<TicketEventView> Events { get; internal set; }
+        public TicketMetaView Meta { get; internal set; }
 
         public TicketView()
         {

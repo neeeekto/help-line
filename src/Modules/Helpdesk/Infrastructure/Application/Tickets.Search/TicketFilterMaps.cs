@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization;
 
 namespace HelpLine.Modules.Helpdesk.Infrastructure.Application.Tickets.Search
 {
-    internal class TicketFilterMap : BsonClassMap<TicketFilter>
+    internal class TicketFilterMap : BsonClassMap<TicketSavedFilter>
     {
         public TicketFilterMap()
         {

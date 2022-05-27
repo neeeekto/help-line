@@ -9,12 +9,12 @@ namespace HelpLine.BuildingBlocks.IntegrationTests
 {
     public class InMemoryQueue : IQueue
     {
-        public List<object> Queue { get; }
+        public PriorityQueue<object, byte> Queue { get; }
         public Dictionary<Type, List<IQueueHandler>> Handlers { get; }
 
         public InMemoryQueue()
         {
-            Queue = new List<object>();
+            Queue = new PriorityQueue<object, byte>();
             Handlers = new Dictionary<Type, List<IQueueHandler>>();
         }
 
@@ -27,9 +27,9 @@ namespace HelpLine.BuildingBlocks.IntegrationTests
         {
         }
 
-        public void Add<T>(T message)
+        public void Add<T>(T message, byte priority)
         {
-            Queue.Add(message);
+            Queue.Enqueue(message, priority);
         }
 
         public void AddHandler<T>(IQueueHandler<T> handler)
@@ -46,11 +46,12 @@ namespace HelpLine.BuildingBlocks.IntegrationTests
 
         public async Task Emit()
         {
-            foreach (var message in Queue.ToList())
+            while (Queue.TryDequeue(out var message, out _))
+            {
                 if (Handlers.TryGetValue(message.GetType(), out var handlers))
                     foreach (var queueHandler in handlers)
                         await queueHandler.TryHandle(message);
-            Queue.Clear();
+            }
         }
     }
 }

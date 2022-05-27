@@ -32,7 +32,7 @@ namespace HelpLine.Services.Jobs.Tests
             await Service.ExecuteAsync(new ToggleJobCommand(jobId, true));
             await Startup.Start();
             await Task.Delay(new TimeSpan(TimeSpan.TicksPerSecond + 500));
-            var emited = BusServiceFactory.Queues.Any(x => x.Value.Queue.Any());
+            var emited = BusServiceFactory.Queues.Any(x => x.Value.Queue.Count != 0);
             Assert.That(emited, Is.True);
         }
     }

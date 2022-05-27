@@ -11,10 +11,10 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SaveTicketF
 {
     internal class SaveTicketFilterCommandHandler : ICommandHandler<SaveTicketFilterCommand, Guid>
     {
-        private readonly IRepository<TicketFilter> _repository;
+        private readonly IRepository<TicketSavedFilter> _repository;
         private readonly IExecutionContextAccessor _accessor;
 
-        public SaveTicketFilterCommandHandler(IRepository<TicketFilter> repository, IExecutionContextAccessor accessor)
+        public SaveTicketFilterCommandHandler(IRepository<TicketSavedFilter> repository, IExecutionContextAccessor accessor)
         {
             _repository = repository;
             _accessor = accessor;
@@ -22,7 +22,7 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SaveTicketF
 
         public async Task<Guid> Handle(SaveTicketFilterCommand request, CancellationToken cancellationToken)
         {
-            var filter = new TicketFilter
+            var filter = new TicketSavedFilter
             {
                 Changed = DateTime.UtcNow,
                 Owner = _accessor.IsAvailable ? _accessor.UserId : null,

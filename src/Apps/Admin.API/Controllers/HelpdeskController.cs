@@ -98,7 +98,7 @@ namespace HelpLine.Apps.Admin.API.Controllers
         [Route("ticket/{ticketId}/view/recreate")]
         public async Task<ActionResult> RecreateView(string ticketId)
         {
-            await _helpdeskModule.ExecuteCommandAsync(new RecreateTicketViewCommand(ticketId));
+            await _helpdeskModule.ExecuteCommandAsync(new SyncTicketViewCommand(ticketId));
             return Ok();
         }
 

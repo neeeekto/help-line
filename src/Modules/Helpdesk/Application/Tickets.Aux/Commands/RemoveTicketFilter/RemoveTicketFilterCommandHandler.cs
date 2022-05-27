@@ -9,9 +9,9 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.RemoveTicke
 {
     internal class RemoveTicketFilterCommandHandler : ICommandHandler<RemoveTicketFilterCommand>
     {
-        private readonly IRepository<TicketFilter> _repository;
+        private readonly IRepository<TicketSavedFilter> _repository;
 
-        public RemoveTicketFilterCommandHandler(IRepository<TicketFilter> repository)
+        public RemoveTicketFilterCommandHandler(IRepository<TicketSavedFilter> repository)
         {
             _repository = repository;
         }

@@ -2,11 +2,11 @@ using HelpLine.Modules.Helpdesk.Application.Contracts;
 
 namespace HelpLine.Modules.Helpdesk.Application.Tickets.Commands.RecreateTicketView
 {
-    public class RecreateTicketViewCommand : CommandBase
+    public class SyncTicketViewCommand : CommandBase
     {
         public string TicketId { get; }
 
-        public RecreateTicketViewCommand(string ticketId)
+        public SyncTicketViewCommand(string ticketId)
         {
             TicketId = ticketId;
         }

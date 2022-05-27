@@ -2,13 +2,12 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using HelpLine.Modules.Helpdesk.Application.Configuration.Commands;
 using HelpLine.BuildingBlocks.Bus.EventsBus;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Commands.PublishTicketViewChangeEvent;
+using HelpLine.Modules.Helpdesk.Application.Configuration.Commands;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Notifications;
 using MediatR;
 
-namespace HelpLine.Modules.Helpdesk.Application.Tickets.Commands.PublishChangeEvent
+namespace HelpLine.Modules.Helpdesk.Application.Tickets.Commands.PublishTicketViewChangeEvent
 {
     internal class PublishTicketViewChangeEventCommandHandler : ICommandHandler<PublishTicketViewChangeEventCommand>
     {

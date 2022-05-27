@@ -62,7 +62,8 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
                     IterationCount = 0,
                     LastMessageType = TicketDiscussionStateView.MessageType.Incoming,
                     LastReplyDate = null
-                }
+                },
+                Meta = new TicketMetaView(evt.Meta),
             };
             ticket.UserIds = ticket.UserIds.Concat(evt.UserChannels.Select(x => new UserIdInfoView
                 {Channel = x.Channel.Value, UserId = x.UserId.Value, UseForDiscussion = true, Type = UserIdType.Main}));
@@ -81,7 +82,6 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
                 CreateDate = evt.CreateDate,
                 ProjectId = evt.ProjectId.Value,
                 UserMeta = evt.UserMeta,
-                Meta = new TicketMetaView(evt.Meta)
             });
         }
 

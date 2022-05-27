@@ -26,9 +26,9 @@ namespace HelpLine.BuildingBlocks.Bus.RabbitMQ
             _client.StartConsuming();
         }
 
-        public void Add<T>(T message)
+        public void Add<T>(T message, byte priority)
         {
-            _client.Publish(message);
+            _client.Publish(message, priority);
         }
 
         public void AddHandler<T>(IQueueHandler<T> handler)

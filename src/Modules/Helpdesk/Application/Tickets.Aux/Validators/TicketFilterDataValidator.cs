@@ -5,7 +5,7 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
 
 namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Validators
 {
-    internal class TicketFilterDataValidator : AbstractValidator<TicketFilterData>
+    internal class TicketFilterDataValidator : AbstractValidator<TicketSavedFilterData>
     {
         public TicketFilterDataValidator(IMongoContext ctx)
         {

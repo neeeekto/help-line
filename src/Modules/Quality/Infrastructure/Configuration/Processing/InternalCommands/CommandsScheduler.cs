@@ -16,15 +16,15 @@ namespace HelpLine.Modules.Quality.Infrastructure.Configuration.Processing.Inter
         }
 
 
-        public Task EnqueueAsync(ICommand command)
+        public Task EnqueueAsync(ICommand command, byte priority = 4)
         {
-            _queue.Add(command.Id, command);
+            _queue.Add(command.Id, command, priority);
             return Task.CompletedTask;
         }
 
-        public Task EnqueueAsync<T>(ICommand<T> command)
+        public Task EnqueueAsync<T>(ICommand<T> command, byte priority = 4)
         {
-            _queue.Add(command.Id, command);
+            _queue.Add(command.Id, command, priority);
             return Task.CompletedTask;
         }
     }

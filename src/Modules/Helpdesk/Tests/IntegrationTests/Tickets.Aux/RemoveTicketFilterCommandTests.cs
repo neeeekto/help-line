@@ -7,6 +7,7 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.RemoveTicketFilter;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SaveTicketFilter;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetTicketFilters;
 using NUnit.Framework;
@@ -28,10 +29,10 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
 
         private Task<Guid> CreateFilter()
         {
-            return Module.ExecuteCommandAsync(new SaveTicketFilterCommand(ProjectId, new TicketFilter()
+            return Module.ExecuteCommandAsync(new SaveTicketFilterCommand(ProjectId, new TicketSavedFilter()
             {
                 Name = "test",
-                Filter = new ValueFilter(FieldFilterOperators.Equal, new ConstantFilterValue(TestStr), TestStr),
+                Filter = new TicketFilterGroup(),
                 Features = new[] {"test"},
             }));
         }

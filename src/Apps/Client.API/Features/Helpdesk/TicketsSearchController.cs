@@ -12,6 +12,7 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.RemoveTicketFilter;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SaveTicketFilter;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetTicketFilters;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Queries;
@@ -45,10 +46,12 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
             [FromBody] SearchTicketRequest request)
         {
             var pageData = new PageData(page, perPage);
-            var filters = new List<IFilter>()
+            var filters = new List<TicketFilterBase>()
             {
-                new ValueFilter(FieldFilterOperators.Equal, new ConstantFilterValue(project),
-                    nameof(TicketView.ProjectId))
+                new TicketProjectFilter()
+                {
+                    Value = new [] {project}
+                }
             };
 
             if (request.Filter is not null)
@@ -58,13 +61,17 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
 
             var result =
                 await _helpdeskModule.ExecuteQueryAsync(new FindTicketsQuery(pageData,
-                    new GroupFilter(GroupFilterOperators.And, filters.ToArray()), request.Sorts));
+                    new TicketFilterGroup()
+                    {
+                        Filters = filters,
+                        Intersection = true
+                    }, request.Sorts));
             return Ok(result);
         }
 
         [HttpGet]
         [Route("filters")]
-        public async Task<ActionResult<TicketFilter>> GetFilters([ProjectParam] string project,
+        public async Task<ActionResult<TicketSavedFilter>> GetFilters([ProjectParam] string project,
             [FromQuery] IEnumerable<string>? features)
         {
             return Ok(await _helpdeskModule.ExecuteQueryAsync(new GetTicketFiltersQuery(project, _executionContextAccessor.UserId, features)));
@@ -72,7 +79,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
 
         [HttpGet]
         [Route("filters/{filterId:guid}")]
-        public async Task<ActionResult<TicketFilter>> GetFilter(Guid filterId)
+        public async Task<ActionResult<TicketSavedFilter>> GetFilter(Guid filterId)
         {
             return Ok(await _helpdeskModule.ExecuteQueryAsync(new GetTicketFilterQuery(filterId)));
         }
@@ -80,7 +87,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
         [HttpPost]
         [Route("filters")]
         public async Task<ActionResult<Guid>> AddFilter([ProjectParam] string project,
-            [FromBody] TicketFilterData request)
+            [FromBody] TicketSavedFilterData request)
         {
             return Ok(await _helpdeskModule.ExecuteCommandAsync(new SaveTicketFilterCommand(project, request)));
         }
@@ -88,7 +95,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
         [HttpPatch]
         [Route("filters/{filterId:guid}")]
         public async Task<ActionResult> UpdateFilter([ProjectParam] string project,
-            [FromBody] TicketFilterData request, Guid filterId)
+            [FromBody] TicketSavedFilterData request, Guid filterId)
         {
             await _helpdeskModule.ExecuteCommandAsync(new SaveTicketFilterCommand(project, request, filterId));
             return Ok();

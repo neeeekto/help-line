@@ -36,7 +36,7 @@ namespace HelpLine.Modules.Helpdesk.Infrastructure
             Add<TicketsDelayConfiguration>("TicketsDelays");
             Add<AutoreplyScenario>("AutoreplyScenarios");
             Add<TicketSchedule>("Schedules");
-            Add<TicketFilter>("TicketFilters");
+            Add<TicketSavedFilter>("TicketFilters");
             Add<TicketReopenCondition>("TicketReopenConditions");
             Add<Ban>("Banned");
             Add<BanSettings>("BanSettings");

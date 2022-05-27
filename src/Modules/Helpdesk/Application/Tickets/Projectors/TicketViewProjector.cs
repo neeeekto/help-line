@@ -7,7 +7,6 @@ using HelpLine.BuildingBlocks.Domain.EventsSourcing;
 using HelpLine.BuildingBlocks.Infrastructure.Data;
 using HelpLine.Modules.Helpdesk.Application.Configuration.Commands;
 using HelpLine.Modules.Helpdesk.Application.Configuration.Projections;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Commands.PublishChangeEvent;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Commands.PublishTicketViewChangeEvent;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;
 using HelpLine.Modules.Helpdesk.Domain.Tickets;

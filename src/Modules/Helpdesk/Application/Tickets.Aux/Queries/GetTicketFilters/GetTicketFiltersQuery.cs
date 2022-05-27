@@ -5,7 +5,7 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
 
 namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetTicketFilters
 {
-    public class GetTicketFiltersQuery : QueryBase<IEnumerable<TicketFilter>>
+    public class GetTicketFiltersQuery : QueryBase<IEnumerable<TicketSavedFilter>>
     {
         public string ProjectId { get; }
         public Guid? ForOperatorId { get; }

@@ -12,7 +12,6 @@ namespace HelpLine.Modules.Helpdesk.Infrastructure.Application.Mappers
             MapMember(x => x.UserIds);
             MapMember(x => x.Language);
             MapMember(x => x.Message).SetIgnoreIfNull(true);
-            MapMember(x => x.Meta).SetIgnoreIfNull(true);
             MapMember(x => x.Priority);
             MapMember(x => x.Status);
             MapMember(x => x.Tags);

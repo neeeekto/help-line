@@ -7,6 +7,7 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Aux;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SaveTicketFilter;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetTicketFilters;
 using HelpLine.Modules.Helpdesk.IntegrationTests.SeedWork;
@@ -28,10 +29,10 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
             await CreateOperator();
         }
 
-        private TicketFilterData MakeData() => new TicketFilterData
+        private TicketSavedFilterData MakeData() => new TicketSavedFilterData
         {
             Name = TestStr,
-            Filter = new ValueFilter(FieldFilterOperators.Equal, new ConstantFilterValue(TestStr), TestStr),
+            Filter = new TicketFilterGroup(),
             Features = new [] {TEST_FEAT},
             Order = 1
         };
@@ -50,7 +51,7 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
             Assert.That(entity.Name, Is.EqualTo(data.Name));
             Assert.That(entity.Changed, Is.LessThan(DateTime.UtcNow));
             Assert.That(entity.Features, Does.Contain(TEST_FEAT));
-            Assert.That(entity.Filter, Is.TypeOf<ValueFilter>());
+            Assert.That(entity.Filter, Is.TypeOf<TicketFilterGroup>());
             Assert.That(entity.Share, Is.Null);
             Assert.That(entity.Order, Is.EqualTo(data.Order));
         }
@@ -69,7 +70,7 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
             Assert.That(entity.Name, Is.EqualTo(data.Name));
         }
 
-        public class InvalidSource : TicketFilterData
+        public class InvalidSource : TicketSavedFilterData
         {
             public string ProjectId = HelpdeskTestBase.ProjectId;
 
@@ -77,7 +78,7 @@ namespace HelpLine.Modules.Helpdesk.IntegrationTests.Tickets.Aux
             {
                 Name = TestStr;
                 Share = null;
-                Filter = new ValueFilter(FieldFilterOperators.Equal, new ConstantFilterValue(TestStr), TestStr);
+                Filter = new TicketFilterGroup();
                 Features = new[] {"test"};
             }
 
