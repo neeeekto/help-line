@@ -1,7 +1,7 @@
 using HelpLine.BuildingBlocks.Application.TypeDescription;
 using HelpLine.Modules.Helpdesk.Jobs;
 
-namespace HelpLine.Apps.Admin.API.Meta
+namespace HelpLine.Apps.Admin.API.Meta.Jobs
 {
     internal class CollectEmailMessagesJobDataDescription : Description
     {

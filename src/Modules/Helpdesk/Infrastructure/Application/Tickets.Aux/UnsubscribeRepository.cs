@@ -1,11 +1,9 @@
 using System;
 using System.Linq.Expressions;
 using HelpLine.BuildingBlocks.Infrastructure.Data;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Channels;
 
-namespace HelpLine.Modules.Helpdesk.Infrastructure.Application.Tickets.Channels
+namespace HelpLine.Modules.Helpdesk.Infrastructure.Application.Tickets.Aux
 {
     internal class UnsubscribeRepository : RepositoryBase<Unsubscribe>
     {

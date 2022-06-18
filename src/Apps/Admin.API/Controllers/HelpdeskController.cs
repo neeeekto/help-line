@@ -12,7 +12,7 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Channels.Commands.SaveChanne
 using HelpLine.Modules.Helpdesk.Application.Tickets.Channels.Models;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Channels.Queries.GetChannelSettings;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Commands.CreateTicket;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Commands.RecreateTicketView;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Commands.SyncTicketView;
 using HelpLine.Modules.Helpdesk.Application.Tickets.DTO;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Queries.GetTicket;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;

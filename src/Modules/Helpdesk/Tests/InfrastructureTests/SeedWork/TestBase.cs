@@ -7,7 +7,7 @@ using HelpLine.Modules.Helpdesk.Domain.Tickets;
 using MongoDB.Bson.Serialization;
 using NUnit.Framework;
 
-namespace HelpLine.Modules.Helpdesk.Infrastructure.UnitTests.SeedWork
+namespace HelpLine.Modules.Helpdesk.Infrastructure.Tests.SeedWork
 {
     public abstract class TestBase
     {

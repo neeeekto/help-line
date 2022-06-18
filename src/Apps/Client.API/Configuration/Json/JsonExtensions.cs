@@ -3,6 +3,9 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Actions;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
 using HelpLine.Modules.Helpdesk.Application.Tickets.DTO;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters.Values;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Sorts;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels.Events;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +27,10 @@ namespace HelpLine.Apps.Client.API.Configuration.Json
                 opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<DescriptionFieldType>());
                 opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<ScheduledEventResultView>());
                 opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<TicketReminderItemBase>());
+                opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<TicketFilterBase>());
+                opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<TicketSortBase>());
+                opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<TicketInitiatorFilterValueBase>());
+                opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<FilterDateValueBase>());
                 opt.SerializerSettings.Converters.Add(new StringEnumConverter());
             });
         }

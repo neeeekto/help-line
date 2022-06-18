@@ -1,4 +1,4 @@
-using HelpLine.Modules.Helpdesk.Domain.Operators;
+using HelpLine.Modules.Quality.Domain.Operators;
 using HelpLine.Modules.Quality.Domain.Tickets.State;
 
 namespace HelpLine.Modules.Quality.Domain.Tickets.Events

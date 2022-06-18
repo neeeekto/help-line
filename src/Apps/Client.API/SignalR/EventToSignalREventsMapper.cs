@@ -28,7 +28,7 @@ namespace HelpLine.Apps.Client.API.SignalR
             return Task.CompletedTask;
         }
 
-        private async Task Handle(TicketViewChangeNotification evt)
+        private async Task Handle(TicketViewChangedNotification evt)
         {
             await _ticketHubContext.Clients.Group(evt.TicketId).OnUpdated(evt.NewEvents);
             await _ticketsHubContext.Clients.Group(evt.Project).OnUpdated(evt.TicketId, evt.NewEvents);

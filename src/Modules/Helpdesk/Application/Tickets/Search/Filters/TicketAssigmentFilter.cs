@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
+namespace HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters;
 
 public sealed class TicketAssigmentFilter : TicketFilterBase
 {
-    public IEnumerable<ValueBase> Value { get; set; }
+    public IEnumerable<ValueBase> Values { get; set; }
     
     public abstract class ValueBase {}
     public sealed class CurrentOperator : ValueBase {}

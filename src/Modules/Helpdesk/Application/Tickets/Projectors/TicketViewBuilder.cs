@@ -61,7 +61,8 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
                 {
                     IterationCount = 0,
                     LastMessageType = TicketDiscussionStateView.MessageType.Incoming,
-                    LastReplyDate = null
+                    LastReplyDate = null,
+                    HasAttachments = false,
                 },
                 Meta = new TicketMetaView(evt.Meta),
             };
@@ -83,6 +84,8 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
                 ProjectId = evt.ProjectId.Value,
                 UserMeta = evt.UserMeta,
             });
+            if (evt.Message?.Attachments?.Count() > 0)
+                Ticket.DiscussionState.HasAttachments = true;
         }
 
         private void When(TicketStatusChangedEvent evt)
@@ -159,7 +162,7 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
                     Message = evt.Feedback.Message,
                     Score = evt.Feedback.Score,
                     Solved = evt.Feedback.Solved,
-                    OptionalScores = evt.Feedback.OptionalScores?.MapToDictionary(),
+                    OptionalScores = evt.Feedback.OptionalScores?.MapToDictionary() ?? new Dictionary<string, int>(),
                     DateTime = evt.CreateDate
                 }
             });
@@ -176,6 +179,10 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
                 CreateDate = evt.CreateDate,
             });
             Ticket.DiscussionState.LastMessageType = TicketDiscussionStateView.MessageType.Incoming;
+            if (!Ticket.DiscussionState.HasAttachments && evt.Message.Attachments?.Count() > 0)
+            {
+                Ticket.DiscussionState.HasAttachments = true;
+            }
         }
 
         private void When(TicketOutgoingMessageAddedEvent evt)
@@ -199,6 +206,11 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
             if (Ticket.DiscussionState.LastMessageType == TicketDiscussionStateView.MessageType.Incoming)
             {
                 Ticket.DiscussionState.IterationCount += 1;
+            }
+
+            if (!Ticket.DiscussionState.HasAttachments && evt.Message.Attachments?.Count() > 0)
+            {
+                Ticket.DiscussionState.HasAttachments = true;
             }
 
             Ticket.DiscussionState.LastMessageType = TicketDiscussionStateView.MessageType.Outgoin;
@@ -282,6 +294,10 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
         {
             var noteEvent = Ticket.Events.OfType<TicketNoteEventView>()
                 .FirstOrDefault(x => x.NoteId == evt.NoteId.Value);
+            if (!Ticket.DiscussionState.HasAttachments && evt.Message.Attachments?.Count() > 0)
+            {
+                Ticket.DiscussionState.HasAttachments = true;
+            }
             if (noteEvent == null)
             {
                 AddEvent(new TicketNoteEventView

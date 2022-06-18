@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
 using HelpLine.BuildingBlocks.Application.TypeDescription;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Channels.Models;
 
-namespace HelpLine.Apps.Admin.API.Meta
+namespace HelpLine.Apps.Admin.API.Meta.Jobs
 {
     internal class EmailFeedbackDataDescription : Description
     {

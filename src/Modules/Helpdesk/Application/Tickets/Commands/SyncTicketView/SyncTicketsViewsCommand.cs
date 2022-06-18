@@ -1,7 +1,7 @@
 using HelpLine.Modules.Helpdesk.Application.Contracts;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters;
 
-namespace HelpLine.Modules.Helpdesk.Application.Tickets.Commands.RecreateTicketView;
+namespace HelpLine.Modules.Helpdesk.Application.Tickets.Commands.SyncTicketView;
 
 public class SyncTicketsViewsCommand : CommandBase
 {

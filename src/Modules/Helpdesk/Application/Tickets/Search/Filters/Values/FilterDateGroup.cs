@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters.Values;
 
-namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
+namespace HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters.Values;
 
 public sealed class FilterDateGroup : FilterDateValueBase
 {

@@ -15,6 +15,9 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Commands.ExecuteScena
 using HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Core;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Models;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Triggers;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Sorts;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;
 using HelpLine.Modules.Helpdesk.Domain.Tickets;
 using MediatR;
@@ -40,9 +43,8 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediator _mediator;
         private readonly ICommandsScheduler _scheduler;
-        private readonly ISearchProvider<TicketView, TicketFilterCtx> _searchProvider;
+        private readonly ITicketSearchProvider _searchProvider;
         private readonly IMongoContext _context;
-        private readonly IFilterContextFactory _filterContextFactory;
         private static readonly InstanceCreator InstanceCreator = new InstanceCreator();
         private readonly ILogger _logger;
 
@@ -50,15 +52,13 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Services
         private bool _handlerAdded = false;
 
         public ScenariosRunner(IUnitOfWork unitOfWork, IMediator mediator, ICommandsScheduler scheduler,
-            ISearchProvider<TicketView, TicketFilterCtx> searchProvider, IMongoContext context,
-            IFilterContextFactory filterContextFactory, ILogger logger)
+            ITicketSearchProvider searchProvider, IMongoContext context, ILogger logger)
         {
             _unitOfWork = unitOfWork;
             _mediator = mediator;
             _scheduler = scheduler;
             _searchProvider = searchProvider;
             _context = context;
-            _filterContextFactory = filterContextFactory;
             _logger = logger;
         }
 
@@ -151,17 +151,21 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Services
                     var hasFilter = filterDict.TryGetValue(x, out var filter);
                     if(!hasFilter)
                         _logger.Warning($"Filter {x} that contains in scenario {scenario.Id} is not found");
-                    return filter;
+                    return filter?.Filter;
                 }).Where(x => x != null)
-                .Cast<IFilter>().ToList();
+                .Cast<TicketFilterBase>()
+                .ToList();
             if (ids?.Any() == true)
-                filters.Add(new InFilter(new[] {nameof(TicketView.Id)},
-                    ids.Select(
-                        x => new ConstantFilterValue(x.Value))));
+                filters.Add(new TicketIdFilter()
+                {
+                    Value = ids.Select(x => x.Value).ToArray()
+                });
 
-            var ctx = await _filterContextFactory.Make();
-            ctx.CurrentUser = Guid.Empty;
-            var tickets = await _searchProvider.Find(ctx, filters.ToArray());
+            var tickets = await _searchProvider.Find(new TicketFilterGroup()
+            {
+                Filters = filters.ToArray(),
+                Intersection = true
+            }, Array.Empty<TicketSortBase>());
 
             return tickets.Select(x => new TicketId(x.Id));
         }

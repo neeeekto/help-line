@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using HelpLine.BuildingBlocks.Application.Search;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters;
 
 namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models
 {

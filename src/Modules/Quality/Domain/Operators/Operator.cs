@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using HelpLine.BuildingBlocks.Domain;
-using HelpLine.Modules.Helpdesk.Domain.Operators;
 
 namespace HelpLine.Modules.Quality.Domain.Operators
 {

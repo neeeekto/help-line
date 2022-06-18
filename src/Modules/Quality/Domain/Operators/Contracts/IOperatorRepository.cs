@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using HelpLine.Modules.Helpdesk.Domain.Operators;
 
 namespace HelpLine.Modules.Quality.Domain.Operators.Contracts
 {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
+namespace HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters;
 
 public sealed class TicketUserMetaFilter : TicketFilterBase
 {

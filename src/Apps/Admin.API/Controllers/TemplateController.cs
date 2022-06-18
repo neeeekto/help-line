@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HelpLine.Apps.Admin.API.Meta;
+using HelpLine.Apps.Admin.API.Meta.Jobs;
 using HelpLine.BuildingBlocks.Application.TypeDescription;
 using HelpLine.Services.TemplateRenderer;
 using HelpLine.Services.TemplateRenderer.Application.Commands.Delete;

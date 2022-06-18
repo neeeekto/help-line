@@ -5,12 +5,11 @@ using HelpLine.Apps.Admin.API.Meta.Migrations;
 using HelpLine.BuildingBlocks.Application.TypeDescription;
 using HelpLine.Services.Migrations;
 using HelpLine.Services.Migrations.Application.Commands.RunMigration;
-using HelpLine.Services.Migrations.Application.Queries.GetAwaitingMigrations;
 using HelpLine.Services.Migrations.Application.Queries.GetMigrations;
 using HelpLine.Services.Migrations.Application.Views;
-using HelpLine.Services.Migrations.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace HelpLine.Apps.Admin.API.Controllers
 {
@@ -26,6 +25,7 @@ namespace HelpLine.Apps.Admin.API.Controllers
         {
             _migrationService = migrationService;
         }
+        
 
         [HttpGet]
         [Route("")]

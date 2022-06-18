@@ -13,7 +13,7 @@ export const useTicketAtDateQuery = (
   projectId: Project["id"],
   date: Date
 ) =>
-  useQuery([projectId, "ticket", ticketId, date], () =>
+  useQuery([projectId, "ticket", ticketId, date], (ctx) =>
     ticketApi.getByIdAtDate(ticketId, date)
   );
 

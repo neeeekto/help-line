@@ -1,4 +1,4 @@
-﻿namespace HelpLine.Modules.Quality.Domain.Tickets
+﻿namespace HelpLine.Modules.Quality.Domain.Tickets.State
 {
 	public enum Reason
 	{

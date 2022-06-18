@@ -19,6 +19,7 @@ namespace HelpLine.BuildingBlocks.Infrastructure.EventSourcing
         public async Task<IEnumerable<EventBase<TId>>> Get(TId aggregateId, int fromVersion)
         {
             return await Collection.Find( x => x.AggregateId.Equals(aggregateId))
+                .SortBy(x => x.OccurredOn)
                 .Skip(fromVersion)
                 .ToListAsync();
         }

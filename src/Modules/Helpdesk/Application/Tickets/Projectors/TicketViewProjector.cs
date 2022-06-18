@@ -3,34 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HelpLine.BuildingBlocks.Domain;
-using HelpLine.BuildingBlocks.Domain.EventsSourcing;
-using HelpLine.BuildingBlocks.Infrastructure.Data;
+using HelpLine.BuildingBlocks.Infrastructure.EventSourcing;
 using HelpLine.Modules.Helpdesk.Application.Configuration.Commands;
 using HelpLine.Modules.Helpdesk.Application.Configuration.Projections;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Commands.PublishTicketViewChangeEvent;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;
 using HelpLine.Modules.Helpdesk.Domain.Tickets;
 using HelpLine.Modules.Helpdesk.Domain.Tickets.Events;
-using MongoDB.Driver;
 using Serilog;
 
 namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
 {
     internal class TicketViewProjector : IProjector
     {
-        private readonly IMongoContext _context;
         private readonly ILogger _logger;
         private readonly ICommandsScheduler _scheduler;
+        private readonly ITicketViewRepository _repository;
+        private readonly IEventStore<TicketId> _eventStore;
 
-        public TicketViewProjector(IMongoContext context, ILogger logger, ICommandsScheduler scheduler)
+
+        public TicketViewProjector(ILogger logger, ICommandsScheduler scheduler, ITicketViewRepository repository, IEventStore<TicketId> eventStore)
         {
-            _context = context;
             _logger = logger;
             _scheduler = scheduler;
+            _repository = repository;
+            _eventStore = eventStore;
         }
 
-        private IMongoCollection<TicketView> Tickets => _context.GetCollection<TicketView>();
-        private IMongoCollection<EventBase<TicketId>> TicketEvents => _context.GetCollection<EventBase<TicketId>>();
 
         public async Task Project(IEnumerable<IDomainEvent> events)
         {
@@ -55,7 +54,8 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
             }
 
             await InsertTicketView(ticket);
-            await _scheduler.EnqueueAsync(new PublishTicketViewChangeEventCommand(Guid.NewGuid(), ticket.Id, ticket.ProjectId, events.Select(x => x.Id).ToArray()));
+            await _scheduler.EnqueueAsync(new PublishTicketViewChangeEventCommand(Guid.NewGuid(), ticket.Id,
+                ticket.ProjectId, events.Select(x => x.Id).ToArray()));
         }
 
         private TicketView Apply(TicketView? ticket, IEnumerable<TicketEventBase> events)
@@ -69,21 +69,19 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
 
         private async Task<TicketView?> GetTicketView(TicketId id)
         {
-            var ticket = await Tickets.Find(_context.Session, x => x.Id == id.Value).FirstOrDefaultAsync();
+            var ticket = await _repository.Get(id.Value);
             return ticket;
         }
 
         private async Task InsertTicketView(TicketView ticketView)
         {
-            await Tickets.ReplaceOneAsync(_context.Session, x => x.Id == ticketView.Id, ticketView,
-                new ReplaceOptions {IsUpsert = true});
-
+            await _repository.Save(ticketView);
         }
 
         private async Task<TicketView> FullRestoreTicketView(TicketId id)
         {
-            var events = await TicketEvents.Find(x => x.AggregateId == id).SortBy(x => x.OccurredOn).ToListAsync();
-            if(!events.Any()) throw new ApplicationException($"Events for ticket {id} not found");
+            var events = await _eventStore.Get(id, 0);
+            if (!events.Any()) throw new ApplicationException($"Events for ticket {id} not found");
             var builder = new TicketViewBuilder();
             foreach (var evt in events)
                 builder.Project(evt);

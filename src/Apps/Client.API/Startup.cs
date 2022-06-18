@@ -262,7 +262,7 @@ namespace HelpLine.Apps.Client.API
             var eventsBus = rabbitMqFactory.MakeEventsBus("Client.API");
             eventsBus.StartConsuming();
 
-            eventsBus.Subscribe(new AppBusEventsHandler<TicketViewChangeNotification>(eventHandler));
+            eventsBus.Subscribe(new AppBusEventsHandler<TicketViewChangedNotification>(eventHandler));
         }
 
 

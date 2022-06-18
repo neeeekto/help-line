@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using HelpLine.BuildingBlocks.Application.Queries;
 using HelpLine.BuildingBlocks.Application.Search;
 using HelpLine.Modules.Helpdesk.Application.Contracts;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Sorts;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;
 

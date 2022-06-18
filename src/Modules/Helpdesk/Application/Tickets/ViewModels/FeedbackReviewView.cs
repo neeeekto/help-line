@@ -10,6 +10,6 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels
         public int Score { get; internal set; }
         public string? Message { get; internal set; }
         public bool? Solved { get; internal set; }
-        public IDictionary<string, int>? OptionalScores { get; internal set; }
+        public IDictionary<string, int> OptionalScores { get; internal set; }
     }
 }

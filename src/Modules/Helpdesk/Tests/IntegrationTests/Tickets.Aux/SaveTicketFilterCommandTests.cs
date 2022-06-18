@@ -7,9 +7,9 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Aux;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SaveTicketFilter;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetTicketFilters;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters;
 using HelpLine.Modules.Helpdesk.IntegrationTests.SeedWork;
 using NUnit.Framework;
 

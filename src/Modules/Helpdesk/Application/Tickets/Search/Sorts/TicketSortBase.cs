@@ -4,6 +4,3 @@ public abstract class TicketSortBase
 {
     public bool Descending { get; set; }
 }
-
-public sealed class TicketIdSort : TicketSortBase {}
- 

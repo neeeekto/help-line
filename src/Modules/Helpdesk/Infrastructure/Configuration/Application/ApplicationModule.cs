@@ -8,8 +8,13 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Services;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Macros;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Services;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Projectors;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Search;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;
+using HelpLine.Modules.Helpdesk.Infrastructure.Application.Tickets;
 using HelpLine.Modules.Helpdesk.Infrastructure.Application.Tickets.Search;
+using HelpLine.Modules.Helpdesk.Infrastructure.Application.Tickets.Search.ElasticSearch;
+using HelpLine.Modules.Helpdesk.Infrastructure.Application.Tickets.Search.Mongo;
 
 namespace HelpLine.Modules.Helpdesk.Infrastructure.Configuration.Application
 {
@@ -29,12 +34,12 @@ namespace HelpLine.Modules.Helpdesk.Infrastructure.Configuration.Application
                 .As<IValueMapper>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<TicketFilterTypeProvider>()
-                .As<IAdditionalTypeProvider>()
-                .InstancePerLifetimeScope();
-
             builder.RegisterType<FilterContextFactory>()
                 .As<IFilterContextFactory>()
+                .InstancePerLifetimeScope();
+            
+            builder.RegisterType<TicketViewRepository>()
+                .As<ITicketViewRepository>()
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<FilterValueGetter<TicketFilterCtx>>()
@@ -42,7 +47,15 @@ namespace HelpLine.Modules.Helpdesk.Infrastructure.Configuration.Application
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<TicketSearchProvider>()
-                .As<ISearchProvider<TicketView, TicketFilterCtx>>()
+                .As<ITicketSearchProvider>()
+                .InstancePerLifetimeScope();
+            
+            builder.RegisterType<TicketMongoSearchProvider>()
+                .AsSelf()
+                .InstancePerLifetimeScope();
+            
+            builder.RegisterType<TicketElasticSearchProvider>()
+                .AsSelf()
                 .InstancePerLifetimeScope();
         }
     }

@@ -1,6 +1,6 @@
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;
 
-namespace HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models.Filters;
+namespace HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters;
 
 public sealed class TicketLastMessageTypeFilter : TicketFilterBase
 {

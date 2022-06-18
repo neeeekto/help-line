@@ -1,7 +1,7 @@
 using HelpLine.BuildingBlocks.Domain;
-using HelpLine.Modules.Helpdesk.Domain.Operators;
+using HelpLine.Modules.Quality.Domain.Operators;
 
-namespace HelpLine.Modules.Quality.Domain.Tickets
+namespace HelpLine.Modules.Quality.Domain.Tickets.State
 {
     public class InvolvedOperator : Entity
     {

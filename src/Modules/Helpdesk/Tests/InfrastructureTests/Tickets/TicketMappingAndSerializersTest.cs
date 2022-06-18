@@ -1,16 +1,15 @@
 using System.Linq;
 using HelpLine.BuildingBlocks.Domain;
 using HelpLine.BuildingBlocks.Infrastructure.Data;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Macros;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Models;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Macros.Triggers;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels.Events;
 using HelpLine.Modules.Helpdesk.Domain.Tickets.Events;
-using HelpLine.Modules.Helpdesk.Infrastructure.UnitTests.SeedWork;
+using HelpLine.Modules.Helpdesk.Infrastructure.Tests.SeedWork;
 using NetArchTest.Rules;
 using NUnit.Framework;
 
-namespace HelpLine.Modules.Helpdesk.Infrastructure.UnitTests.Tickets
+namespace HelpLine.Modules.Helpdesk.Infrastructure.Tests.Tickets
 {
     [TestFixture]
     public class TicketMappingTest : TestBase

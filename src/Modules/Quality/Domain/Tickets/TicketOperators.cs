@@ -1,7 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using HelpLine.BuildingBlocks.Domain.EventsSourcing;
-using HelpLine.Modules.Helpdesk.Domain.Operators;
+using HelpLine.Modules.Quality.Domain.Operators;
 using HelpLine.Modules.Quality.Domain.Tickets.Events;
 using HelpLine.Modules.Quality.Domain.Tickets.State;
 
