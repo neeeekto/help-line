@@ -14,9 +14,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\BuildingBlocks\IntegrationTests\HelpLine.BuildingBlocks.IntegrationTests.csproj" />
-      <ProjectReference Include="..\Contracts\HelpLine.Services.Jobs.Contracts.csproj" />
-      <ProjectReference Include="..\Implementation\HelpLine.Services.Jobs.csproj" />
+      <ProjectReference Include="..\..\..\..\BuildingBlocks\Application\HelpLine.BuildingBlocks.Application.csproj" />
+      <ProjectReference Include="..\..\..\..\BuildingBlocks\IntegrationTests\HelpLine.BuildingBlocks.IntegrationTests.csproj" />
+      <ProjectReference Include="..\..\..\..\Services\Jobs\Implementation\HelpLine.Services.Jobs.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\HelpLine.Modules.UserAccess.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Roles" />
     </ItemGroup>
 
     <ItemGroup>

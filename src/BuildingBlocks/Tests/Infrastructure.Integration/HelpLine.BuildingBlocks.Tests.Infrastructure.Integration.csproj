@@ -4,7 +4,11 @@
         <TargetFramework>net6.0</TargetFramework>
         <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
+
         <IsPackable>false</IsPackable>
+
+        <RootNamespace>HelpLine.BuildingBlocks.Infrastructure.IntegrationTests</RootNamespace>
+
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,15 +18,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\BuildingBlocks\IntegrationTests\HelpLine.BuildingBlocks.IntegrationTests.csproj" />
-      <ProjectReference Include="..\Contracts\HelpLine.Services.Jobs.Contracts.csproj" />
-      <ProjectReference Include="..\Implementation\HelpLine.Services.Jobs.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\HelpLine.BuildingBlocks.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="test.settings.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
+      <Folder Include="Search.Linq" />
     </ItemGroup>
 
 </Project>
