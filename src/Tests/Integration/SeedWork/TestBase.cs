@@ -1,10 +1,7 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data;
 using System.Threading.Tasks;
 using HelpLine.BuildingBlocks.Application.Emails;
 using HelpLine.BuildingBlocks.Domain;
-using NSubstitute;
 using NUnit.Framework;
 using Serilog;
 

@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpLine.Tests.Integration"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B1D398A1-7005-4792-8D7F-CD9E5F3C29B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpLine.BuildingBlocks.Application.UnitTests", "BuildingBlocks\Tests\Application.UnitTests\HelpLine.BuildingBlocks.Application.UnitTests.csproj", "{32915CF6-62D9-4121-8650-6279D5154B4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelpLine.BuildingBlocks.Tests.Application.Unit", "BuildingBlocks\Tests\Application.Unit\HelpLine.BuildingBlocks.Tests.Application.Unit.csproj", "{32915CF6-62D9-4121-8650-6279D5154B4B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpdesk", "Helpdesk", "{DA8015E7-E9B5-4273-A4C1-2625CD9280E9}"
 EndProject
@@ -49,15 +49,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.Helpdesk.I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E8FB529A-07F8-4F74-B3F2-A6FB18391B6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.Helpdesk.Domain.UnitTests", "Modules\Helpdesk\Tests\UnitTests\HelpLine.Modules.Helpdesk.Domain.UnitTests.csproj", "{FF85333D-E1B4-4477-97CA-7EDDE5BED512}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.Helpdesk.Tests.Domain", "Modules\Helpdesk\Tests\Domain\HelpLine.Modules.Helpdesk.Tests.Domain.csproj", "{FF85333D-E1B4-4477-97CA-7EDDE5BED512}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.Helpdesk.ArchTests", "Modules\Helpdesk\Tests\ArchTests\HelpLine.Modules.Helpdesk.ArchTests.csproj", "{60CAF4C1-D1C4-4FEB-B9E4-BC3F101A0733}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.Helpdesk.Tests.Arch", "Modules\Helpdesk\Tests\Arch\HelpLine.Modules.Helpdesk.Tests.Arch.csproj", "{60CAF4C1-D1C4-4FEB-B9E4-BC3F101A0733}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.Helpdesk.IntegrationTests", "Modules\Helpdesk\Tests\IntegrationTests\HelpLine.Modules.Helpdesk.IntegrationTests.csproj", "{A0C1B33E-2F92-4D88-9987-86D3EEEDF05B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.Helpdesk.Tests.Application", "Modules\Helpdesk\Tests\Application\HelpLine.Modules.Helpdesk.Tests.Application.csproj", "{A0C1B33E-2F92-4D88-9987-86D3EEEDF05B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.Helpdesk.Infrastructure.Tests", "Modules\Helpdesk\Tests\InfrastructureTests\HelpLine.Modules.Helpdesk.Infrastructure.Tests.csproj", "{48DCE870-D087-4187-8FEF-E7CC9D8E6F62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.Helpdesk.Tests.Infrastructure", "Modules\Helpdesk\Tests\Infrastructure\HelpLine.Modules.Helpdesk.Tests.Infrastructure.csproj", "{48DCE870-D087-4187-8FEF-E7CC9D8E6F62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.Infrastructure.UnitTests", "BuildingBlocks\Tests\Infrastructure.UnitTests\HelpLine.BuildingBlocks.Infrastructure.UnitTests.csproj", "{1F08132A-57A2-4408-B433-3861F5AEC6B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.Tests.Infrastructure.Unit", "BuildingBlocks\Tests\Infrastructure.Unit\HelpLine.BuildingBlocks.Tests.Infrastructure.Unit.csproj", "{1F08132A-57A2-4408-B433-3861F5AEC6B2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{F5FBC93F-C06E-4B14-B643-3965BEC0F06B}"
 EndProject
@@ -87,7 +87,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{8172C84D
 		.dockerignore = .dockerignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.IntegrationTests", "BuildingBlocks\Tests\IntegrationTests\HelpLine.BuildingBlocks.IntegrationTests.csproj", "{9E612D58-5556-4AB1-A9C1-9EE19139A2DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.IntegrationTests", "BuildingBlocks\IntegrationTests\HelpLine.BuildingBlocks.IntegrationTests.csproj", "{9E612D58-5556-4AB1-A9C1-9EE19139A2DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.Bus", "BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus\HelpLine.BuildingBlocks.Bus.csproj", "{CF66870F-99F9-4A08-AE12-2DA1D8FD9028}"
 EndProject
@@ -95,17 +95,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bus", "Bus", "{F72DF9C1-110
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.Bus.RabbitMQ", "BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus.RabbitMQ\HelpLine.BuildingBlocks.Bus.RabbitMQ.csproj", "{340EB461-D999-4340-97E5-B31AF3468D57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.Infrastructure.IntegrationTests", "BuildingBlocks\Tests\Infrastructure.IntegrationTests\HelpLine.BuildingBlocks.Infrastructure.IntegrationTests.csproj", "{0F6735A1-B42C-41FC-B268-99E39C511E5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.Tests.Infrastructure.Integration", "BuildingBlocks\Tests\Infrastructure.Integration\HelpLine.BuildingBlocks.Tests.Infrastructure.Integration.csproj", "{0F6735A1-B42C-41FC-B268-99E39C511E5E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C02CD842-B9E0-4679-B73D-D8A992CD3B51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.UserAccess.ArchTests", "Modules\UserAccess\Tests\ArchTests\HelpLine.Modules.UserAccess.ArchTests.csproj", "{77DACDDA-071E-487B-A856-E1CEAA104B85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.UserAccess.Tests.Arch", "Modules\UserAccess\Tests\Arch\HelpLine.Modules.UserAccess.Tests.Arch.csproj", "{77DACDDA-071E-487B-A856-E1CEAA104B85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.UserAccess.Domain.UnitTests", "Modules\UserAccess\Tests\UnitTests\HelpLine.Modules.UserAccess.Domain.UnitTests.csproj", "{D39D86A3-90C8-4AF6-81D0-1C06E39DBA45}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.UserAccess.Tests.Domain", "Modules\UserAccess\Tests\Domain\HelpLine.Modules.UserAccess.Tests.Domain.csproj", "{D39D86A3-90C8-4AF6-81D0-1C06E39DBA45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.UserAccess.Infrastructure.Tests", "Modules\UserAccess\Tests\HelpLine.Modules.UserAccess.Infrastructure.Tests\HelpLine.Modules.UserAccess.Infrastructure.Tests.csproj", "{287C0563-9AD3-4910-BE5F-461C1236DBCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.UserAccess.Tests.Infrastructure", "Modules\UserAccess\Tests\Infrastructure\HelpLine.Modules.UserAccess.Tests.Infrastructure.csproj", "{287C0563-9AD3-4910-BE5F-461C1236DBCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.UserAccess.IntegrationTests", "Modules\UserAccess\Tests\HelpLine.Modules.UserAccess.IntegrationTests\HelpLine.Modules.UserAccess.IntegrationTests.csproj", "{36338D5E-8614-4E6F-8B4E-3E07CC045E97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.UserAccess.Tests.Application", "Modules\UserAccess\Tests\Application\HelpLine.Modules.UserAccess.Tests.Application.csproj", "{36338D5E-8614-4E6F-8B4E-3E07CC045E97}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Modules.UserAccess.Jobs", "Modules\UserAccess\Jobs\HelpLine.Modules.UserAccess.Jobs.csproj", "{1EE2B7EF-DCEE-4419-A295-C396C09C2916}"
 EndProject
@@ -145,7 +145,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Services.Migration
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Services.Migrations", "Services\Migrations\Implementation\HelpLine.Services.Migrations.csproj", "{B9141196-8CF1-4E83-BE35-580A90DD69C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Tests.E2E", "Tests\E2E\HelpLine.Tests.E2E.csproj", "{FEF3B307-E0F6-407C-9941-20D0EBAE84AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.UnitTests", "BuildingBlocks\HelpLine.BuildingBlocks.UnitTests\HelpLine.BuildingBlocks.UnitTests.csproj", "{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -454,12 +454,12 @@ Global
 		{B9141196-8CF1-4E83-BE35-580A90DD69C1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B9141196-8CF1-4E83-BE35-580A90DD69C1}.Default|Any CPU.ActiveCfg = Debug|Any CPU
 		{B9141196-8CF1-4E83-BE35-580A90DD69C1}.Default|Any CPU.Build.0 = Debug|Any CPU
-		{FEF3B307-E0F6-407C-9941-20D0EBAE84AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEF3B307-E0F6-407C-9941-20D0EBAE84AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FEF3B307-E0F6-407C-9941-20D0EBAE84AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FEF3B307-E0F6-407C-9941-20D0EBAE84AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FEF3B307-E0F6-407C-9941-20D0EBAE84AB}.Default|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEF3B307-E0F6-407C-9941-20D0EBAE84AB}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}.Default|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -499,7 +499,6 @@ Global
 		{9EAE56AF-3466-4F4E-A8F2-50B584CE654C} = {E6044ECB-48CE-4933-BE90-07C5D3746451}
 		{CD27EAC2-C7D3-4835-8E3B-29A9ED82AD40} = {E6044ECB-48CE-4933-BE90-07C5D3746451}
 		{85DB8A62-E2B6-49FA-8089-FBF8214360B7} = {E6044ECB-48CE-4933-BE90-07C5D3746451}
-		{9E612D58-5556-4AB1-A9C1-9EE19139A2DB} = {B1D398A1-7005-4792-8D7F-CD9E5F3C29B7}
 		{F72DF9C1-1103-42F1-B564-388BF8218CD1} = {E91D4BE3-61FE-441C-A227-29850D414216}
 		{CF66870F-99F9-4A08-AE12-2DA1D8FD9028} = {F72DF9C1-1103-42F1-B564-388BF8218CD1}
 		{340EB461-D999-4340-97E5-B31AF3468D57} = {F72DF9C1-1103-42F1-B564-388BF8218CD1}
@@ -527,7 +526,8 @@ Global
 		{0A29011F-4CC6-4E1A-90DB-47B208A959B5} = {AC14BCB1-F872-4F2F-B7BB-60AA1D9B3F0E}
 		{229DE6A4-637A-42B5-8731-5571060DCFC4} = {AC14BCB1-F872-4F2F-B7BB-60AA1D9B3F0E}
 		{B9141196-8CF1-4E83-BE35-580A90DD69C1} = {AC14BCB1-F872-4F2F-B7BB-60AA1D9B3F0E}
-		{FEF3B307-E0F6-407C-9941-20D0EBAE84AB} = {8B08A9EE-CE27-4CC3-ACB3-3BD9628E5479}
+		{9E612D58-5556-4AB1-A9C1-9EE19139A2DB} = {E91D4BE3-61FE-441C-A227-29850D414216}
+		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0} = {E91D4BE3-61FE-441C-A227-29850D414216}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6B94C21A-AA6D-4D82-963E-C69C0353B938}

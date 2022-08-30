@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <LangVersion>10</LangVersion>
+        <Nullable>enable</Nullable>
+
+        <IsPackable>false</IsPackable>
+
+        <RootNamespace>HelpLine.BuildingBlocks.Infrastructure.UnitTests</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="nunit" Version="3.13.1" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.1.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\HelpLine.BuildingBlocks.UnitTests\HelpLine.BuildingBlocks.UnitTests.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\HelpLine.BuildingBlocks.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>

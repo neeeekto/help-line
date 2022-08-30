@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\BuildingBlocks\Tests\IntegrationTests\HelpLine.BuildingBlocks.IntegrationTests.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\IntegrationTests\HelpLine.BuildingBlocks.IntegrationTests.csproj" />
       <ProjectReference Include="..\Implementation\HelpLine.Services.TemplateRenderer.csproj" />
       <ProjectReference Include="..\Implementation\HelpLine.Services.TemplateRenderer.csproj" />
     </ItemGroup>
