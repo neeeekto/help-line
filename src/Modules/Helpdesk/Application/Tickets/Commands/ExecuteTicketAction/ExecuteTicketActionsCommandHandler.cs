@@ -11,7 +11,7 @@ using HelpLine.Modules.Helpdesk.Domain.Tickets.State;
 
 namespace HelpLine.Modules.Helpdesk.Application.Tickets.Commands.ExecuteTicketAction
 {
-    class ExecuteTicketActionsCommandHandler : ICommandHandler<ExecuteTicketActionsCommand, IEnumerable<object>>
+    class  ExecuteTicketActionsCommandHandler : ICommandHandler<ExecuteTicketActionsCommand, IEnumerable<object>>
     {
         private readonly ITicketServicesProvider _ticketServicesProvider;
         private readonly ITicketsRepository _ticketsRepository;

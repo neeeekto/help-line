@@ -46,6 +46,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
         [HttpPost]
         public async Task<ActionResult<Guid>> AddBan([ProjectParam] string project, BanRequest request)
         {
+            // Only one ban available at same time for user, if you try add another you will get 400, see cmd validator
             return Ok(await _helpdeskModule.ExecuteCommandAsync(new AddBanCommand(project, request.Parameter,
                 request.Value, request.ExpiredAt)));
         }

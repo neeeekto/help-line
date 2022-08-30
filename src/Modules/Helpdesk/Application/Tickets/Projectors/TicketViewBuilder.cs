@@ -20,6 +20,7 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
 
         public TicketViewBuilder Project(EventBase<TicketId> evt)
         {
+            Ticket.Version += 1;
             When((dynamic) evt);
             return this;
         }

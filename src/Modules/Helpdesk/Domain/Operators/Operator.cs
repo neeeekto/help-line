@@ -40,7 +40,7 @@ namespace HelpLine.Modules.Helpdesk.Domain.Operators
 
         public void AddToFavorite(TicketId ticketId)
         {
-            Favorite = Favorite.Concat(new[] {ticketId});
+            Favorite = Favorite.Concat(new[] {ticketId}).Distinct();
         }
 
         public void RemoveFromFavorite(TicketId ticketId)

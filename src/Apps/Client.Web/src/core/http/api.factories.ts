@@ -29,7 +29,7 @@ export const makeRudApi = <
   get: () => http.get<TResult[]>(`${segment}`).then((x) => x.data),
   save: (data: TData, key: TKey) =>
     http
-      .post<void>(`${segment}/${key}`, data, {
+      .put<void>(`${segment}/${key}`, data, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",

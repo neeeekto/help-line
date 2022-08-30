@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using HelpLine.Apps.Client.API.Configuration.Correctors;
 using HelpLine.Apps.Client.API.Configuration.Middlewares;
@@ -63,7 +64,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
         public async Task<ActionResult> RetryMessage([FromRoute] string ticketId,
             IEnumerable<TicketActionBase> actions, Guid messageId, string userId)
         {
-           await _helpdeskModule.ExecuteCommandAsync(new RetryOutgoingMessageCommand(ticketId, messageId,
+            await _helpdeskModule.ExecuteCommandAsync(new RetryOutgoingMessageCommand(ticketId, messageId,
                 userId, new OperatorInitiatorDto(_executionContextAccessor.UserId)));
             return Ok();
         }
@@ -71,8 +72,13 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
         [HttpPost]
         [Route("")]
         public async Task<ActionResult> Execute([FromRoute] string ticketId,
-            IEnumerable<TicketActionBase> actions)
+            IEnumerable<TicketActionBase> actions, [VersionParam] int version)
         {
+            var currentVersion = await _helpdeskModule.ExecuteQueryAsync(new GetTicketVersionQuery(ticketId));
+            if (version != currentVersion)
+            {
+                return Conflict($"Ticket version not match, current: ${currentVersion}, needed: ${version}");
+            }
             var result = await _helpdeskModule.ExecuteCommandAsync(new ExecuteTicketActionsCommand(ticketId, actions,
                 new OperatorInitiatorDto(_executionContextAccessor.UserId)));
             return Ok(result);

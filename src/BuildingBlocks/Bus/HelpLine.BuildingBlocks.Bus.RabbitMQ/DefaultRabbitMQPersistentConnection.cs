@@ -47,17 +47,8 @@ namespace HelpLine.BuildingBlocks.Bus.RabbitMQ
         public void Dispose()
         {
             if (_disposed) return;
-
             _disposed = true;
-
-            try
-            {
-                _connection.Dispose();
-            }
-            catch (IOException ex)
-            {
-                _logger.Error(ex.ToString());
-            }
+            _connection.Dispose();
         }
 
         public bool TryConnect()

@@ -11,7 +11,5 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Queries.GetTicket
         {
             TicketId = ticketId;
         }
-
-
     }
 }

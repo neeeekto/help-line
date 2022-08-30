@@ -51,7 +51,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("platforms/{key}")]
         public async Task<ActionResult> SavePlatform([ProjectParam] string project, string key,
             [FromBody] PlatformRequest request)
@@ -76,7 +76,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("problems-and-themes/{tag}")]
         public async Task<ActionResult> SaveProblemAndThemes([ProjectParam] string project,
             [FromBody] ProblemAndTheme data, string tag)

@@ -8,6 +8,7 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels
     public class TicketView
     {
         public string Id { get; internal set; }
+        public int Version { get; internal set; }
         public string ProjectId { get; internal set; }
         public IEnumerable<string> Tags { get; internal set; }
         public string Language { get; internal set; }

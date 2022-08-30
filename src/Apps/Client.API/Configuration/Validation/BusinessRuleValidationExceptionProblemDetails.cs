@@ -8,7 +8,7 @@ namespace HelpLine.Apps.Client.API.Configuration.Validation
         public BusinessRuleValidationExceptionProblemDetails(BusinessRuleValidationException exception)
         {
             Title = "Business rule broken";
-            Status = StatusCodes.Status409Conflict;
+            Status = StatusCodes.Status400BadRequest;
             Detail = exception.Message;
             Type = "https://somedomain/business-rule-validation-error";
         }

@@ -103,8 +103,10 @@ namespace HelpLine.Apps.Client.API
             services.AddProblemDetails(x =>
             {
                 x.IncludeExceptionDetails = (_, __) => true;
+                x.Map<NotFoundException>(ex => new NotFoundProblemDetails(ex));
                 x.Map<InvalidCommandException>(ex => new InvalidCommandProblemDetails(ex));
                 x.Map<BusinessRuleValidationException>(ex => new BusinessRuleValidationExceptionProblemDetails(ex));
+
             });
             services.AddApiVersioning(config =>
             {

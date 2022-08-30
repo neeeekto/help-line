@@ -8,7 +8,7 @@ using MongoDB.Driver;
 
 namespace HelpLine.Modules.Helpdesk.Application.Tickets.Queries.GetTicket
 {
-    internal class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketView>
+    internal class GetTicketQueryHandler : IQueryHandler<GetTicketQuery, TicketView>, IQueryHandler<GetTicketVersionQuery, int>
     {
         private readonly IMongoContext _context;
 
@@ -24,6 +24,13 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Queries.GetTicket
             if (ticket is null)
                 throw new NotFoundException(request.TicketId);
             return ticket;
+        }
+
+        public async Task<int> Handle(GetTicketVersionQuery request, CancellationToken cancellationToken)
+        {
+            return await _context.GetCollection<TicketView>().Find(x => x.Id == request.TicketId)
+                .Project(x => x.Version)
+                .FirstOrDefaultAsync(cancellationToken);
         }
     }
 }
