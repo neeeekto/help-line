@@ -40,7 +40,7 @@ namespace HelpLine.Apps.Admin.API.Controllers
         [Route("{migration}")]
         public async Task<ActionResult> Run(string migration, [FromBody] MigrationParamsRequest request)
         {
-            _migrationService.ExecuteAsync(new RunMigrationCommand(migration, request.Params));
+            await _migrationService.ExecuteAsync(new RunMigrationCommand(migration, request.Params));
             return Ok();
         }
 
