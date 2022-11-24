@@ -1,0 +1,33 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@help-line/entities/admin/api": ["libs/entities/admin/api/src/index.ts"],
+      "@help-line/entities/admin/query": [
+        "libs/entities/admin/query/src/index.ts"
+      ],
+      "@help-line/entities/admin/stubs": [
+        "libs/entities/admin/stubs/src/index.ts"
+      ],
+      "@help-line/entities/share": ["libs/entities/share/src/index.ts"],
+      "@help-line/modules/api": ["libs/modules/api/src/index.ts"],
+      "@help-line/modules/common": ["libs/modules/common/src/index.ts"],
+      "@help-line/modules/http": ["libs/modules/http/src/index.ts"],
+      "@help-line/modules/http-stubs": ["libs/modules/http-stubs/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
