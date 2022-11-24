@@ -4,6 +4,9 @@ import NxWelcome from './nx-welcome';
 import { useEffect, useState } from 'react';
 
 export function App() {
+  useEffect(() => {
+    fetch('/v1/projects/').then(console.log);
+  }, []);
   return (
     <>
       <NxWelcome title={'Welcome main'} />

@@ -1,7 +1,15 @@
 import { getGreeting } from '../support/app.po';
+import { adminProjectsStubApi } from '@help-line/entities/admin/stubs';
+import { CyApiHandlers } from '@help-line/modules/http-stubs';
 
 describe('main', () => {
-  beforeEach(() => cy.visit('/'));
+  beforeEach(() => {
+    cy.visit('/');
+    adminProjectsStubApi
+      .get()
+      .handle(CyApiHandlers.success([1, 2, 3]))
+      .as('stubApi');
+  });
 
   it('should display welcome message', () => {
     // Custom command example, see `../support/commands.ts` file
