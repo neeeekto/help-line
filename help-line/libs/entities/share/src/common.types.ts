@@ -1,3 +1,4 @@
+export type GUID = string;
 export type LanguageDictionary<T = string> = Record<string, T>;
 
 export interface WithType<T> {

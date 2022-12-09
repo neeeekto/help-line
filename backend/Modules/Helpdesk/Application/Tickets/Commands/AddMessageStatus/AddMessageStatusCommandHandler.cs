@@ -27,7 +27,8 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Commands.AddMessageStatu
 
             await ticket.Execute(
                 new AddMessageStatusTicketCommand(new TicketOutgoingMessageId(request.MessageId),
-                    new UserId(request.UserId), request.Status, request.Reason), _servicesProvider,
+                    new UserId(request.UserId), request.Status, request.Reason,
+                    request.Meta == null ? null : new MessageMeta(request.Meta)), _servicesProvider,
                 new SystemInitiator());
             await _ticketsRepository.SaveAsync(ticket, cancellationToken);
             return Unit.Value;

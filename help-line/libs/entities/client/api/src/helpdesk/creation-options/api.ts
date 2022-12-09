@@ -1,14 +1,13 @@
-import { httpClient, makeRudApi } from "@core/http";
-import { Platform, ProblemAndTheme } from "./types";
+import {
+  CreationOptionsPlatformClientApiSchema,
+  CreationOptionsProblemAndThemesClientApiSchema,
+} from './schema';
+import { createApiClassBySchema } from '@help-line/modules/http';
 
-export const creationOptionsPlatformApi = makeRudApi<
-  Platform,
-  Platform["name"],
-  string
->(httpClient, "/api/v1/hd/creation-options/platforms");
+export class CreationOptionsPlatformClientApi extends createApiClassBySchema(
+  CreationOptionsPlatformClientApiSchema
+) {}
 
-export const creationOptionsProblemAndThemesApi = makeRudApi<
-  ProblemAndTheme,
-  ProblemAndTheme,
-  string
->(httpClient, "/api/v1/hd/creation-options/problems-and-themes");
+export class CreationOptionsProblemAndThemesClientApi extends createApiClassBySchema(
+  CreationOptionsProblemAndThemesClientApiSchema
+) {}

@@ -16,19 +16,19 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("v1/hd/channels")]
+    [Route("v1/hd/preview")]
     [Authorize]
-    public class ChannelsController : ControllerBase
+    public class PreviewController : ControllerBase
     {
         private readonly IHelpdeskModule _helpdesk;
 
-        public ChannelsController(IHelpdeskModule helpdesk)
+        public PreviewController(IHelpdeskModule helpdesk)
         {
             _helpdesk = helpdesk;
         }
 
         [HttpGet]
-        [Route("email/previews/{ticketId}/feedback/{feedbackId:guid}")]
+        [Route("{ticketId}/email/feedback/{feedbackId:guid}")]
         public async Task<ActionResult<EmailRendererResult>> GetFeedbackPreview(string ticketId, Guid feedbackId)
         {
             var result =
@@ -37,7 +37,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
         }
 
         [HttpGet]
-        [Route("email/previews/{ticketId}/messages")]
+        [Route("{ticketId}/email/message")]
         public async Task<ActionResult<EmailRendererResult>> GetMessagesPreview(string ticketId)
         {
             var result = await _helpdesk.ExecuteQueryAsync(new GetEmailMessageTemplatePreviewQuery(ticketId));

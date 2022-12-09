@@ -229,7 +229,8 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Projectors
             {
                 Date = evt.CreateDate,
                 Detail = evt.Detail,
-                Status = evt.Status
+                Status = evt.Status,
+                Meta = evt.Meta
             });
         }
 

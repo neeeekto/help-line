@@ -8,6 +8,7 @@ using HelpLine.Modules.Helpdesk.Application.Tickets.Aux;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.AddBan;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.RemoveBan;
+using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SetBanSetting;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetBans;
@@ -28,13 +29,6 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
         public BanController(IHelpdeskModule helpdeskModule)
         {
             _helpdeskModule = helpdeskModule;
-        }
-
-        [HttpGet]
-        [Route("settings")]
-        public async Task<ActionResult<BanSettings>> GetBanSettings([ProjectParam] string project)
-        {
-            return Ok(await _helpdeskModule.ExecuteQueryAsync(new GetBanSettingsQuery(project)));
         }
 
         [HttpGet]

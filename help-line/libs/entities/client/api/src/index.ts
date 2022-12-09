@@ -1,6 +1,6 @@
 export * from './helpdesk/automations';
 export * from './helpdesk/ban';
-export * from './helpdesk/channels';
+export * from './helpdesk/preview';
 export * from './helpdesk/creation-options';
 export * from './helpdesk/message-templates';
 export * from './helpdesk/meta';
@@ -13,3 +13,4 @@ export * from './helpdesk/tickets';
 export * from './helpdesk/unsubscribe';
 export * from './user-access/users';
 export * from './user-access/roles';
+export * from './schema.share';

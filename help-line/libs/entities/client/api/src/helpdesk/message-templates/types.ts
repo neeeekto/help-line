@@ -1,4 +1,4 @@
-import { LanguageDictionary } from '@entities/common';
+import { GUID, LanguageDictionary } from '@help-line/entities/share';
 
 export interface MessageTemplateContent {
   title: string;
@@ -14,7 +14,7 @@ export interface MessageTemplateData {
 }
 
 export interface MessageTemplate extends MessageTemplateData {
-  id: string;
+  id: GUID;
   order: number;
   modifyDate: string; // DateTime
 }

@@ -7,7 +7,7 @@ import {
 } from './api.context';
 import { useHttpClient } from './http.hooks';
 
-type ApiCctor<TApi> = new (http: HttpClient) => TApi;
+export type ApiCctor<TApi> = new (http: HttpClient) => TApi;
 
 export const useApi = <TApi>(
   apiCctor: ApiCctor<TApi>,

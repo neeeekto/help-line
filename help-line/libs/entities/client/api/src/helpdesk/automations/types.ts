@@ -1,3 +1,5 @@
+import { GUID } from '@help-line/entities/share';
+
 export interface TagCondition {
   include: boolean;
   tags: string[];
@@ -15,5 +17,5 @@ export interface AutoReplyData {
 }
 
 export interface AutoReply extends AutoReplyData {
-  id: string;
+  id: GUID;
 }

@@ -1,5 +1,7 @@
 import { HttpMethod, ResponseType } from './http.types';
-type ValueOrFactory<TValue, TParams> = TValue | ((params: TParams) => TValue);
+export type ValueOrFactory<TValue, TParams> =
+  | TValue
+  | ((params: TParams) => TValue);
 
 export interface IApiAction<TReq, TRes> {
   readonly method: HttpMethod;

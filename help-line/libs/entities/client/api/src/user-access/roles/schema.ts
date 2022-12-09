@@ -1,5 +1,5 @@
 import { createApiAction, HttpMethod } from '@help-line/modules/http';
-import { Project, Role, RoleData, User } from '@help-line/entities/client/api';
+import { Role, RoleData } from './types';
 
 export const RolesClientApiSchema = {
   get: createApiAction<Role[], void>({

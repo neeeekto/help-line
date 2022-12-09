@@ -9,9 +9,10 @@ import {
   UsersClientApi,
 } from '@help-line/entities/client/api';
 import { useApi } from '@help-line/modules/api';
+import { ROOT_QUERY } from '../constants';
 
 export const clientUsersQueryKeys = createQueryKeys(
-  ['client', 'users'],
+  [ROOT_QUERY, 'users'],
   ({ makeKey }) => ({
     list: createQueryKeys(makeKey('list'), ({ makeKey }) => ({
       byProject: (projectId?: Project['id']) => makeKey('list', projectId),

@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;
 using HelpLine.Modules.Helpdesk.Domain.Tickets.State;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 
 namespace HelpLine.Modules.Helpdesk.Infrastructure.Application.Mappers
@@ -12,6 +14,9 @@ namespace HelpLine.Modules.Helpdesk.Infrastructure.Application.Mappers
         {
             AutoMap();
             MapMember(x => x.Detail).SetIgnoreIfNull(true);
+            MapMember(x => x.Meta).SetIgnoreIfNull(true).SetSerializer(
+                new DictionaryInterfaceImplementerSerializer<Dictionary<string, string>, string, string>(
+                    DictionaryRepresentation.ArrayOfDocuments));;
             MapMember(x => x.Status).SetSerializer(new EnumSerializer<MessageStatus>(BsonType.String));
             MapMember(x => x.Date);
         }

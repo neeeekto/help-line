@@ -1,4 +1,4 @@
-import { LanguageDictionary } from "@entities/common";
+import { LanguageDictionary } from '@help-line/entities/share';
 
 export interface Platform {
   key: string;

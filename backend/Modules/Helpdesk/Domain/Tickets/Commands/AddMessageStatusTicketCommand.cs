@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HelpLine.Modules.Helpdesk.Domain.Tickets.Events;
@@ -12,13 +13,16 @@ namespace HelpLine.Modules.Helpdesk.Domain.Tickets.Commands
         public UserId UserId { get; private set; }
         public MessageStatus Status { get; private set; }
         public string? Reason { get; private set; }
+        public MessageMeta? Meta { get; private set; }
 
-        public AddMessageStatusTicketCommand(TicketOutgoingMessageId messageId, UserId userId, MessageStatus status, string? reason = null)
+        public AddMessageStatusTicketCommand(TicketOutgoingMessageId messageId, UserId userId, MessageStatus status, string? reason = null, 
+            MessageMeta? meta = null)
         {
             MessageId = messageId;
             UserId = userId;
             Status = status;
             Reason = reason;
+            Meta = meta;
         }
 
         internal override Task<VoidResult> Execute(CommandContext ctx)

@@ -67,20 +67,24 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Channels.Commands.Delive
 
                 var message = await _mediator.Send(new RenderMessageEmailTemplateCommand(ticket, system),
                     cancellationToken);
-                var meta = new Dictionary<string, string>()
+                var emailMeta = new Dictionary<string, string>()
                 {
-                    {"ticketId", request.TicketId},
-                    {"messageId", request.MessageId.ToString()},
+                    { "ticketId", request.TicketId },
+                    { "messageId", request.MessageId.ToString() },
                 };
                 await _emailSender.SendEmail(new EmailMessage(
                     EmailMessageFromBuilder.Build(system.From.Domain, request.TicketId, system.From.Name),
-                    new[] {request.UserId},
+                    new[] { request.UserId },
                     message.Subject, message.Body,
                     null, new EmailMessage.EmailMeta(
-                        new ReadOnlyDictionary<string, string>(meta))));
+                        new ReadOnlyDictionary<string, string>(emailMeta))));
 
                 await _mediator.Send(new AddMessageStatusCommand(request.TicketId, request.MessageId,
-                    MessageStatus.Sent, request.UserId), cancellationToken);
+                    MessageStatus.Sent, request.UserId, meta: new Dictionary<string, string>()
+                    {
+                        { "Subject", message.Subject },
+                        { "Body", message.Body }
+                    }), cancellationToken);
             }
             catch (Exception e)
             {

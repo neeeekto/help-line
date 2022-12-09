@@ -8,9 +8,10 @@ import {
 } from '@help-line/entities/client/api';
 import { useApi } from '@help-line/modules/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ROOT_QUERY } from '../constants';
 
 export const clientRolesQueryKeys = createQueryKeys(
-  ['client', 'roles'],
+  [ROOT_QUERY, 'roles'],
   ({ makeKey }) => ({
     list: () => makeKey('list'),
   })

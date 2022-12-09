@@ -1,19 +1,17 @@
+import { GUID } from '@help-line/entities/share';
+
 export enum BanType {
   Ip = 'Ip',
   Text = 'Text',
 }
 
-export interface Ban {
-  readonly id: string;
-  projectId: string;
+export interface CreateBanData {
   parameter: BanType;
   value: string;
   expiredAt: string; // Date
 }
 
-export interface BanSettings {
-  projectId: string;
-  banDelay: string;
-  ticketsCount: number;
-  interval: string;
+export interface Ban extends CreateBanData {
+  readonly id: GUID;
+  readonly projectId: string;
 }
