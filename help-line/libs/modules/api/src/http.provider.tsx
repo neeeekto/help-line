@@ -3,10 +3,7 @@ import { HttpClient } from '@help-line/modules/http';
 import { AxiosHttpBackend, HttpInterceptor } from '@help-line/modules/http';
 import { HttpContext } from './index';
 import { ApiContext } from './api.context';
-import {
-  ApiFactoryContext,
-  ApiHttpFactoryContext,
-} from './api-factory.context';
+import { ApiFactoryContext, ApiHttpFactoryContext } from './api.context';
 
 interface HttpProviderProps extends PropsWithChildren {
   serverUrl?: string;

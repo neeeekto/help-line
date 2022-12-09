@@ -1,0 +1,85 @@
+﻿.flex {
+  display: flex;
+}
+
+.inlineFlex {
+  display: inline-flex;
+}
+
+.none {
+  display: none;
+}
+
+.flexWrap {
+  flex-wrap: wrap;
+}
+
+.flexNoWrap {
+  flex-wrap: nowrap;
+}
+
+.flex00Auto {
+  flex: 0 0 auto !important;
+}
+
+.flex11Auto {
+  flex: 1 1 auto !important;
+}
+
+.flexColumn {
+  flex-direction: column;
+}
+.alignItemsStart {
+  align-items: start;
+}
+.alignItemsCenter {
+  align-items: center;
+}
+
+.alignItemsEnd {
+  align-items: end;
+}
+
+.justifyContentEnd {
+  justify-content: flex-end;
+}
+
+.justifyContentCenter {
+  justify-content: center;
+}
+.justifyContentSpaceBetween {
+  justify-content: space-between;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.autoWidth {
+  width: auto;
+}
+
+.fullHeight {
+  height: 100%;
+}
+
+.autoHeight {
+  height: auto;
+}
+.overflowAuto {
+  overflow: auto;
+}
+
+.overflowHidden {
+  overflow: hidden;
+}
+
+.stickyBottom {
+  position: sticky;
+  bottom: 0;
+}
+
+.stickyTop {
+  position: sticky;
+  top: 0;
+}

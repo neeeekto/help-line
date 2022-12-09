@@ -1,9 +1,4 @@
-import {
-  ApiBuilder,
-  ApiByScheme,
-  HttpClient,
-  IApiAction,
-} from '@help-line/modules/http';
+import { HttpClient } from '@help-line/modules/http';
 import { useContext, useEffect } from 'react';
 import {
   ApiContext,
@@ -12,18 +7,12 @@ import {
 } from './api.context';
 import { useHttpClient } from './http.hooks';
 
-type ApiType<TFactory> = TFactory extends new (http: HttpClient) => infer TApi
-  ? TApi
-  : TFactory extends ApiBuilder<infer TSchema>
-  ? ApiByScheme<TSchema>
-  : unknown;
+type ApiCctor<TApi> = new (http: HttpClient) => TApi;
 
-type ApiBuilderOrCctor<TApi> = new (http: HttpClient) => TApi | ApiBuilder<any>;
-
-export const useApi = <TApi, TFactory = ApiBuilderOrCctor<TApi>>(
-  apiCctorOrBuilder: TFactory,
-  factory?: (http: HttpClient) => ApiType<TFactory>
-): ApiType<TFactory> => {
+export const useApi = <TApi>(
+  apiCctor: ApiCctor<TApi>,
+  factory?: (http: HttpClient) => TApi
+): TApi => {
   const defaultHttp = useHttpClient();
   const customHttp = useContext(ApiHttpFactoryContext);
   const apiCache = useContext(ApiContext);
@@ -37,25 +26,18 @@ export const useApi = <TApi, TFactory = ApiBuilderOrCctor<TApi>>(
     throw new Error('apiCache context not found');
   }
 
-  let api = apiCache.get(apiCctorOrBuilder);
-  const http = customHttp.get(apiCctorOrBuilder) || defaultHttp;
+  let api = apiCache.get(apiCctor);
+  const http = customHttp.get(apiCctor) || defaultHttp;
   if (!api) {
-    factory = factory || apiFactory.get(apiCctorOrBuilder);
-    api = factory
-      ? factory(http)
-      : typeof apiCctorOrBuilder === 'function'
-      ? new (apiCctorOrBuilder as any)(http)
-      : (apiCctorOrBuilder as ApiBuilder<any>).build(http);
-    apiCache.set(apiCctorOrBuilder, api);
+    factory = factory || apiFactory.get(apiCctor);
+    api = factory ? factory(http) : new apiCctor(http);
+    apiCache.set(apiCctor, api);
   }
   return api;
 };
 
-export const useCustomHttpClientForApi = <
-  TApi,
-  TFactory = ApiBuilderOrCctor<TApi>
->(
-  apiCctorOrBuilder: TFactory,
+export const useCustomHttpClientForApi = <TApi>(
+  apiCctor: ApiCctor<TApi>,
   factory: (http: HttpClient) => HttpClient
 ) => {
   const http = useHttpClient();
@@ -69,12 +51,12 @@ export const useCustomHttpClientForApi = <
   }
 
   useEffect(() => {
-    registry.set(apiCctorOrBuilder, factory(http));
+    registry.set(apiCctor, factory(http));
   }, [http, registry]);
 };
 
-export const useCustomApiFactory = <TApi, TFactory = ApiBuilderOrCctor<TApi>>(
-  apiCctorOrBuilder: TFactory,
+export const useCustomApiFactory = <TApi>(
+  apiCctor: ApiCctor<TApi>,
   factory: (http: HttpClient) => TApi
 ) => {
   const registry = useContext(ApiFactoryContext);
@@ -84,6 +66,6 @@ export const useCustomApiFactory = <TApi, TFactory = ApiBuilderOrCctor<TApi>>(
   }
 
   useEffect(() => {
-    registry.set(apiCctorOrBuilder, factory);
-  }, [apiCctorOrBuilder, registry]);
+    registry.set(apiCctor, factory);
+  }, [apiCctor, registry]);
 };

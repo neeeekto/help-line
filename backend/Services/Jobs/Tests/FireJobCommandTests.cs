@@ -34,6 +34,7 @@ namespace HelpLine.Services.Jobs.Tests
             await Task.Delay(new TimeSpan(TimeSpan.TicksPerSecond + 500));
             var emited = BusServiceFactory.Queues.Any(x => x.Value.Queue.Count != 0);
             Assert.That(emited, Is.True);
+            await Startup.Stop();
         }
     }
 }

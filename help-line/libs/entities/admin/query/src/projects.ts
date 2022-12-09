@@ -5,11 +5,14 @@ import {
   ProjectData,
 } from '@help-line/entities/admin/api';
 import { useApi } from '@help-line/modules/api';
+import { createQueryKeys } from '@help-line/modules/query';
 
-export const adminProjectsQueryKeys = {
-  root: ['admin', 'projects'] as const,
-  list: () => [...adminProjectsQueryKeys.root, 'list'] as const,
-};
+export const adminProjectsQueryKeys = createQueryKeys(
+  ['admin', 'projects'],
+  ({ makeKey }) => ({
+    list: () => makeKey('list'),
+  })
+);
 
 export const useProjectsQuery = () => {
   const api = useApi(ProjectAdminApi);

@@ -1,5 +1,11 @@
-import React, { PropsWithChildren, useMemo, useState } from 'react';
-import { useAuthStore$ } from '@help-line/modules/auth';
+import React, {
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { useAuthUser, useLogoutByNetworkAction } from '@help-line/modules/auth';
 import { HttpInterceptor } from '@help-line/modules/http';
 import {
   ApiResolverInterceptor,
@@ -19,27 +25,27 @@ export const DefaultHttpProvider: React.FC<DefaultHttpProviderProps> = ({
   env,
   interceptors: additionalInterceptors,
 }) => {
-  const authStore$ = useAuthStore$();
-  const authFacade = useMemo(() => {
-    return {
-      getToken: () => {
-        const user = authStore$.state?.user;
-        return user
-          ? {
-              type: user.token_type,
-              value: user.access_token,
-            }
-          : null;
-      },
-      logout: () => {
-        return authStore$.logoutLocal();
-      },
-    } as AuthFacade;
-  }, [authStore$]);
+  const user = useAuthUser();
+  const logoutByNetworkAction = useLogoutByNetworkAction();
+  const authFacadeRef = useRef<AuthFacade>({
+    getToken: () => null,
+    logout: () => Promise.resolve(),
+  });
+  useEffect(() => {
+    authFacadeRef.current.getToken = () => {
+      return user
+        ? {
+            type: user?.token_type,
+            value: user?.access_token,
+          }
+        : null;
+    };
+    authFacadeRef.current.logout = () => logoutByNetworkAction.mutateAsync();
+  }, [user, logoutByNetworkAction]);
 
   const [interceptors] = useState([
     new ApiResolverInterceptor(env.apiPrefix, env.serverUrl),
-    new AuthInterceptor(authFacade),
+    new AuthInterceptor(authFacadeRef.current),
     ...(additionalInterceptors ?? []),
   ]);
   return <HttpProvider interceptors={interceptors}>{children}</HttpProvider>;

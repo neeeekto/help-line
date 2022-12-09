@@ -15,5 +15,4 @@ export interface HelpLineUserProfile extends Profile, HelpLineUserProfileProject
   permission: string[];
   userId: string;
   isAdmin?: boolean;
-
 }

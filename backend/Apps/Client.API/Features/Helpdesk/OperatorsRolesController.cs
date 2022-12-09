@@ -40,6 +40,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
             var roles = await _helpdeskModule.ExecuteQueryAsync(new GetRolesQuery());
             return Ok(roles);
         }
+        
 
         [HttpGet]
         [Route("{roleId:guid}")]

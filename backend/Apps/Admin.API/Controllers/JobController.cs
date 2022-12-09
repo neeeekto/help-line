@@ -80,8 +80,8 @@ namespace HelpLine.Apps.Admin.API.Controllers
         }
 
         [HttpPost]
-        [Route("toggle/{jobId:guid}")]
-        public async Task<ActionResult> Toggle(bool enable, Guid jobId)
+        [Route("{jobId:guid}/toggle")]
+        public async Task<ActionResult> Toggle([FromBody] bool enable, Guid jobId)
         {
             await _jobsService.ExecuteAsync(new ToggleJobCommand(jobId, enable));
             return Ok();
@@ -95,7 +95,7 @@ namespace HelpLine.Apps.Admin.API.Controllers
         }
 
         [HttpPost]
-        [Route("fire/{jobId:guid}")]
+        [Route("{jobId:guid}/fire")]
         public async Task<ActionResult> Fire(Guid jobId)
         {
             await _jobsService.ExecuteAsync(new FireJobManualCommand(jobId));

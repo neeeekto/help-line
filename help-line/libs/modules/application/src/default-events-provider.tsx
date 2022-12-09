@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useCallback } from 'react';
 import { EventsProvider } from '@help-line/modules/events';
-import { useAuthStore$ } from '@help-line/modules/auth';
+import { useAuthUser } from '@help-line/modules/auth';
 import { IEnvironment } from './environment.type';
 
 interface DefaultEventsProviderProps extends PropsWithChildren {
@@ -11,11 +11,8 @@ export const DefaultEventsProvider: React.FC<DefaultEventsProviderProps> = ({
   children,
   env,
 }) => {
-  const authStore$ = useAuthStore$();
-  const tokenResolver = useCallback(
-    () => authStore$.state?.user?.access_token,
-    [authStore$]
-  );
+  const user = useAuthUser();
+  const tokenResolver = useCallback(() => user?.access_token, [user]);
 
   return (
     <EventsProvider authTokenResolver={tokenResolver} serverUrl={env.serverUrl}>

@@ -9,28 +9,35 @@ export type ApiByScheme<TSchema extends Record<string, IApiAction<any, any>>> =
       : unknown;
   };
 
-export class ApiBuilder<TSchema extends Record<string, IApiAction<any, any>>> {
-  private readonly schema: TSchema;
+export interface ApiBySchemaConstructor<
+  TSchema extends Record<string, IApiAction<any, any>>
+> {
+  new (http: HttpClient): ApiByScheme<TSchema>;
+}
 
-  constructor(schema: TSchema) {
-    this.schema = schema;
-  }
+export function createApiClassBySchema<
+  TSchema extends Record<string, IApiAction<any, any>>
+>(schema: TSchema) {
+  const ApiBySchema = class {
+    constructor(private readonly http: HttpClient) {}
+  };
 
-  public build(http: HttpClient) {
-    const result: any = {};
-    Object.entries(this.schema).forEach(([key, action]) => {
-      result[key] = (req: any) =>
-        http
-          .fetch({
-            url: callOrGetValue(action.url, req),
-            params: callOrGetValue(action.params, req),
-            data: callOrGetValue(action.data, req),
-            headers: callOrGetValue(action.header, req),
-            method: action.method,
-            responseType: action.responseType,
-          })
-          .then((x) => x.data);
-    });
-    return result as ApiByScheme<TSchema>;
-  }
+  Object.entries(schema).forEach(([key, action]) => {
+    // @ts-ignore
+    ApiBySchema.prototype[key] = function (req: any) {
+      // @ts-ignore
+      this.http
+        .fetch({
+          url: callOrGetValue(action.url, req),
+          params: callOrGetValue(action.params, req),
+          data: callOrGetValue(action.data, req),
+          headers: callOrGetValue(action.header, req),
+          method: action.method,
+          responseType: action.responseType,
+        })
+        .then((x) => x.data);
+    };
+  });
+
+  return ApiBySchema as any as ApiBySchemaConstructor<TSchema>;
 }

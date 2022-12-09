@@ -43,7 +43,7 @@ namespace HelpLine.Apps.Admin.API.Controllers
         }
 
         [HttpGet]
-        [Route("schedules/{ticketId}")]
+        [Route("ticket/{ticketId}/schedules")]
         public async Task<ActionResult<IEnumerable<TicketSchedule>>> GetSchedulesByTicket(string ticketId)
         {
             var result = await _helpdeskModule.ExecuteQueryAsync(new GetSchedulesByTicketQuery(ticketId));

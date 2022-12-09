@@ -15,12 +15,22 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@help-line/components": ["libs/components/src/index.ts"],
       "@help-line/entities/admin/api": ["libs/entities/admin/api/src/index.ts"],
       "@help-line/entities/admin/query": [
         "libs/entities/admin/query/src/index.ts"
       ],
       "@help-line/entities/admin/stubs": [
         "libs/entities/admin/stubs/src/index.ts"
+      ],
+      "@help-line/entities/client/api": [
+        "libs/entities/client/api/src/index.ts"
+      ],
+      "@help-line/entities/client/query": [
+        "libs/entities/client/query/src/index.ts"
+      ],
+      "@help-line/entities/client/stubs": [
+        "libs/entities/client/stubs/src/index.ts"
       ],
       "@help-line/entities/share": ["libs/entities/share/src/index.ts"],
       "@help-line/modules/api": ["libs/modules/api/src/index.ts"],
@@ -31,7 +41,9 @@
       "@help-line/modules/common": ["libs/modules/common/src/index.ts"],
       "@help-line/modules/events": ["libs/modules/events/src/index.ts"],
       "@help-line/modules/http": ["libs/modules/http/src/index.ts"],
-      "@help-line/modules/http-stubs": ["libs/modules/http-stubs/src/index.ts"]
+      "@help-line/modules/http-stubs": ["libs/modules/http-stubs/src/index.ts"],
+      "@help-line/modules/query": ["libs/modules/query/src/index.ts"],
+      "@help-line/style-utils": ["libs/style-utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -101,7 +101,9 @@ describe('api.hooks', () => {
     });
   });
   describe('useCustomHttpClientForApi', () => {
-    const apiCctor = function () {};
+    const apiCctor = class {
+      constructor() {}
+    };
     const factory = jest.fn(() => http);
 
     beforeEach(() => {

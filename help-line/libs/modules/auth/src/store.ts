@@ -1,56 +1,100 @@
-import { observable, action } from 'mobx';
+import { useBoolean } from 'ahooks';
+import { useContext, useEffect, useMemo } from 'react';
+import { User, UserManager, UserManagerSettings } from 'oidc-client';
+import { message } from 'antd';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { HelpLineUserProfile } from './types';
+import { AuthUserManagerContext } from './context';
 
-import { UserManager, User } from 'oidc-client';
-import { makeAuthEvents } from './events';
+const authKeys = {
+  root: ['#auth'],
+  state: () => [...authKeys.root, 'state'],
+  user: () => [...authKeys.root, 'user'],
+};
 
-export const makeAuthStore = (
-  userManager: UserManager,
-  authEvents: ReturnType<typeof makeAuthEvents>
-) => {
-  const state = observable({
-    isAuth: false,
-    user: null as User | null,
+export const useAuthUserManager = () => useContext(AuthUserManagerContext);
+
+export const useAuthState = () => {
+  const query = useQuery(authKeys.state(), () => false, {
+    staleTime: Infinity,
   });
+  return query.data!;
+};
 
-  const login = action('login', async () => {
-    await userManager.signinPopup();
+export const useAuthUser = () => {
+  const query = useQuery<null | User>(authKeys.user(), () => null, {
+    staleTime: Infinity,
   });
+  return query.data as null | User;
+};
 
-  const logoutLocal = action('logoutLocal', async () => {
+export const useAuthProfile = () => {
+  const query = useAuthUser();
+  return query?.profile as HelpLineUserProfile | undefined;
+};
+
+export const useLogoutAction = () => {
+  const userManager = useAuthUserManager();
+
+  return useMutation([...authKeys.root, 'logout'], () =>
+    userManager.signoutPopup()
+  );
+};
+
+export const useLogoutByNetworkAction = () => {
+  const userManager = useAuthUserManager();
+
+  return useMutation([...authKeys.root, 'logoutByNetwork'], async () => {
     await userManager.clearStaleState();
     await userManager.removeUser();
   });
-
-  const logoutGlobal = action('logoutGlobal', async () => {
-    await userManager.signoutPopup();
-  });
-
-  const init = action('init', async () => {
-    const user = await userManager.getUser();
-    if (user) {
-      userManager.events.load(user);
-    }
-  });
-
-  userManager.events.addUserLoaded((user) => {
-    state.isAuth = true;
-    state.user = user;
-    console.log(user);
-    authEvents.emit(true);
-  });
-
-  userManager.events.addUserUnloaded(() => {
-    state.isAuth = false;
-    authEvents.emit(false);
-  });
-
-  return {
-    state,
-    login,
-    init,
-    logoutLocal,
-    logoutGlobal,
-  };
 };
 
-export type AuthStore = ReturnType<typeof makeAuthStore>;
+export const useLoginAction = () => {
+  const userManager = useAuthUserManager();
+
+  return useMutation([...authKeys.root, 'login'], () =>
+    userManager.signinPopup()
+  );
+};
+
+export const useAuthStartup = (userManager: UserManager) => {
+  const [loading, loadingActions] = useBoolean(true);
+  const client = useQueryClient();
+  useEffect(() => {
+    const userLoaded = (user: User) => {
+      client.setQueryData(authKeys.user(), user);
+      client.setQueryData(authKeys.state(), true);
+    };
+
+    const userUnloaded = () => {
+      client.setQueryData(authKeys.user(), null);
+      client.setQueryData(authKeys.state(), false);
+    };
+
+    userManager.events.addUserLoaded(userLoaded);
+
+    userManager.events.addUserUnloaded(userUnloaded);
+
+    loadingActions.setTrue();
+    userManager
+      .getUser()
+      .then((user) => {
+        if (user) {
+          userManager.events.load(user);
+        }
+        loadingActions.setFalse();
+      })
+      .catch(() => {
+        message.error({
+          content: 'Auth error',
+        });
+      });
+    return () => {
+      userManager?.events?.removeUserLoaded(userLoaded);
+      userManager?.events?.removeUserLoaded(userUnloaded);
+    };
+  }, [userManager]);
+
+  return loading;
+};

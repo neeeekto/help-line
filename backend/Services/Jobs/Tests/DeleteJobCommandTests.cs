@@ -55,6 +55,7 @@ namespace HelpLine.Services.Jobs.Tests
 
             var jobs = await Service.ExecuteAsync(new GetJobsQuery());
             Assert.That(jobs.Any(), Is.False);
+            await Startup.Stop();
         }
     }
 }
