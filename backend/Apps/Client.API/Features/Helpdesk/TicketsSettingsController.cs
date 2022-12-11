@@ -19,7 +19,7 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
 {
     [ApiController]
     [ApiVersion("1.0")]
-    [Route("v1/hd/settings")]
+    [Route("v1/hd/tickets-settings")]
     [Authorize]
     public class TicketsSettingsController : ControllerBase
     {

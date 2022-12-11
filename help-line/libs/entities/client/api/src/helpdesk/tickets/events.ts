@@ -1,73 +1,57 @@
-import { makeEventServiceHook } from "@core/events/events.hooks";
-import { Ticket } from "@entities/helpdesk/tickets";
-import { Guid } from "@entities/common";
-import { OperatorView } from "@entities/helpdesk/operators";
-import { Project } from "@entities/helpdesk/projects";
+import { makeUseEventServiceHook } from '@help-line/modules/events';
+import { Ticket } from './types';
+import { GUID } from '@help-line/entities/share';
+import { Operator } from '../operators';
+import { Project } from '../projects';
 
-export const useTicketsEvents = makeEventServiceHook(
-  "tickets",
+export const useTicketsEvents = makeUseEventServiceHook(
+  'tickets',
   {
-    OnUpdated: (ticketId: Ticket["id"], newEventsIds: Guid[]) => ({
+    OnUpdated: (ticketId: Ticket['id'], newEventsIds: GUID[]) => ({
       ticketId,
       newEventsIds,
     }),
-    OnCreated: (ticketId: Ticket["id"]) => ({ ticketId }),
-    OnOpen: (ticketId: Ticket["id"], operatorId: OperatorView["id"]) => ({
+    OnCreated: (ticketId: Ticket['id']) => ({ ticketId }),
+    OnOpen: (ticketId: Ticket['id'], operatorId: Operator['id']) => ({
       ticketId,
       operatorId,
     }),
-    OnClose: (ticketId: Ticket["id"], operatorId: OperatorView["id"]) => ({
+    OnClose: (ticketId: Ticket['id'], operatorId: Operator['id']) => ({
       ticketId,
       operatorId,
     }),
   },
   {
-    Subscribe: (projectId: Project["id"]) => [projectId],
-    Unsubscribe: (projectId: Project["id"]) => [projectId],
+    Subscribe: (projectId: Project['id']) => [projectId],
+    Unsubscribe: (projectId: Project['id']) => [projectId],
   }
 );
 
-export const useTicketEvents = makeEventServiceHook(
-  "ticket",
+export const useTicketEvents = makeUseEventServiceHook(
+  'ticket',
   {
-    OnUpdated: (newEventsIds: Guid[]) => ({
+    OnUpdated: (newEventsIds: GUID[]) => ({
       newEventsIds,
     }),
-    OnOpen: (operatorId: OperatorView["id"]) => ({
+    OnOpen: (operatorId: Operator['id']) => ({
       operatorId,
     }),
-    OnClose: (operatorId: OperatorView["id"]) => ({
+    OnClose: (operatorId: Operator['id']) => ({
       operatorId,
     }),
   },
   {
-    Subscribe: (ticketId: Ticket["id"]) => [ticketId],
-    Unsubscribe: (ticketId: Ticket["id"]) => [ticketId],
+    Subscribe: (ticketId: Ticket['id']) => [ticketId],
+    Unsubscribe: (ticketId: Ticket['id']) => [ticketId],
     Open: (
-      projectId: Project["id"],
-      ticketId: Ticket["id"],
-      operatorId: OperatorView["id"]
+      projectId: Project['id'],
+      ticketId: Ticket['id'],
+      operatorId: Operator['id']
     ) => [projectId, ticketId, operatorId],
     Close: (
-      projectId: Project["id"],
-      ticketId: Ticket["id"],
-      operatorId: OperatorView["id"]
+      projectId: Project['id'],
+      ticketId: Ticket['id'],
+      operatorId: Operator['id']
     ) => [projectId, ticketId, operatorId],
   }
 );
-
-export const useTestEvents = makeEventServiceHook(
-  "test",
-  {
-    onEvent: (newEventsIds: Guid[]) => ({
-      newEventsIds,
-    }),
-  },
-  {}
-);
-
-useTestEvents().add({
-  onEvent: (data) => {
-    console.log(data.newEventsIds);
-  },
-});

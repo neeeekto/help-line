@@ -1,5 +1,5 @@
 import { createQueryKeys } from '@help-line/modules/query';
-import { ROOT_QUERY } from '../constants';
+import { ROOT_QUERY_KEY } from '../constants';
 import {
   EmailFeedbackPreviewRequest,
   EmailMessagePreviewRequest,
@@ -10,7 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useApi } from '@help-line/modules/api';
 
 const clientPreviewQueryKeys = createQueryKeys(
-  [ROOT_QUERY, 'preview'],
+  [ROOT_QUERY_KEY, 'preview'],
   ({ makeKey }) => ({
     feedback: (args: EmailFeedbackPreviewRequest & ProjectApiRequest) =>
       makeKey(args.projectId, 'feedback', args.ticketId, args.feedbackId),

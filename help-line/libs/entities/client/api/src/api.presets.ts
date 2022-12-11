@@ -47,7 +47,7 @@ export const makeCrudSchema = <
   TCreateData,
   TUpdateData,
   TId,
-  TShareArgs
+  TShareArgs = void
 >(
   apiPrefix: string,
   header?: ValueOrFactory<Record<string, any>, TShareArgs>

@@ -47,22 +47,6 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
         }
 
         [HttpGet]
-        [Route("simple")]
-        public async Task<ActionResult<IEnumerable<OperatorResponse>>> GetOperators([ProjectParam] string projectId)
-        {
-            var operators = await _userAccessModule.ExecuteQueryAsync(new GetUsersQuery(projectId));
-            return Ok(operators.Select(x => new OperatorResponse()
-            {
-                Id = x.Id,
-                Email = x.Email,
-                Photo = x.Info.Photo,
-                FirstName = x.Info.FirstName,
-                LastName = x.Info.LastName,
-                Active = x.Status == UserStatus.Active,
-            }));
-        }
-
-        [HttpGet]
         [Route("")]
         public async Task<ActionResult<IEnumerable<OperatorView>>> GetOperators()
         {
@@ -78,25 +62,9 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
             return Ok();
         }
 
-        [HttpGet]
-        [Route("{operatorId:guid}")]
-        public async Task<ActionResult<OperatorResponse>> GetOperator(Guid operatorId)
-        {
-            var oper = await _userAccessModule.ExecuteQueryAsync(new GetUserQuery(operatorId));
-            return Ok(new OperatorResponse()
-            {
-                Id = oper.Id,
-                Email = oper.Email,
-                Photo = oper.Info.Photo,
-                FirstName = oper.Info.FirstName,
-                LastName = oper.Info.LastName,
-                Active = oper.Status == UserStatus.Active
-            });
-        }
-
         [HttpPost]
-        [Route("favorite/{ticketId}")]
-        public async Task<ActionResult> AddFavorite(string ticketId)
+        [Route("{operatorId:guid}/favorite/{ticketId}")]
+        public async Task<ActionResult> AddFavorite(Guid operatorId, string ticketId)
         {
             var myId = _contextAccessor.UserId;
             await _helpdeskModule.ExecuteCommandAsync(new AddFavoriteTicketCommand(myId, ticketId));
@@ -104,8 +72,8 @@ namespace HelpLine.Apps.Client.API.Features.Helpdesk
         }
 
         [HttpDelete]
-        [Route("favorite/{ticketId}")]
-        public async Task<ActionResult> RemoveFavorite(string ticketId)
+        [Route("{operatorId:guid}/favorite/{ticketId}")]
+        public async Task<ActionResult> RemoveFavorite(Guid operatorId, string ticketId)
         {
             var myId = _contextAccessor.UserId;
             await _helpdeskModule.ExecuteCommandAsync(new RemoveFavoriteTicketCommand(myId, ticketId));

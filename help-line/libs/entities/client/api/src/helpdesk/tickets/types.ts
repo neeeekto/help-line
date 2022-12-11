@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import { WithType, Filter } from '@help-line/api/share';
 import { Operator } from '../operators';
+import { StringDate, TimeStamp, WithType } from '@help-line/entities/share';
+import { Project } from '../projects';
 
 export enum TicketStatusType {
   New = 'New', // opened, pending
@@ -299,15 +300,17 @@ export type TicketEvent =
   | TicketAssigmentEvent
   | TicketCreatedEvent;
 
+export type TicketId = ''; //0-000000
 export interface Ticket {
-  id: string;
-  projectId: string;
+  id: TicketId;
+  version: number;
+  projectId: Project['id'];
   tags: string[];
   language: string;
   status: TicketStatus;
   priority: TicketPriority;
   hardAssigment: boolean;
-  assignedTo?: string; // OperatorID
+  assignedTo?: Operator['id']; // OperatorID
   createDate: string; // StringDate
   dateOfLastStatusChange: string; // StringDate
   discussionState: TicketDiscussionState;
@@ -377,7 +380,7 @@ export interface TicketFilterShareForOperators
 
 export interface TicketFilterData {
   name: string;
-  filter: Filter;
+  filter: TicketFilterValue; // TODO: Update model!
   share?: TicketFilterShareGlobal | TicketFilterShareForOperators;
   features: TicketFilterFeatures[]; // for client features, eg: global, default, counters, important - server dont know about it
   order: number; // View order in filters list
@@ -386,7 +389,7 @@ export interface TicketFilterData {
 export interface TicketFilter extends TicketFilterData {
   id: string;
   changed: string; // DateTime
-  owner?: Operator['id']; // null is system, GUid - operator ID
+  owner: Operator['id'] | null; // null is system, GUid - operator ID
 }
 
 // Actions
@@ -522,3 +525,182 @@ export type TicketAction =
   | TogglePendingAction
   | ToggleUserChannelAction
   | UnassignAction;
+
+// Ticket Filters
+export enum TicketFilterOperators {
+  Equal = 'Equal',
+  NotEqual = 'NotEqual',
+  Less = 'Less',
+  LessOrEqual = 'LessOrEqual',
+  Great = 'Great',
+  GreatOrEqual = 'GreatOrEqual',
+}
+
+export enum TicketFilterDateValueActionOperation {
+  Add = 'Add',
+  Sub = 'Sub',
+}
+export interface TicketFilterDateValueAction {
+  operation: TicketFilterDateValueActionOperation;
+  amount: TimeStamp;
+}
+
+export interface TicketFilterDateValue extends WithType<'FilterDateValue'> {
+  operator: TicketFilterOperators;
+  dateTime?: StringDate; // null - now
+  action?: TicketFilterDateValueAction; // null - no actions
+}
+
+export interface TicketAssigmentFilterCurrentOperator
+  extends WithType<'CurrentOperator'> {}
+export interface TicketAssigmentFilterUnassigned
+  extends WithType<'Unassigned'> {}
+export interface TicketAssigmentFilterOperator extends WithType<'Operator'> {
+  id: Operator['id'];
+}
+export interface TicketAssigmentFilter
+  extends WithType<'TicketAssigmentFilter'> {
+  values: Array<
+    | TicketAssigmentFilterCurrentOperator
+    | TicketAssigmentFilterUnassigned
+    | TicketAssigmentFilterOperator
+  >;
+}
+
+export interface TicketAttachmentFilter
+  extends WithType<'TicketAttachmentFilter'> {
+  value: boolean; // true - has attachments, false - without attachments
+}
+
+export interface TicketCreateDateFilter
+  extends WithType<'TicketCreateDateFilter'> {
+  value: TicketFilterDateValue;
+}
+
+export interface TicketOperatorInitiatorFilterValue
+  extends WithType<'TicketOperatorInitiatorFilterValue'> {
+  ids: Array<Operator['id']>;
+}
+
+export type TicketInitiatorFilterValue = TicketOperatorInitiatorFilterValue;
+
+export interface TicketEventFilterBase {
+  initiators?: TicketInitiatorFilterValue[];
+  createDate: TicketFilterDateValue;
+}
+
+export interface TicketEventExistFilter
+  extends WithType<'TicketEventExistFilter'>,
+    TicketEventFilterBase {
+  type: Array<TicketEvent['$type']>;
+}
+
+export interface TicketFeedbackFilter extends WithType<'TicketFeedbackFilter'> {
+  date: TicketFilterDateValue;
+  solved?: boolean;
+  scores: number[];
+  optionalScores: Record<string, number>[];
+  hasMessage?: boolean;
+}
+
+export interface TicketFilterGroup extends WithType<'TicketFilterGroup'> {
+  intersection: boolean; // true = and, false = or
+  filters: TicketFilterValue[];
+}
+
+export interface TicketHardAssigmentFilter
+  extends WithType<'TicketHardAssigmentFilter'> {
+  value: boolean;
+}
+
+export interface TicketIdFilter extends WithType<'TicketIdFilter'> {
+  value: Ticket['id'];
+}
+
+export interface TicketIterationCountFilter
+  extends WithType<'TicketIterationCountFilter'> {
+  operator: TicketFilterOperators;
+  value: number;
+}
+
+export interface TicketLanguageFilter extends WithType<'TicketLanguageFilter'> {
+  value: Array<Ticket['language']>;
+}
+
+export interface TicketLastMessageTypeFilter
+  extends WithType<'TicketLastMessageTypeFilter'> {
+  value: TicketDiscussionStateMessageType;
+}
+
+export interface TicketLastReplyFilter
+  extends WithType<'TicketLastReplyFilter'> {
+  value: TicketFilterDateValue;
+}
+
+export interface TicketMetaFilter extends WithType<'TicketMetaFilter'> {
+  fromTickets?: string[];
+  sources?: string[];
+  platforms?: string[];
+}
+
+export interface TicketProjectFilter extends WithType<'TicketProjectFilter'> {
+  value: Array<Ticket['projectId']>;
+}
+
+export interface TicketStatusFilter extends WithType<'TicketStatusFilter'> {
+  kind?: TicketStatusKind;
+  type: TicketStatusType[];
+}
+
+export interface TicketTagsFilter extends WithType<'TicketTagsFilter'> {
+  exclude: boolean; // false = exclude, true = include
+  tags: string[];
+}
+
+export interface TicketUserIdFilter extends WithType<'TicketUserIdFilter'> {
+  type?: UserIdType;
+  useForDiscussion?: boolean;
+  channel?: string[];
+  ids: string[];
+}
+
+export interface TicketUserMetaFilter extends WithType<'TicketUserMetaFilter'> {
+  key: string;
+  value: string[];
+}
+
+export type TicketFilterValue =
+  | TicketAssigmentFilter
+  | TicketAttachmentFilter
+  | TicketCreateDateFilter
+  | TicketEventExistFilter
+  | TicketFeedbackFilter
+  | TicketFilterGroup
+  | TicketHardAssigmentFilter
+  | TicketIdFilter
+  | TicketIterationCountFilter
+  | TicketLanguageFilter
+  | TicketLastMessageTypeFilter
+  | TicketLastReplyFilter
+  | TicketMetaFilter
+  | TicketProjectFilter
+  | TicketStatusFilter
+  | TicketTagsFilter
+  | TicketUserIdFilter
+  | TicketUserMetaFilter;
+
+// Ticket Sort
+
+export interface TicketSortBase {
+  descending: boolean;
+}
+
+export interface TicketCreateDateSort
+  extends TicketSortBase,
+    WithType<'TicketCreateDateSort'> {}
+
+export interface TicketIdSort
+  extends TicketSortBase,
+    WithType<'TicketIdSort'> {}
+
+export type TicketSortValue = TicketCreateDateSort | TicketIdSort;

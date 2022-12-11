@@ -1,5 +1,7 @@
+import { GUID } from '@help-line/entities/share';
+
 export interface Unsubscribe {
-  id: string;
+  id: GUID;
   userId: string;
   message: string;
   date: string; //DateTime

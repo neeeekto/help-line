@@ -25,7 +25,6 @@ const useEventsService = <TEvents extends FnMapper, TCommands extends FnMapper>(
 
 export const makeUseEventServiceHook =
   <TEvents extends FnMapper, TCommands extends FnMapper>(
-    serverUrl: string,
     hubKey: string,
     events: TEvents,
     commands: TCommands

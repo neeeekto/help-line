@@ -1,4 +1,4 @@
-import { LanguageDictionary } from "@entities/common";
+import { LanguageDictionary } from '@help-line/entities/share';
 
 export interface Tag {
   key: string;
@@ -15,11 +15,11 @@ export interface TagDescriptionIssue {
   audience: string[];
 }
 
-export interface TagDescription {
+export interface TagDescriptionData {
   issues: TagDescriptionIssue[];
   enabled: boolean;
 }
 
-export interface TagDescriptionItem extends TagDescription {
+export interface TagDescription extends TagDescriptionData {
   tag: string;
 }

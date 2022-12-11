@@ -1,5 +1,5 @@
 import { createQueryKeys } from '@help-line/modules/query';
-import { ROOT_QUERY } from './constants';
+import { ROOT_QUERY_KEY } from './constants';
 import { ApiCctor, useApi } from '@help-line/modules/api';
 import {
   QueryKey,
@@ -26,9 +26,12 @@ export const makeQueryAndMutationForRudApi = <
   cctor: ApiCctor<IRudApi<TEntity, TSaveData, TId, TShareArgs>>,
   shareArgToKeys: (args: TShareArgs) => QueryKey = () => []
 ) => {
-  const queryKeys = createQueryKeys([ROOT_QUERY, ...key], ({ makeKey }) => ({
-    list: (args: TShareArgs) => makeKey(...shareArgToKeys(args), 'list'),
-  }));
+  const queryKeys = createQueryKeys(
+    [ROOT_QUERY_KEY, ...key],
+    ({ makeKey }) => ({
+      list: (args: TShareArgs) => makeKey(...shareArgToKeys(args), 'list'),
+    })
+  );
 
   const useListQuery = (args: TShareArgs) => {
     const api = useApi(cctor);
@@ -95,9 +98,12 @@ export const makeQueryAndMutationForCrudApi = <
   cctor: ApiCctor<ICrudApi<TEntity, TCreateData, TUpdateData, TId, TShareArgs>>,
   shareArgToKeys: (args: TShareArgs) => QueryKey = () => []
 ) => {
-  const queryKeys = createQueryKeys([ROOT_QUERY, ...key], ({ makeKey }) => ({
-    list: (args: TShareArgs) => makeKey(...shareArgToKeys(args), 'list'),
-  }));
+  const queryKeys = createQueryKeys(
+    [ROOT_QUERY_KEY, ...key],
+    ({ makeKey }) => ({
+      list: (args: TShareArgs) => makeKey(...shareArgToKeys(args), 'list'),
+    })
+  );
 
   const useListQuery = (args: TShareArgs) => {
     const api = useApi(cctor);

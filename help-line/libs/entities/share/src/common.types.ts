@@ -9,4 +9,6 @@ export interface KeyValue<TKey = any, TValue = any> {
   key: TKey;
   value: TValue;
 }
-export type Guid = string;
+
+export type TimeStamp = string;
+export type StringDate = string;

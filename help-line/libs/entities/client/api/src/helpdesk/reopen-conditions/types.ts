@@ -1,3 +1,5 @@
+import { GUID } from '@help-line/entities/share';
+
 export interface ReopenConditionData {
   name: string;
   minimalScore: number;
@@ -5,6 +7,6 @@ export interface ReopenConditionData {
 }
 
 export interface ReopenCondition extends ReopenConditionData {
-  id: string;
+  id: GUID;
   enabled: boolean;
 }
