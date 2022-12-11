@@ -28,6 +28,7 @@ namespace HelpLine.Apps.Client.API.Configuration.Json
                 opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<ScheduledEventResultView>());
                 opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<TicketReminderItemBase>());
                 opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<TicketFilterBase>());
+                opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<TicketAssigmentFilter.ValueBase>());
                 opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<TicketSortBase>());
                 opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<TicketInitiatorFilterValueBase>());
                 opt.SerializerSettings.Converters.Add(InheritConverterBuilder.Build<FilterDateValueBase>());

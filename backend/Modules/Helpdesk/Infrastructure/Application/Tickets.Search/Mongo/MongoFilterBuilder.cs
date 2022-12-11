@@ -103,6 +103,13 @@ internal class MongoFilterBuilder
             }
         }
 
+        if (filter.HasMessage is not null)
+        {
+            result &= (bool)filter.HasMessage
+                ? fb.Where(x => x.Message != null && x.Message != "")
+                : fb.Where(x => x.Message != null && x.Message == "");
+        }
+
         return _filterBuilder.ElemMatch(x => x.Feedbacks, result);
     }
 
@@ -135,12 +142,12 @@ internal class MongoFilterBuilder
     {
         return Build<TicketView>(x => x.DiscussionState.LastReplyDate, filter.Value);
     }
-    
+
     private FilterDefinition<TicketView> Build(TicketProjectFilter filter)
     {
         return _filterBuilder.In(x => x.ProjectId, filter.Value);
     }
-    
+
     private FilterDefinition<TicketView> Build(TicketStatusFilter filter)
     {
         var typeFilter = _filterBuilder.In(x => x.Status.Type, filter.Type);
@@ -148,14 +155,17 @@ internal class MongoFilterBuilder
         {
             return _filterBuilder.And(_filterBuilder.Eq(x => x.Status.Kind, filter.Kind), typeFilter);
         }
+
         return typeFilter;
     }
-    
+
     private FilterDefinition<TicketView> Build(TicketTagsFilter filter)
     {
-        return filter.Exclude ? _filterBuilder.AnyNin(x => x.Tags, filter.Tags) : _filterBuilder.AnyIn(x => x.Tags, filter.Tags);
+        return filter.Exclude
+            ? _filterBuilder.AnyNin(x => x.Tags, filter.Tags)
+            : _filterBuilder.AnyIn(x => x.Tags, filter.Tags);
     }
-    
+
     private FilterDefinition<TicketView> Build(TicketUserIdFilter filter)
     {
         var fb = new FilterDefinitionBuilder<UserIdInfoView>();
@@ -169,17 +179,17 @@ internal class MongoFilterBuilder
         {
             result &= fb.Eq(x => x.Type, filter.Type);
         }
+
         if (filter.UseForDiscussion is not null)
         {
             result &= fb.Eq(x => x.UseForDiscussion, filter.UseForDiscussion);
         }
-        
+
         return _filterBuilder.ElemMatch(x => x.UserIds, result);
     }
-    
+
     private FilterDefinition<TicketView> Build(TicketUserMetaFilter filter)
     {
-        
         return _filterBuilder.In(x => x.UserMeta[filter.Key], filter.Value);
     }
 
@@ -207,7 +217,7 @@ internal class MongoFilterBuilder
     private FilterDefinition<TicketView> Build(TicketEventExistFilter filter)
     {
         var fb = new FilterDefinitionBuilder<TicketEventView>();
-        return Build(filter, fb.In("_t", filter.Type));
+        return Build(filter, fb.In("_t", filter.Types));
     }
 
     private FilterDefinition<TicketView> Build(TicketEventFilterBase filter, FilterDefinition<TicketEventView> extend)
