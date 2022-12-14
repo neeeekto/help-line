@@ -13,7 +13,6 @@ using NUnit.Framework;
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Operators
 {
     [TestFixture]
-    [NonParallelizable]
     public class DeleteRoleCommandTests : OperatorsTestBase
     {
         protected override string NS => nameof(DeleteRoleCommandTests);

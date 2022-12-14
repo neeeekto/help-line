@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands;
@@ -9,6 +10,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class TicketCheckerTests : TicketsTestBase
     {
         protected override string NS => nameof(TicketCheckerTests);
@@ -24,7 +26,13 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         {
             var testIp = "127.0.0.1";
             await Module.ExecuteCommandAsync(new AddBanCommand(ProjectId, Ban.Parameters.Ip, testIp));
-            var testData = new TicketTestData();
+            var testData = new TicketTestData()
+            {
+                UserMeta = new Dictionary<string, string>()
+                {
+                    {"IP", testIp}
+                }
+            };
             Assert.CatchAsync(() => CreateTicket(testData));
         }
 

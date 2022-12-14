@@ -9,8 +9,8 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
 {
-    [NonParallelizable]
     [TestFixture]
+    [Parallelizable(ParallelScope.Children)]
     public class SavePlatformCommandTests : CreationOptionsTestBase
     {
         protected override string NS => nameof(SavePlatformCommandTests);
@@ -18,15 +18,10 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
         public const string Name = "testName";
         public const string Icon = "testIcon";
 
-        [SetUp]
-        public async Task Setup()
-        {
-            await CreateProject();
-        }
-
         [Test]
         public async Task SavePlatformCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
             var cmd = new SavePlatformCommand(Key, ProjectId, Name, Icon);
             await Module.ExecuteCommandAsync(cmd);
             var entities = await Module.ExecuteQueryAsync(new GetPlatformsQuery(ProjectId));
@@ -43,6 +38,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
         [Test]
         public async Task SavePlatformCommand_WhenDifferentProject_IsSuccessful()
         {
+            await CreateProject();
             var otherProjectId = "other";
             await CreateProject(projectId: otherProjectId);
             await Module.ExecuteCommandAsync(new SaveTagCommand(Key, otherProjectId, true));
@@ -59,6 +55,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
         [Test]
         public async Task SavePlatformCommand_WhenPlatformForTagExist_IsSuccessfulAndReplace()
         {
+            await CreateProject();
             var cmd = new SavePlatformCommand(Key, ProjectId, Name, Icon);
             await Module.ExecuteCommandAsync(cmd);
             await Module.ExecuteCommandAsync(cmd);

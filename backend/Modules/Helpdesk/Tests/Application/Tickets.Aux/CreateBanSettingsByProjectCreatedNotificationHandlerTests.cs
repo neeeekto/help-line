@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets.Aux
 {
-    [NonParallelizable]
     [TestFixture]
     public class CreateBanSettingsByProjectCreatedNotificationHandlerTests : TicketAuxTestBase
     {

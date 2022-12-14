@@ -17,7 +17,6 @@ using NUnit.Framework;
 namespace HelpLine.Modules.UserAccess.Tests.Application.Jobs
 {
     [TestFixture]
-    [NonParallelizable]
     public class SyncSessionsJobTests : UserAccessTestBase
     {
         protected override string NS => nameof(SyncSessionsJobTests);

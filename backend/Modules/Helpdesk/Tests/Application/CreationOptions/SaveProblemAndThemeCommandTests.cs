@@ -11,8 +11,8 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
 {
-    [NonParallelizable]
     [TestFixture]
+    [Parallelizable]
     public class SaveProblemAndThemeCommandTests : CreationOptionsTestBase
     {
         protected override string NS => nameof(SaveProblemAndThemeCommandTests);
@@ -43,6 +43,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
         }
 
         [Test]
+        [Parallelizable]
         public async Task SaveProblemAndThemeCommand_WhenDataIsValid_IsSuccessful()
         {
             var cmd = new SaveProblemAndThemeCommand(ProjectId, Entity.Tag, Entity);
@@ -59,6 +60,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
         }
 
         [Test]
+        [Parallelizable]
         public async Task SaveProblemAndThemeCommand_WhenDisabled_IsSuccessful()
         {
             var cmd = new SaveProblemAndThemeCommand(ProjectId, ExistTag, new ProblemAndTheme
@@ -105,6 +107,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
         }
 
         [Test]
+        [Parallelizable]
         public async Task SaveProblemAndThemeCommand_WhenDifferentProject_IsSuccessful()
         {
             var otherProjectId = "other";
@@ -122,6 +125,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
         }
 
         [Test]
+        [Parallelizable]
         public async Task SaveProblemAndThemeCommand_WhenForExistTag_IsSuccessfulAndReplace()
         {
             var cmd = new SaveProblemAndThemeCommand(ProjectId,  Entity.Tag, Entity);
@@ -132,6 +136,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
         }
 
         [Test]
+        [Parallelizable]
         public async Task SaveProblemAndThemeCommand_WhenDeepEntity_IsSuccessful()
         {
             var cmd = new SaveProblemAndThemeCommand(ProjectId, ExistTag, new ProblemAndTheme

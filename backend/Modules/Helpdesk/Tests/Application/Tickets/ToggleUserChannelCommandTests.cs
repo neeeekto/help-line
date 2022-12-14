@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class ToggleUserChannelCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(ToggleUserChannelCommandTests);
@@ -17,6 +18,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task ToggleUserChannelCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
             var userId = "test2";

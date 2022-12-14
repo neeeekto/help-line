@@ -69,6 +69,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Infrastructure.Tickets
                 // TODO: Епала костыльная...
                 .And().DoNotHaveName("UserChannels")
                 .And().DoNotHaveName("UserMeta")
+                .And().DoNotHaveName("MessageMeta")
                 .GetTypes()
                 .Where(t => !t.IsEnum);
 

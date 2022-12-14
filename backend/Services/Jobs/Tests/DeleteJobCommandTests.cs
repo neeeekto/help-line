@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Services.Jobs.Tests
 {
-    [NonParallelizable]
+    [TestFixture]
     public class DeleteJobCommandTests : JobTestsBase
     {
         protected override string DbName => nameof(DeleteJobCommandTests);

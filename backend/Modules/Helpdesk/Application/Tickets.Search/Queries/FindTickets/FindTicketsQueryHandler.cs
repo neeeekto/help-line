@@ -1,14 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using HelpLine.BuildingBlocks.Application.Queries;
-using HelpLine.BuildingBlocks.Application.Search.Contracts;
 using HelpLine.Modules.Helpdesk.Application.Configuration.Queries;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Contracts;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Search;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;
 
-namespace HelpLine.Modules.Helpdesk.Application.Tickets.Queries.FindTickets
+namespace HelpLine.Modules.Helpdesk.Application.Tickets.Search.Queries.FindTickets
 {
     internal class FindTicketsQueryHandler : IQueryHandler<FindTicketsQuery, PagedResult<TicketView>>
     {

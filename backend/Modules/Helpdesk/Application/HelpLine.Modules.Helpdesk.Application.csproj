@@ -31,6 +31,7 @@
   <ItemGroup>
     <Folder Include="TemporaryProblems\Queries" />
     <Folder Include="Tickets.Reports\Projectors" />
+    <Folder Include="Tickets.Search\Queries" />
   </ItemGroup>
 
 </Project>

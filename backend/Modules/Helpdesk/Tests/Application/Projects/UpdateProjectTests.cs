@@ -11,7 +11,6 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Projects
 {
-    [NonParallelizable]
     [TestFixture]
     public class UpdateProjectTests : HelpdeskTestBase
     {

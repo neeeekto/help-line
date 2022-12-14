@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class ChangeTagsCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(ChangeTagsCommandTests);
@@ -17,6 +18,8 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task ChangeTagsCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
+            
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
 

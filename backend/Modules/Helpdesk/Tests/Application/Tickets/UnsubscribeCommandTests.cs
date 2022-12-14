@@ -16,6 +16,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class UnsubscribeCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(UnsubscribeCommandTests);
@@ -23,6 +24,8 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task UnsubscribeCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
+
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
             var operatorId = Guid.NewGuid();
@@ -49,9 +52,10 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task UnsubscribeCommand_WhenFewTickets_IsSuccessful()
         {
+            await CreateProject();
             var testData = new TicketTestData();
             var ticketId1 = await CreateTicket(testData);
-            var ticketId2 = await CreateTicket(testData, false);
+            var ticketId2 = await CreateTicket(testData);
             var operatorId = Guid.NewGuid();
             var message = "test";
             await CreateOperator(operatorId);

@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class RetryOutgoingMessageCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(RetryOutgoingMessageCommandTests);
@@ -21,6 +22,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task RetryOutgoingMessageCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
             var messageId = await Reply(ticketId, new MessageDto() {Text = "test"}, new SystemInitiatorDto());

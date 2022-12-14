@@ -11,7 +11,6 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.CreationOptions
 {
-    [NonParallelizable]
     [TestFixture]
     public class RemoveProblemAndThemeCommandTests : CreationOptionsTestBase
     {

@@ -12,6 +12,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class TogglePendingCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(TogglePendingCommandTests);
@@ -19,6 +20,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task TogglePendingCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
             var operatorId = Guid.NewGuid();

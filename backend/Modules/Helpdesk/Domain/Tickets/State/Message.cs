@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using HelpLine.BuildingBlocks.Domain;
 
 namespace HelpLine.Modules.Helpdesk.Domain.Tickets.State

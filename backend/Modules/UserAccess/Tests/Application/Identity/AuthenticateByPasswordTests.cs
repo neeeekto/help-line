@@ -11,7 +11,6 @@ using NUnit.Framework;
 namespace HelpLine.Modules.UserAccess.Tests.Application.Identity
 {
     [TestFixture]
-    [NonParallelizable]
     public class AuthenticateByPasswordTests : UserAccessTestBase
     {
         protected override string NS => nameof(AuthenticateByPasswordTests);

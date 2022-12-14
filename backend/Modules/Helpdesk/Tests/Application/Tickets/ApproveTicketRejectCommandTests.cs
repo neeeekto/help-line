@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class ApproveTicketRejectCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(ApproveTicketRejectCommandTests);
@@ -20,6 +21,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task ApproveTicketRejectCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
             await Reply(ticketId, new MessageDto() {Text = "test"},

@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class AddTicketReminderCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(AddTicketNoteCommandTests);
@@ -21,6 +22,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task AddTicketReminderCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
             var message = new MessageDto {Text = "out"};

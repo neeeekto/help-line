@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class SaveFeedbackCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(SaveFeedbackCommandTests);
@@ -21,6 +22,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task SaveFeedbackCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
             await SetDelayConfigForTests();

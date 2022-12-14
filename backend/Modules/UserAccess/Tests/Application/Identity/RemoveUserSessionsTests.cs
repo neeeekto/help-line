@@ -13,7 +13,6 @@ using NUnit.Framework;
 namespace HelpLine.Modules.UserAccess.Tests.Application.Identity
 {
     [TestFixture]
-    [NonParallelizable]
     public class RemoveUserSessionsTests : UserAccessTestBase
     {
         protected override string NS => nameof(RemoveUserSessionsTests);

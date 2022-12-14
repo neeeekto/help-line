@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using HelpLine.Modules.Helpdesk.Application.Tickets.DTO;
@@ -11,7 +12,11 @@ namespace HelpLine.Modules.Helpdesk.Infrastructure.Application.Profiles
     {
         public TicketDtoProfiles()
         {
-            CreateMap<MessageDto, Message>().ConstructUsing(x => new Message(x.Text, x.Attachments));
+            CreateMap<MessageDto, Message>()
+                .ConstructUsing((x, ctx) =>
+                {
+                    return new Message(x.Text, x.Attachments?.ToList());
+                }).ForAllMembers(x => x.AllowNull());
             CreateMap<TicketFeedbackDto, TicketFeedback>().ConstructUsing(x =>
                 new TicketFeedback(x.Score, x.Message, x.Solved, x.OptionalScores));
             CreateMap<InitiatorDto, Initiator>().ConstructUsing((initiator, ctx) =>

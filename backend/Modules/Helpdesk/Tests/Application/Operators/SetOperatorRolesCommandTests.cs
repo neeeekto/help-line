@@ -15,7 +15,6 @@ using NUnit.Framework;
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Operators
 {
     [TestFixture]
-    [NonParallelizable]
     public class SetOperatorRolesCommandTests : OperatorsTestBase
     {
         protected override string NS => nameof(SetOperatorRolesCommandTests);

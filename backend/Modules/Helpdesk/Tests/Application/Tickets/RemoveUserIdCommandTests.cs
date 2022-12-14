@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class RemoveUserIdCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(RemoveUserIdCommandTests);
@@ -17,6 +18,8 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task RemoveUserIdCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
+            
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
 

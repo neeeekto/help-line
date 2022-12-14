@@ -15,7 +15,7 @@ namespace HelpLine.BuildingBlocks.Infrastructure.IntegrationTests.Search.Cases
             {
                 var cases = typeof(SortTestCasesProvider).Assembly.GetTypes()
                     .Where(x => x.FullName.Contains(
-                                    "HelpLine.BuildingBlocks.Tests.Infrastructure.Integration.Search.Cases.Sorts")
+                                    "HelpLine.BuildingBlocks.Infrastructure.IntegrationTests.Search.Cases.Sorts")
                                 && x.Name.EndsWith("Case")
                     )
                     .Where(x => !x.IsAbstract && !x.IsGenericType);

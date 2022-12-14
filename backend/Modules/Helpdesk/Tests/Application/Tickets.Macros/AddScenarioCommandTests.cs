@@ -11,6 +11,8 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets.Macros
 {
+    [Parallelizable]
+    [TestFixture]
     public class AddScenarioCommandTests : TicketMacrosTestBase
     {
         protected override string NS => nameof(TicketMacrosTestBase);

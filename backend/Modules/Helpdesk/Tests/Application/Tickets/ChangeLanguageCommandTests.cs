@@ -10,6 +10,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class ChangeLanguageCommandTests: TicketsTestBase
     {
         protected override string NS => nameof(ChangeLanguageCommandTests);
@@ -20,7 +21,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
             var testData = new TicketTestData();
             var lang = "ru";
             await CreateProject(new[] {"en", "ru"});
-            var ticketId = await CreateTicket(testData, false);
+            var ticketId = await CreateTicket(testData);
 
             var cmd = new ChangeLanguageAction(lang);
             await ExecuteAction(ticketId, cmd, new SystemInitiatorDto());

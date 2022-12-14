@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class AssignCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(AssignCommandTests);
@@ -20,6 +21,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task AssignCommandCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
             var testData = new TicketTestData();
             var operatorId = Guid.NewGuid();
             await CreateOperator(operatorId);

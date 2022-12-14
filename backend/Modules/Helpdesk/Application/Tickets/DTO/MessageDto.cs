@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace HelpLine.Modules.Helpdesk.Application.Tickets.DTO
 {
@@ -14,7 +15,7 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.DTO
         public MessageDto(string text, IEnumerable<string>? attachments = null)
         {
             Text = text;
-            Attachments = attachments;
+            Attachments = attachments ?? Array.Empty<string>();
         }
 
 

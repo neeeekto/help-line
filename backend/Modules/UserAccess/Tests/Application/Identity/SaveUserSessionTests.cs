@@ -15,7 +15,6 @@ using NUnit.Framework;
 namespace HelpLine.Modules.UserAccess.Tests.Application.Identity
 {
     [TestFixture]
-    [NonParallelizable]
     public class SaveUserSessionTests : UserAccessTestBase
     {
         protected override string NS => nameof(SaveUserSessionTests);

@@ -7,11 +7,11 @@ public sealed class TicketAssigmentFilter : TicketFilterBase
 {
     public IEnumerable<ValueBase> Values { get; set; }
     
-    public abstract class ValueBase {}
-    public sealed class CurrentOperator : ValueBase {}
-    public sealed class Unassigned : ValueBase {}
-    public sealed class Operator : ValueBase
+    public abstract record ValueBase {}
+    public sealed record CurrentOperator : ValueBase {}
+    public sealed record Unassigned : ValueBase {}
+    public sealed record Operator : ValueBase
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
     }
 }

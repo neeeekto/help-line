@@ -11,6 +11,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class ChangeUserMetaCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(ChangeUserMetaCommandTests);
@@ -18,6 +19,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         [Test]
         public async Task ChangeUserMetaCommand_WhenDataIsValid_IsSuccessful()
         {
+            await CreateProject();
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
 

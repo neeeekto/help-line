@@ -17,27 +17,17 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
     public abstract class TicketsTestBase : HelpdeskTestBase
     {
-        public static string ProjectId = "test";
+        public static string ProjectId = HelpdeskTestBase.ProjectId;
 
-        protected async Task<string> CreateTicket(TicketTestData testData, bool needCreateProject = true)
+        public async Task<Guid> CreateOperator(Guid operatorId, string email = "test", string firstName = "test", string lastName = "test")
         {
-            if (needCreateProject)
-                await CreateProject();
-
-            var cmd = new CreateTicketCommand(testData.ProjectId, testData.Language, testData.Initiator,
-                testData.Tags, testData.Channels, testData.UserMeta,
-                null, testData.Message, testData.Source, null);
-            return await Module.ExecuteCommandAsync(cmd);
-        }
-
-        protected async Task CreateOperator(Guid operatorId)
-        {
-            var evt = new NewUserCreatedIntegrationEvent(Guid.NewGuid(), DateTime.UtcNow, operatorId, "test", "test",
-                "test");
+            var evt = new NewUserCreatedIntegrationEvent(Guid.NewGuid(), DateTime.UtcNow, operatorId, email, firstName,
+                lastName);
             BusServiceFactory.PublishInEventBus(evt);
+            return operatorId; 
         }
 
-        protected async Task SetDelayConfigForTests()
+        public async Task SetDelayConfigForTests()
         {
             var newLifecycleDelay = new Dictionary<TicketLifeCycleType, TimeSpan>
             {
@@ -53,13 +43,13 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
             await Module.ExecuteCommandAsync(cmd);
         }
 
-        protected async Task<object> ExecuteAction(string ticketId, TicketActionBase action, InitiatorDto initiator)
+        public async Task<object> ExecuteAction(string ticketId, TicketActionBase action, InitiatorDto initiator)
         {
             var result = await Module.ExecuteCommandAsync(new ExecuteTicketActionCommand(ticketId, action, initiator));
             return result;
         }
 
-        protected async Task<Guid> Reply(string ticketId, MessageDto message, InitiatorDto initiator)
+        public async Task<Guid> Reply(string ticketId, MessageDto message, InitiatorDto initiator)
         {
             var action = new AddOutgoingMessageAction(message);
             var messageId = await ExecuteAction(ticketId, action, initiator);

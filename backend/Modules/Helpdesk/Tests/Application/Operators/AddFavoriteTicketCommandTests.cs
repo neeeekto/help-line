@@ -9,7 +9,6 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Operators
 {
-    [NonParallelizable]
     [TestFixture]
     public class AddFavoriteTicketCommandTests : OperatorsTestBase
     {

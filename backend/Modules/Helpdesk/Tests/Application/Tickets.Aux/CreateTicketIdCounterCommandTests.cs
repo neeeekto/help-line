@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets.Aux
 {
+    [TestFixture]
     public class CreateTicketIdCounterCommandTests : TicketAuxTestBase
     {
         protected override string NS => nameof(CreateTicketIdCounterCommandTests);

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using HelpLine.BuildingBlocks.Infrastructure.IntegrationTests.Search.Cases.Filters;
-using HelpLine.BuildingBlocks.Infrastructure.IntegrationTests.Search.Cases.Sorts;
 using NUnit.Framework;
 
 namespace HelpLine.BuildingBlocks.Infrastructure.IntegrationTests.Search.Cases
@@ -16,7 +15,7 @@ namespace HelpLine.BuildingBlocks.Infrastructure.IntegrationTests.Search.Cases
             {
                 var cases = typeof(FilterCaseBase).Assembly.GetTypes()
                     .Where(x => x.FullName.Contains(
-                                    "HelpLine.BuildingBlocks.Tests.Infrastructure.Integration.Search.Cases.Filters")
+                                    "HelpLine.BuildingBlocks.Infrastructure.IntegrationTests.Search.Cases.Filters")
                                 && x.Name.EndsWith("Case")
                     )
                     .Where(x => !x.IsAbstract && !x.IsGenericType);

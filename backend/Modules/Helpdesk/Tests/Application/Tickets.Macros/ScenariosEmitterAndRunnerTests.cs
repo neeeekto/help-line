@@ -18,6 +18,8 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets.Macros
 {
+    [Parallelizable]
+    [TestFixture]
     public class ScenariosEmitterAndRunnerTests : TicketMacrosTestBase
     {
         protected override string NS => nameof(ScenariosEmitterAndRunnerTests);

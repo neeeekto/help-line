@@ -21,7 +21,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.SeedWork
 
         protected abstract string NS { get; }
 
-        protected override string DbName => $"hlit_{NS}";
+        protected override string DbName => $"hl_it_{NS}";
         public const string ProjectId = "test";
         public const string Tag = "test";
         public Guid OperatorId => UserId;
@@ -63,16 +63,17 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.SeedWork
             await collections.ForEachAsync(x => db.Database.DropCollection(x));
         }
 
-        protected async Task CreateOperator(Guid? operatorId = null)
+        public async Task<Guid> CreateOperator(Guid? operatorId = null)
         {
             var evt = new NewUserCreatedIntegrationEvent(Guid.NewGuid(), DateTime.UtcNow, operatorId ?? OperatorId, "test", "test",
                 "test");
             BusServiceFactory.PublishInEventBus(evt);
             await BusServiceFactory.EmitAllEvents();
             await BusServiceFactory.EmitAllQueues();
+            return evt.UserId;
         }
 
-        protected async Task CreateProject(string[]? languages = null, string? projectId = null)
+        public async Task CreateProject(string[]? languages = null, string? projectId = null)
         {
             languages ??= new[] {EngLangKey};
             await Module.ExecuteCommandAsync(new CreateProjectCommand(projectId ?? ProjectId, new ProjectDataDto( "test", "img", languages )));
@@ -85,7 +86,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.SeedWork
 
 
 
-        protected async Task<string> CreateTicket(TicketTestData testData)
+        public async Task<string> CreateTicket(TicketTestData testData)
         {
             var cmd = new CreateTicketCommand(testData.ProjectId, testData.Language, testData.Initiator,
                 testData.Tags, testData.Channels, testData.UserMeta,

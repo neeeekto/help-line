@@ -85,6 +85,26 @@ export interface TicketEventBase {
   createDate: string;
 }
 
+export enum TicketEventType {
+  TicketApprovalStatus = 'TicketApprovalStatusEventView',
+  TicketAssigmentBinding = 'TicketAssigmentBindingEventView',
+  TicketAssigment = 'TicketAssigmentEventView',
+  TicketCreated = 'TicketCreatedEventView',
+  TicketFeedback = 'TicketFeedbackEventView',
+  TicketIncomingMessage = 'TicketIncomingMessageEventView',
+  TicketLanguagesChanged = 'TicketLanguagesChangedEventView',
+  TicketLifecycle = 'TicketLifecycleEventView',
+  TicketNote = 'TicketNoteEventView',
+  TicketOutgoingMessage = 'TicketOutgoingMessageEventView',
+  TicketPriority = 'TicketPriorityEventView',
+  TicketReminder = 'TicketReminderEventView',
+  TicketStatusChanged = 'TicketStatusChangedEventView',
+  TicketTagsChanged = 'TicketTagsChangedEventView',
+  TicketUserIdsChanged = 'TicketUserIdsChangedEventView',
+  TicketUserMetaChanged = 'TicketUserMetaChangedEventView',
+  TicketUserUnsubscribed = 'TicketUserUnsubscribedEventView',
+}
+
 export enum ApproveState {
   Waiting = 'Waiting',
   Approved = 'Approved',
@@ -93,7 +113,7 @@ export enum ApproveState {
 }
 export interface TicketApprovalStatusEvent
   extends TicketEventBase,
-    WithType<'TicketApprovalStatusEventView'> {
+    WithType<TicketEventType.TicketApprovalStatus> {
   rejectId: string;
   message: string;
   forStatus: TicketStatus;
@@ -102,13 +122,13 @@ export interface TicketApprovalStatusEvent
 
 export interface TicketAssigmentBindingEvent
   extends TicketEventBase,
-    WithType<'TicketAssigmentBindingEventView'> {
+    WithType<TicketEventType.TicketAssigmentBinding> {
   hardAssigment: boolean;
 }
 
 export interface TicketAssigmentEvent
   extends TicketEventBase,
-    WithType<'TicketAssigmentEventView'> {
+    WithType<TicketEventType.TicketAssigment> {
   from: string;
   to: string;
 }
@@ -126,7 +146,7 @@ export interface Message {
 
 export interface TicketCreatedEvent
   extends TicketEventBase,
-    WithType<'TicketCreatedEventView'> {
+    WithType<TicketEventType.TicketCreated> {
   projectId: string;
   tags: string[];
   language: string;
@@ -139,20 +159,20 @@ export interface TicketCreatedEvent
 }
 export interface TicketFeedbackEvent
   extends TicketEventBase,
-    WithType<'TicketFeedbackEventView'> {
+    WithType<TicketEventType.TicketFeedback> {
   feedbackId: string;
 }
 
 export interface TicketIncomingMessageEvent
   extends TicketEventBase,
-    WithType<'TicketIncomingMessageEventView'> {
+    WithType<TicketEventType.TicketIncomingMessage> {
   message: Message;
   channel: string;
 }
 
 export interface TicketLanguagesChangedEvent
   extends TicketEventBase,
-    WithType<'TicketLanguagesChangedEventView'> {
+    WithType<TicketEventType.TicketLanguagesChanged> {
   from: string;
   to: string;
 }
@@ -176,7 +196,7 @@ export type ScheduleResult = ScheduleDoneResult | ScheduleCanceledResult;
 
 export interface TicketLifecycleEvent
   extends TicketEventBase,
-    WithType<'TicketLifecycleEventView'> {
+    WithType<TicketEventType.TicketLifecycle> {
   type: TicketLifeCycleType;
   result: ScheduleResult;
   executionDate: string; // DateTime
@@ -190,7 +210,7 @@ export interface TicketNoteHistoryRecord {
 
 export interface TicketNoteEvent
   extends TicketEventBase,
-    WithType<'TicketNoteEventView'> {
+    WithType<TicketEventType.TicketNote> {
   noteId: string;
   message: Message;
   tags: string[];
@@ -219,7 +239,7 @@ export interface Recipient {
 
 export interface TicketOutgoingMessageEvent
   extends TicketEventBase,
-    WithType<'TicketOutgoingMessageEventView'> {
+    WithType<TicketEventType.TicketOutgoingMessage> {
   messageId: string;
   message: Message;
   recipients: Recipient[];
@@ -227,7 +247,7 @@ export interface TicketOutgoingMessageEvent
 
 export interface TicketPriorityEvent
   extends TicketEventBase,
-    WithType<'TicketPriorityEventView'> {
+    WithType<TicketEventType.TicketPriority> {
   old: TicketPriority;
   new: TicketPriority;
 }
@@ -242,42 +262,42 @@ export interface ReminderView {
 
 export interface TicketReminderEvent
   extends TicketEventBase,
-    WithType<'TicketReminderEventView'> {
+    WithType<TicketEventType.TicketReminder> {
   reminder: ReminderView;
   result: ScheduleResult;
 }
 
 export interface TicketStatusChangedEvent
   extends TicketEventBase,
-    WithType<'TicketStatusChangedEventView'> {
+    WithType<TicketEventType.TicketStatusChanged> {
   old: TicketStatus;
   new: TicketStatus;
 }
 
 export interface TicketTagsChangedEvent
   extends TicketEventBase,
-    WithType<'TicketTagsChangedEventView'> {
+    WithType<TicketEventType.TicketTagsChanged> {
   old: string[];
   new: string[];
 }
 
 export interface TicketUserIdsChangedEvent
   extends TicketEventBase,
-    WithType<'TicketUserIdsChangedEventView'> {
+    WithType<TicketEventType.TicketUserIdsChanged> {
   old: UserIdInfo[];
   new: UserIdInfo[];
 }
 
 export interface TicketUserMetaChangedEvent
   extends TicketEventBase,
-    WithType<'TicketUserMetaChangedEventView'> {
+    WithType<TicketEventType.TicketUserMetaChanged> {
   old: Record<string, string>;
   new: Record<string, string>;
 }
 
 export interface TicketUserUnsubscribedEvent
   extends TicketEventBase,
-    WithType<'TicketUserUnsubscribedEventView'> {
+    WithType<TicketEventType.TicketUserUnsubscribed> {
   userId: string;
   message: string;
 }

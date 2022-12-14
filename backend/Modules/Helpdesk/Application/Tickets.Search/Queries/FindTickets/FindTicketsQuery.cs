@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using HelpLine.BuildingBlocks.Application.Queries;
-using HelpLine.BuildingBlocks.Application.Search;
 using HelpLine.Modules.Helpdesk.Application.Contracts;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Filters;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Search.Sorts;
 using HelpLine.Modules.Helpdesk.Application.Tickets.ViewModels;
 
-namespace HelpLine.Modules.Helpdesk.Application.Tickets.Queries.FindTickets
+namespace HelpLine.Modules.Helpdesk.Application.Tickets.Search.Queries.FindTickets
 {
     public class FindTicketsQuery : QueryBase<PagedResult<TicketView>>
     {

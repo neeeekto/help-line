@@ -16,7 +16,6 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets.Automations
 {
-    [NonParallelizable]
     [TestFixture]
     public class SaveAutoreplyScenarioCommandTests : TicketAutomationsTestBase
     {

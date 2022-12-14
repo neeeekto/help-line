@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
 {
+    [TestFixture]
     public class ReopenTicketCommandTests : TicketsTestBase
     {
         protected override string NS => nameof(ReopenTicketCommandTests);
@@ -21,6 +22,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.Tickets
         public async Task ReopenTicketCommand_WhenDataIsValid_IsSuccessful()
         {
             await BusServiceFactory.PublishInQueues(new RunTicketTimersJob(Guid.NewGuid()));
+            await CreateProject();
             var testData = new TicketTestData();
             var ticketId = await CreateTicket(testData);
             await SetDelayConfigForTests();
