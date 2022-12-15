@@ -2,15 +2,13 @@ import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
-import App from './app/app';
-import { setupI18n } from '@help-line/modules/application';
+import { setupI18n, RootWrapper } from '@help-line/modules/application';
 import { environment } from './environments/environment';
-import { RootWrapper } from '../../../libs/modules/application/src/root-wrapper';
 
 import './styles/global';
 import { ThemeProvider } from './styles/theme-provider';
 import { AuthGuard } from '@help-line/modules/auth';
-import css from './main.module.scss';
+import { AppRoutes } from './routes';
 
 setupI18n();
 const root = ReactDOM.createRoot(
@@ -22,7 +20,7 @@ root.render(
       <ThemeProvider>
         <AuthGuard>
           <BrowserRouter>
-            <App />
+            <AppRoutes />
           </BrowserRouter>
         </AuthGuard>
       </ThemeProvider>

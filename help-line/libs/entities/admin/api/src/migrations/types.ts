@@ -16,31 +16,42 @@ export interface MigrationStatusBase<T> extends WithType<T> {
   dateTime: string; //DateTime
 }
 
+export enum MigrationStatusType {
+  InQueue = 'MigrationInQueueStatus',
+  Executing = 'MigrationExecutingStatus',
+  Rollback = 'MigrationRollbackStatus',
+  RollbackSuccess = 'MigrationRollbackSuccessStatus',
+  Applied = 'MigrationAppliedStatus',
+  AppliedAndSaved = 'MigrationAppliedAndSavedStatus',
+  Error = 'MigrationErrorStatus',
+  RollbackError = 'MigrationRollbackErrorStatus',
+}
+
 export interface MigrationInQueueStatus
-  extends MigrationStatusBase<'MigrationInQueueStatus'> {}
+  extends MigrationStatusBase<MigrationStatusType.InQueue> {}
 
 export interface MigrationExecutingStatus
-  extends MigrationStatusBase<'MigrationExecutingStatus'> {}
+  extends MigrationStatusBase<MigrationStatusType.Executing> {}
 
 export interface MigrationRollbackStatus
-  extends MigrationStatusBase<'MigrationRollbackStatus'> {}
+  extends MigrationStatusBase<MigrationStatusType.Rollback> {}
 
 export interface MigrationRollbackSuccessStatus
-  extends MigrationStatusBase<'MigrationRollbackSuccessStatus'> {}
+  extends MigrationStatusBase<MigrationStatusType.RollbackSuccess> {}
 
 export interface MigrationAppliedStatus
-  extends MigrationStatusBase<'MigrationAppliedStatus'> {}
+  extends MigrationStatusBase<MigrationStatusType.Applied> {}
 
 export interface MigrationAppliedAndSavedStatus
-  extends MigrationStatusBase<'MigrationAppliedAndSavedStatus'> {}
+  extends MigrationStatusBase<MigrationStatusType.AppliedAndSaved> {}
 
 export interface MigrationErrorStatus
-  extends MigrationStatusBase<'MigrationErrorStatus'> {
+  extends MigrationStatusBase<MigrationStatusType.Error> {
   exception: unknown;
 }
 
 export interface MigrationRollbackErrorStatus
-  extends MigrationStatusBase<'MigrationRollbackErrorStatus'> {
+  extends MigrationStatusBase<MigrationStatusType.RollbackError> {
   exception: unknown;
 }
 

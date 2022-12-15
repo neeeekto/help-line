@@ -16,13 +16,16 @@ import {
 import { IEnvironment } from './environment.type';
 
 interface DefaultHttpProviderProps extends PropsWithChildren {
-  env: IEnvironment;
   interceptors?: HttpInterceptor[];
+  config: {
+    serverUrl: string;
+    apiPrefix: string;
+  };
 }
 
 export const DefaultHttpProvider: React.FC<DefaultHttpProviderProps> = ({
   children,
-  env,
+  config,
   interceptors: additionalInterceptors,
 }) => {
   const user = useAuthUser();
@@ -44,7 +47,7 @@ export const DefaultHttpProvider: React.FC<DefaultHttpProviderProps> = ({
   }, [user, logoutByNetworkAction]);
 
   const [interceptors] = useState([
-    new ApiResolverInterceptor(env.apiPrefix, env.serverUrl),
+    new ApiResolverInterceptor(config.apiPrefix, config.serverUrl),
     new AuthInterceptor(authFacadeRef.current),
     ...(additionalInterceptors ?? []),
   ]);

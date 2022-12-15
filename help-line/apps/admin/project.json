@@ -35,7 +35,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "admin:build",
-        "port": 4200,
+        "port": 3001,
         "hmr": true
       },
       "configurations": {

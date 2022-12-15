@@ -3,7 +3,7 @@ const rootMain = require('../../../.storybook/main');
 module.exports = {
   ...rootMain,
 
-  core: { ...rootMain.core, builder: '@storybook/builder-vite' },
+  core: { ...rootMain.core, builder: 'webpack5' },
 
   stories: [
     ...rootMain.stories,

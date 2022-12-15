@@ -43,6 +43,7 @@
       "@help-line/modules/http": ["libs/modules/http/src/index.ts"],
       "@help-line/modules/http-stubs": ["libs/modules/http-stubs/src/index.ts"],
       "@help-line/modules/query": ["libs/modules/query/src/index.ts"],
+      "@help-line/modules/storybook": ["libs/modules/storybook/src/index.ts"],
       "@help-line/style-utils": ["libs/style-utils/src/index.ts"]
     }
   },

@@ -21,6 +21,7 @@ public class TicketEventExistFilterCases
             await ctx.CreateProject();
             var operatorId = await ctx.CreateOperator(Guid.NewGuid());
             var ticketId = await ctx.CreateTicket(new TicketTestData());
+            var ticketId2 = await ctx.CreateTicket(new TicketTestData());
             await ctx.ExecuteAction(ticketId, new AssignAction(operatorId), new SystemInitiatorDto());
 
             ExpectTickets.Add(ticketId);

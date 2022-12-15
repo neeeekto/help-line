@@ -26,7 +26,7 @@ export function createApiClassBySchema<
     // @ts-ignore
     ApiBySchema.prototype[key] = function (req: any) {
       // @ts-ignore
-      this.http
+      return this.http
         .fetch({
           url: callOrGetValue(action.url, req),
           params: callOrGetValue(action.params, req),

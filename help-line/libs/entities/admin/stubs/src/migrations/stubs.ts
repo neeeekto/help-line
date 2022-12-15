@@ -3,6 +3,7 @@ import {
   Migration,
   MigrationStatus,
   MigrationStatusBase,
+  MigrationStatusType,
 } from '@help-line/entities/admin/api';
 import { faker } from '@faker-js/faker';
 
@@ -10,7 +11,7 @@ export namespace AdminMigrationsStubs {
   export const createMigrationStatus = createStubFactory<MigrationStatus>(
     () => ({
       dateTime: faker.datatype.datetime().toISOString(),
-      $type: 'MigrationInQueueStatus',
+      $type: MigrationStatusType.InQueue,
     })
   );
 
@@ -21,6 +22,6 @@ export namespace AdminMigrationsStubs {
     parents: [],
     isManual: false,
     applied: false,
-    statuses: [],
+    statuses: [createMigrationStatus()],
   }));
 }
