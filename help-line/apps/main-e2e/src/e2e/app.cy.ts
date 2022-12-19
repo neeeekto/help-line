@@ -1,6 +1,6 @@
 import { getGreeting } from '../support/app.po';
 import { adminProjectsStubApi } from '@help-line/entities/admin/stubs';
-import { CyApiHandlers } from '@help-line/modules/http-stubs';
+import { CyApiHandlers } from '@help-line/dev/http-stubs';
 
 describe('main', () => {
   beforeEach(() => {

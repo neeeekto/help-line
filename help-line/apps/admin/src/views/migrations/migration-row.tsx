@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Migration } from '@help-line/entities/admin/api';
+import { Migration, MigrationStatusType } from '@help-line/entities/admin/api';
 import cn from 'classnames';
 import { boxCss, mouseCss, spacingCss } from '@help-line/style-utils';
 import {
@@ -11,7 +11,7 @@ import {
   RollbackOutlined,
 } from '@ant-design/icons';
 import last from 'lodash/last';
-import { Drawer, Dropdown, Tag, Tooltip, Typography } from 'antd';
+import { Tag, Tooltip, Typography } from 'antd';
 import ReactTimeago from 'react-timeago';
 
 export const MigrationRow: React.FC<
@@ -49,50 +49,54 @@ export const MigrationRow: React.FC<
           }
           mouseEnterDelay={0.5}
         >
-          {lastStatus?.$type === 'MigrationInQueueStatus' && (
+          {lastStatus?.$type === MigrationStatusType.InQueue && (
             <Typography.Text type="warning">
               <FieldTimeOutlined />
             </Typography.Text>
           )}
-          {lastStatus?.$type === 'MigrationExecutingStatus' && (
+          {lastStatus?.$type === MigrationStatusType.Executing && (
             <LoadingOutlined />
           )}
-          {lastStatus?.$type === 'MigrationRollbackStatus' && (
+          {lastStatus?.$type === MigrationStatusType.Rollback && (
             <Typography.Text type="warning">
               <LoadingOutlined />
               <RollbackOutlined />
             </Typography.Text>
           )}
 
-          {lastStatus?.$type === 'MigrationRollbackSuccessStatus' && (
+          {lastStatus?.$type === MigrationStatusType.RollbackSuccess && (
             <Typography.Text type="warning">
               <RollbackOutlined />
             </Typography.Text>
           )}
 
-          {lastStatus?.$type === 'MigrationErrorStatus' && (
+          {lastStatus?.$type === MigrationStatusType.Error && (
             <Typography.Text type="danger">
               <CloseCircleOutlined />
             </Typography.Text>
           )}
-          {lastStatus?.$type === 'MigrationRollbackErrorStatus' && (
+          {lastStatus?.$type === MigrationStatusType.RollbackError && (
             <Typography.Text type="danger">
               <RollbackOutlined />
             </Typography.Text>
           )}
-          {lastStatus?.$type === 'MigrationAppliedAndSavedStatus' && (
+          {lastStatus?.$type === MigrationStatusType.AppliedAndSaved && (
             <Typography.Text type="success">
               <CloudServerOutlined />
             </Typography.Text>
           )}
-          {lastStatus?.$type === 'MigrationAppliedStatus' && (
+          {lastStatus?.$type === MigrationStatusType.Applied && (
             <Typography.Text type="success">
               <CheckCircleOutlined />
             </Typography.Text>
           )}
         </Tooltip>
 
-        <Typography.Text strong onClick={onClick} className={mouseCss.pointer}>
+        <Typography.Text
+          strong
+          onClick={onClick}
+          className={cn(mouseCss.pointer, boxCss.fullWidth)}
+        >
           {migration.name}
         </Typography.Text>
         <div className={spacingCss.marginLeftAuto}>{children}</div>

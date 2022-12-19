@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from 'react';
-import { Migration } from '@help-line/entities/admin/api';
+import { Migration, MigrationStatusType } from '@help-line/entities/admin/api';
 import { Card, Drawer, List, Radio, Tabs } from 'antd';
 import css from './migrations.module.scss';
 import { MigrationRow } from './migration-row';
 import { MigrationAction } from './migration-action';
 import { MigrationDetails } from './migration-details';
+import last from 'lodash/last';
 
 export const MigrationsView: React.FC<{ migrations: Migration[] }> = ({
   migrations,
@@ -15,6 +16,16 @@ export const MigrationsView: React.FC<{ migrations: Migration[] }> = ({
   );
   const appliedMigrations = useMemo(
     () => migrations.filter((x) => x.applied),
+    [migrations]
+  );
+
+  const activeMigrations = useMemo(
+    () =>
+      migrations.filter((m) =>
+        [MigrationStatusType.Executing, MigrationStatusType.Rollback].includes(
+          last(m.statuses)!.$type
+        )
+      ),
     [migrations]
   );
 
@@ -48,7 +59,11 @@ export const MigrationsView: React.FC<{ migrations: Migration[] }> = ({
                 migration={item}
                 onClick={() => setShowDetails(item)}
               >
-                <MigrationAction migration={item} migrations={migrations} />
+                <MigrationAction
+                  disabled={activeMigrations.length > 0}
+                  migration={item}
+                  migrations={migrations}
+                />
               </MigrationRow>
             </List.Item>
           )}

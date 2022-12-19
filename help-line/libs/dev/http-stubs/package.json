@@ -1,5 +1,5 @@
 {
-  "name": "@help-line/modules/http-stubs",
+  "name": "@help-line/dev/http-stubs",
   "version": "0.0.1",
   "type": "commonjs"
 }

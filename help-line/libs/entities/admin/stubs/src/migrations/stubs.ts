@@ -1,4 +1,4 @@
-import { createStubFactory } from '@help-line/modules/http-stubs';
+import { createStubFactory } from '@help-line/dev/http-stubs';
 import {
   Migration,
   MigrationStatus,

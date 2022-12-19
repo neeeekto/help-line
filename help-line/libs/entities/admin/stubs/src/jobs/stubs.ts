@@ -1,4 +1,4 @@
-import { createStubFactory } from '@help-line/modules/http-stubs';
+import { createStubFactory } from '@help-line/dev/http-stubs';
 import { Job, JobData, JobTriggerState } from '@help-line/entities/admin/api';
 import { faker } from '@faker-js/faker';
 

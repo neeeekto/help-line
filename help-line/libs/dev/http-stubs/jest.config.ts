@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'modules-http-stubs',
+  displayName: 'dev-http-stubs',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../coverage/libs/modules/http-stubs',
+  coverageDirectory: '../../../coverage/libs/dev/http-stubs',
 };

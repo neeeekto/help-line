@@ -94,6 +94,12 @@
         }
       }
     },
+    "deploy:chromatic": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx chromatic --project-token=cd4322138b5b --storybook-build-dir "
+      }
+    },
     "test-storybook": {
       "executor": "nx:run-commands",
       "options": {

@@ -13,7 +13,7 @@ export const MigrationDetails: React.FC<{ migration: Migration }> = ({
         let color = 'gray';
         let details: any;
         switch (s.$type) {
-          case MigrationStatusType.MigrationExecuting:
+          case MigrationStatusType.Executing:
             break;
           case MigrationStatusType.Error:
           case MigrationStatusType.RollbackError:

@@ -16,6 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@help-line/components": ["libs/components/src/index.ts"],
+      "@help-line/dev/e2e-tests": ["libs/dev/e2e-tests/src/index.ts"],
+      "@help-line/dev/http-stubs": ["libs/dev/http-stubs/src/index.ts"],
+      "@help-line/dev/storybook": ["libs/dev/storybook/src/index.ts"],
+      "@help-line/dev/unit-tests": ["libs/dev/unit-tests/src/index.ts"],
       "@help-line/entities/admin/api": ["libs/entities/admin/api/src/index.ts"],
       "@help-line/entities/admin/query": [
         "libs/entities/admin/query/src/index.ts"
@@ -41,9 +45,7 @@
       "@help-line/modules/common": ["libs/modules/common/src/index.ts"],
       "@help-line/modules/events": ["libs/modules/events/src/index.ts"],
       "@help-line/modules/http": ["libs/modules/http/src/index.ts"],
-      "@help-line/modules/http-stubs": ["libs/modules/http-stubs/src/index.ts"],
       "@help-line/modules/query": ["libs/modules/query/src/index.ts"],
-      "@help-line/modules/storybook": ["libs/modules/storybook/src/index.ts"],
       "@help-line/style-utils": ["libs/style-utils/src/index.ts"]
     }
   },
