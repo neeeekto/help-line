@@ -9,7 +9,7 @@ import {
 import { HttpStubRequest } from './create-stub-api';
 
 export namespace MswHandlers {
-  const makeHandler =
+  export const makeHandler =
     (handler: ResponseResolver<MockedRequest, RestContext, DefaultBodyType>) =>
     (req: HttpStubRequest) => {
       const mockUrl = [
