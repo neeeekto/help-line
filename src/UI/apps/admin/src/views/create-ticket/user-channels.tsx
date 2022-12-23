@@ -41,8 +41,6 @@ export const UserChannels: React.FC<{
     };
   }, []);
 
-  const form = Form.useFormInstance();
-
   return (
     <Card
       className={boxCss.fullWidth}
@@ -58,6 +56,7 @@ export const UserChannels: React.FC<{
           <Typography.Text>Channels</Typography.Text>
           <Button
             size="small"
+            data-testid={'add_channel'}
             onClick={onAdd}
             type="dashed"
             disabled={disabled}
@@ -100,6 +99,7 @@ export const UserChannels: React.FC<{
               onClick={onRemove}
               className={boxCss.flex00Auto}
               disabled={disabled}
+              data-testid={`delete_${name}`}
             >
               <DeleteOutlined />
             </Button>

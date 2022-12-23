@@ -1,17 +1,17 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
-import { FullPageContainer } from "@shared/components/full-page-container";
-import cn from "classnames";
-import { boxCss, spacingCss, utilsCss } from "@shared/styles";
-import { helpdeskApi } from "@entities/helpdesk";
-import { Button, Input, message } from "antd";
-import { ReloadOutlined, SearchOutlined } from "@ant-design/icons";
-import { DiffEditor } from "@monaco-editor/react";
-import { AxiosError } from "axios";
+import React, { ChangeEvent, useCallback, useState } from 'react';
+import { FullPageContainer } from '@help-line/components';
+import cn from 'classnames';
+import { boxCss, spacingCss, utilsCss } from '@help-line/style-utils';
+import { helpdeskApi } from '@entities/helpdesk';
+import { Button, Input, message } from 'antd';
+import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
+import { DiffEditor } from '@monaco-editor/react';
+import { AxiosError } from 'axios';
 
 const TicketIndex: React.FC = () => {
-  const [ticketId, setTicketId] = useState("");
+  const [ticketId, setTicketId] = useState('');
   const [original, setOriginal] = useState<any[]>([]);
-  const [diff, setDiff] = useState<[string, string]>(["", ""]);
+  const [diff, setDiff] = useState<[string, string]>(['', '']);
 
   const onInput = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ const TicketIndex: React.FC = () => {
         JSON.stringify(newData, null, 2),
       ]);
       setOriginal([oldData, newData]);
-      message.success("Ticket view has recreated");
+      message.success('Ticket view has recreated');
     } catch (e: any) {
       message.error(e.response?.data?.detail);
     }

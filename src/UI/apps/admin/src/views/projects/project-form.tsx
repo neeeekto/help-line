@@ -1,23 +1,22 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from 'react';
 import {
-  CreateProjectData,
-  Project,
-  useProjectCreateMutation,
-  useProjectUpdateMutation,
-} from "@entities/projects";
-import { Button, Form, Input, Select } from "antd";
+  useCreateProjectMutation,
+  useUpdateProjectMutation,
+} from '@help-line/entities/admin/query';
+import { Button, Form, Input, Select } from 'antd';
+import { CreateProjectData, Project } from '@help-line/entities/admin/api';
 
 export const ProjectForm: React.FC<{
   project?: Project;
   onClose?: () => void;
 }> = ({ project, onClose }) => {
-  const updateProject = useProjectUpdateMutation();
-  const createProject = useProjectCreateMutation();
+  const updateProject = useUpdateProjectMutation(project?.id || '');
+  const createProject = useCreateProjectMutation();
 
   const onApply = useCallback(
     async (val: CreateProjectData) => {
       if (project) {
-        await updateProject.mutateAsync({ projectId: project.id, data: val });
+        await updateProject.mutateAsync(val);
       } else {
         await createProject.mutateAsync(val);
       }
@@ -28,8 +27,8 @@ export const ProjectForm: React.FC<{
 
   const initValue = useMemo<CreateProjectData>(() => {
     return {
-      name: project?.info.name ?? "",
-      image: project?.info.image ?? "",
+      name: project?.info.name ?? '',
+      image: project?.info.image ?? '',
       languages: project?.languages ?? [],
       projectId: project?.id,
     } as CreateProjectData;
@@ -44,14 +43,14 @@ export const ProjectForm: React.FC<{
       <Form.Item
         label="ID"
         name="projectId"
-        rules={[{ required: true, message: "Please input project name!" }]}
+        rules={[{ required: true, message: 'Please input project name!' }]}
       >
         <Input disabled={!!project} />
       </Form.Item>
       <Form.Item
         label="Name"
         name="name"
-        rules={[{ required: true, message: "Please input project name!" }]}
+        rules={[{ required: true, message: 'Please input project name!' }]}
       >
         <Input />
       </Form.Item>
@@ -63,11 +62,11 @@ export const ProjectForm: React.FC<{
       <Form.Item
         label="Languages"
         name="languages"
-        rules={[{ required: true, message: "Languages is required!" }]}
+        rules={[{ required: true, message: 'Languages is required!' }]}
       >
         <Select
           mode="tags"
-          style={{ width: "100%" }}
+          style={{ width: '100%' }}
           placeholder="Select languages"
         >
           {project?.languages.map((x) => (

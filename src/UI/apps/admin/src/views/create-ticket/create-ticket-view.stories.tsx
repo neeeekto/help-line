@@ -53,3 +53,26 @@ export const Primary = factory.create({
     },
   },
 });
+
+export const Loading = factory.create({
+  parameters: {
+    msw: {
+      handlers: [adminProjectsStubApi.get().handle(MswHandlers.delay(100000))],
+    },
+  },
+});
+
+export const Error = factory.create({
+  parameters: {
+    msw: {
+      handlers: [adminProjectsStubApi.get().handle(MswHandlers.error(500))],
+    },
+  },
+});
+
+export const WithCreatedTicket = factory.create({
+  args: {
+    lastCreatedTicket: AdminHelpdeskStubs.createTicketId(),
+  },
+  parameters: {},
+});

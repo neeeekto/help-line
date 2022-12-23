@@ -1,19 +1,19 @@
-import React, { FormEvent, useCallback, useMemo, useState } from "react";
-import { EditedItem, Opened } from "@views/templates/state/editro.types";
-import { Context, Template } from "@entities/templates";
-import { boxCss, spacingCss } from "@shared/styles";
-import { AutoComplete, Input, Select, Tooltip, Typography } from "antd";
-import { editorStore } from "@views/templates/state/editor.store";
-import { observer } from "mobx-react-lite";
-import { useContextQueries } from "@entities/templates/queries";
-import uniq from "lodash/uniq";
+import React, { FormEvent, useCallback, useMemo, useState } from 'react';
+import { EditedItem, Opened } from '../../state/editro.types';
+import { Context, Template } from '@help-line/entities/admin/api';
+import { boxCss, spacingCss } from '@help-line/style-utils';
+import { AutoComplete, Input, Select, Tooltip, Typography } from 'antd';
+import { editorStore } from '../../state/editor.store';
+import { observer } from 'mobx-react-lite';
+import { useContextsQuery } from '@help-line/entities/admin/query';
+import uniq from 'lodash/uniq';
 
 export const ContextMeta: React.FC<{ active: Opened<Context> }> = observer(
   ({ active }) => {
     const edit = editorStore.getEditModelByOpened(
       active
     ) as EditedItem<Context>;
-    const contextQuery = useContextQueries().useListQuery();
+    const contextQuery = useContextsQuery();
     const aliases = useMemo(() => {
       return uniq(
         contextQuery.data?.filter((x) => x.alias).map((x) => x.alias!) || []
@@ -22,13 +22,13 @@ export const ContextMeta: React.FC<{ active: Opened<Context> }> = observer(
 
     const updateAlias = useCallback(
       (val: string) => {
-        editorStore.changeField(active, "alias", val);
+        editorStore.changeField(active, 'alias', val);
       },
       [active]
     );
     const updateExtend = useCallback(
       (contextsId: string) => {
-        editorStore.changeField(active, "extend", contextsId);
+        editorStore.changeField(active, 'extend', contextsId);
       },
       [active]
     );
@@ -37,7 +37,7 @@ export const ContextMeta: React.FC<{ active: Opened<Context> }> = observer(
         <div className={spacingCss.marginTopLg}>
           <Tooltip
             mouseEnterDelay={1}
-            title={`Alias for this context. If you set this property than context will be available by two keys, context id and context alias. 
+            title={`Alias for this context. If you set this property than context will be available by two keys, context id and context alias.
             Warning! Two context with the same alias won't be merged, last defined in template (context property) will be used!`}
           >
             <Typography.Text strong>Alias</Typography.Text>

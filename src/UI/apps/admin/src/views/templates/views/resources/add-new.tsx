@@ -4,26 +4,26 @@ import React, {
   useMemo,
   useRef,
   useState,
-} from "react";
-import cn from "classnames";
-import { boxCss, spacingCss } from "@shared/styles";
-import { Button, Input } from "antd";
-import { editorStore } from "@views/templates/state/editor.store";
-import { observer } from "mobx-react-lite";
-import { TemplateItem } from "@entities/templates";
-import css from "./resources.module.scss";
-import { StopOutlined } from "@ant-design/icons";
-import { useClickAway } from "ahooks";
-import { Icon } from "@views/templates/components/Icon";
-import { SourceType } from "@views/templates/state/editro.types";
+} from 'react';
+import cn from 'classnames';
+import { boxCss, spacingCss } from '@help-line/style-utils';
+import { Button, Input } from 'antd';
+import { editorStore } from '../../state/editor.store';
+import { observer } from 'mobx-react-lite';
+import { TemplateBase } from '@help-line/entities/admin/api';
+import css from './resources.module.scss';
+import { StopOutlined } from '@ant-design/icons';
+import { useClickAway } from 'ahooks';
+import { Icon } from '../../components/Icon';
+import { SourceType } from '../../state/editro.types';
 
 export const AddNew: React.FC<{
   type: SourceType;
-  items: TemplateItem[];
+  items: TemplateBase[];
   onAdd: (id: string) => void;
   onCancel: () => void;
 }> = observer(({ type, onAdd, items, onCancel }) => {
-  const [id, setId] = useState("");
+  const [id, setId] = useState('');
   const ref = useRef<any>();
   useClickAway(() => {
     onCancel();

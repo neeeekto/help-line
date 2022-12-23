@@ -1,11 +1,11 @@
-import React from "react";
-import { FullPageContainer } from "@shared/components/full-page-container";
-import cn from "classnames";
-import { boxCss, spacingCss } from "@shared/styles";
-import css from "@views/templates/templates.module.scss";
-import { Resources } from "@views/templates/views/resources";
-import { Meta } from "@views/templates/views/meta";
-import { Editor } from "@views/templates/views/editor";
+import React from 'react';
+import { FullPageContainer } from '@help-line/components';
+import cn from 'classnames';
+import { boxCss, spacingCss } from '@help-line/style-utils';
+import css from '@views/templates/templates.module.scss';
+import { Resources } from '@views/templates/views/resources';
+import { Meta } from '@views/templates/views/meta';
+import { Editor } from '@views/templates/views/editor';
 
 const TemplatesView: React.FC = () => {
   return (

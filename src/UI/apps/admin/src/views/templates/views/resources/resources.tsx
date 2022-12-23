@@ -1,20 +1,18 @@
-import React, { useMemo, useState } from "react";
-import { observer } from "mobx-react-lite";
-import { Button, Collapse, Input, Tree } from "antd";
+import React, { useMemo, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { Button, Collapse, Input, Tree } from 'antd';
 import {
-  useComponentQueries,
-  useContextQueries,
-  useTemplatesQueries,
-  TemplateItemQueries,
-} from "@entities/templates/queries";
-import { Resource } from "./resource";
+  useContextsQuery,
+  useTemplatesQuery,
+  useTemplateSaveMutation,
+  useComponentsQuery,
+} from '@help-line/entities/admin/query';
+import { Resource } from './resource';
 
-import { SourceType } from "@views/templates/state/editro.types";
+import { SourceType } from '../../state/editro.types';
 
 export const Resources: React.FC = observer(() => {
-  const templatesQueries = useTemplatesQueries() as any as TemplateItemQueries;
-  const componentsQueries = useComponentQueries() as any as TemplateItemQueries;
-  const contextQueries = useContextQueries() as any as TemplateItemQueries;
+  const tmplQuery = useTemplatesQuery();
 
   return (
     <>
@@ -22,9 +20,9 @@ export const Resources: React.FC = observer(() => {
         src={SourceType.Template}
         name="Templates"
         lang="handlebars"
-        queries={templatesQueries}
+        queryList={tmplQuery}
       />
-      <Resource
+      {/*<Resource
         src={SourceType.Component}
         name="Components"
         lang="handlebars"
@@ -36,7 +34,7 @@ export const Resources: React.FC = observer(() => {
         name="Contexts"
         lang="json"
         queries={contextQueries}
-      />
+      />*/}
     </>
   );
 });

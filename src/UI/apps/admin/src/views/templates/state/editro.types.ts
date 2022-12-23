@@ -1,19 +1,19 @@
-import { TemplateItem } from "@entities/templates";
+import { TemplateBase } from '@help-line/entities/admin/api';
 
 export enum SourceType {
-  Template = "template",
-  Context = "context",
-  Component = "component",
+  Template = 'template',
+  Context = 'context',
+  Component = 'component',
 }
 
-export interface EditedItem<T extends TemplateItem = TemplateItem> {
+export interface EditedItem<T extends TemplateBase = TemplateBase> {
   src: SourceType;
   id: string;
   original?: T;
   current: T;
 }
 
-export interface Opened<T extends TemplateItem = TemplateItem> {
+export interface Opened<T extends TemplateBase = TemplateBase> {
   id: string;
   lang: string;
   src: SourceType;

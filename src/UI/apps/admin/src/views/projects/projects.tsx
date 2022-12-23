@@ -1,19 +1,19 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState } from 'react';
 import {
-  Project,
-  useProjectActivateToggleMutation,
+  useToggleProjectMutation,
   useProjectsQuery,
-} from "@entities/projects";
-import { FullPageContainer } from "@shared/components/full-page-container";
-import { Spin, List, Avatar, Switch, Tag, Button, Drawer } from "antd";
-import css from "./projects.module.scss";
-import cn from "classnames";
-import { useBoolean } from "ahooks";
-import { ProjectForm } from "@views/projects/project-form";
-import { boxCss, mouseCss, spacingCss } from "@shared/styles";
+} from '@help-line/entities/admin/query';
+import { FullPageContainer } from '@help-line/components';
+import { Spin, List, Avatar, Switch, Tag, Button, Drawer } from 'antd';
+import css from './projects.module.scss';
+import cn from 'classnames';
+import { useBoolean } from 'ahooks';
+import { ProjectForm } from './project-form';
+import { boxCss, mouseCss, spacingCss } from '@help-line/style-utils';
+import { Project } from '@help-line/entities/admin/api';
 
 const SwitchProject: React.FC<{ project: Project }> = ({ project }) => {
-  const toggleProjectActivation = useProjectActivateToggleMutation(project.id);
+  const toggleProjectActivation = useToggleProjectMutation(project.id);
   const onChange = useCallback(
     () => toggleProjectActivation.mutate(project.active),
     [toggleProjectActivation, project.active]

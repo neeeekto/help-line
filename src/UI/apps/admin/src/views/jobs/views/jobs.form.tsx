@@ -1,25 +1,21 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from 'react';
 import {
-  Job,
-  JobData,
   useCreateJobMutation,
   useJobsQuery,
   useJobTasksQuery,
   useUpdateJobMutation,
-} from "@entities/jobs";
-import { AutoComplete, Button, Form, Input, Typography } from "antd";
-import { ReQuartzCron } from "@sbzen/re-cron";
-import css from "./jobs.module.scss";
-import cronstrue from "cronstrue";
-import { DataBuilder } from "@shared/components/data-builder";
-import { boxCss, spacingCss } from "@shared/styles";
-import cn from "classnames";
-import groupBy from "lodash/groupBy";
-import ReactJson, { ReactJsonViewProps } from "react-json-view";
+} from '@help-line/entities/admin/query';
+import { Button, Form, Input, Typography } from 'antd';
+import { ReQuartzCron } from '@sbzen/re-cron';
+import css from './jobs.module.scss';
+import cronstrue from 'cronstrue';
+import { DataBuilder } from '../../../components/data-builder';
+import { boxCss, spacingCss } from '@help-line/style-utils';
+import cn from 'classnames';
+import groupBy from 'lodash/groupBy';
+import { Job, JobData } from '@help-line/entities/admin/api';
 
-const Json: React.FC<Partial<ReactJsonViewProps>> = (props: any) => (
-  <ReactJson {...props} />
-);
+const Json: React.FC = (props: any) => <></>;
 
 export const JobsForm: React.FC<{
   entity?: Job;
@@ -29,10 +25,10 @@ export const JobsForm: React.FC<{
   const jobsQuery = useJobsQuery();
   const jobsTasksQuery = useJobTasksQuery();
   const createJobMutation = useCreateJobMutation(task);
-  const updateJobMutation = useUpdateJobMutation(entity?.id || "");
+  const updateJobMutation = useUpdateJobMutation(entity?.id || '');
 
   const groupOptions = useMemo(
-    () => Object.keys(groupBy(jobsQuery.data || [], "group")),
+    () => Object.keys(groupBy(jobsQuery.data || [], 'group')),
     [jobsQuery]
   );
   const dataDescription = useMemo(
@@ -59,7 +55,7 @@ export const JobsForm: React.FC<{
       initialValues={
         entity || {
           taskType: task,
-          schedule: "* * * ? * *",
+          schedule: '* * * ? * *',
           data: dataDescription ? { $type: dataDescription.root } : null,
         }
       }
@@ -70,7 +66,7 @@ export const JobsForm: React.FC<{
       <Form.Item
         label="Name"
         name="name"
-        rules={[{ required: true, message: "Please input job name!" }]}
+        rules={[{ required: true, message: 'Please input job name!' }]}
       >
         <Input />
       </Form.Item>
@@ -101,11 +97,11 @@ export const JobsForm: React.FC<{
         {(form) => (
           <>
             <Typography.Text type="secondary">
-              {cronstrue.toString(form.getFieldValue("schedule"))}
+              {cronstrue.toString(form.getFieldValue('schedule'))}
             </Typography.Text>
             <div className={spacingCss.paddingBottomSm} />
             <ReQuartzCron
-              value={form.getFieldValue("schedule")}
+              value={form.getFieldValue('schedule')}
               onChange={(value) => {
                 form.setFieldsValue({ schedule: value });
               }}
@@ -122,7 +118,7 @@ export const JobsForm: React.FC<{
               <DataBuilder
                 className={css.jobFormData}
                 description={dataDescription}
-                value={form.getFieldValue("data")}
+                value={form.getFieldValue('data')}
                 onChange={(val) => form.setFieldsValue({ data: val })}
               />
             )}
@@ -130,11 +126,11 @@ export const JobsForm: React.FC<{
           <Form.Item
             label="Data JSON"
             name="data"
-            rules={[{ required: true, message: "Please add data!" }]}
+            rules={[{ required: true, message: 'Please add data!' }]}
             style={{ margin: 0 }}
             valuePropName="src"
           >
-            <Json displayDataTypes={false} />
+            <Json />
           </Form.Item>
         </>
       )}

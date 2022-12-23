@@ -1,7 +1,7 @@
-import { observable, action, computed } from "mobx";
-import { EditedItem, Opened, SourceType } from "./editro.types";
-import { TemplateItem } from "@entities/templates";
-import cloneDeep from "lodash/cloneDeep";
+import { observable, action, computed } from 'mobx';
+import { EditedItem, Opened, SourceType } from './editro.types';
+import { TemplateBase } from '@help-line/entities/admin/api';
+import cloneDeep from 'lodash/cloneDeep';
 
 export const makeEditorStore = () => {
   const state = observable({
@@ -23,8 +23,8 @@ export const makeEditorStore = () => {
   };
 
   const isEqual = (
-    x: Pick<EditedItem, "id" | "src">,
-    y: Pick<EditedItem, "id" | "src">
+    x: Pick<EditedItem, 'id' | 'src'>,
+    y: Pick<EditedItem, 'id' | 'src'>
   ) => x.src == y.src && x.id === y.id;
 
   const active = computed(() => {
@@ -38,7 +38,7 @@ export const makeEditorStore = () => {
   });
 
   const open = action(
-    "editing.open",
+    'editing.open',
     (item: EditedItem, field: string, lang: string, value?: string) => {
       const editModel = state.edited.find((x) => isEqual(x, item));
       if (!editModel) {
@@ -66,8 +66,8 @@ export const makeEditorStore = () => {
   );
 
   const openTemplateItem = action(
-    "editing.open.templateItem",
-    (item: TemplateItem, src: SourceType, field: string, lang: string) => {
+    'editing.open.templateItem',
+    (item: TemplateBase, src: SourceType, field: string, lang: string) => {
       open(
         {
           id: item.id,
@@ -81,13 +81,13 @@ export const makeEditorStore = () => {
     }
   );
 
-  const focus = action("editing.focus", (opened: Opened) => {
+  const focus = action('editing.focus', (opened: Opened) => {
     state.opened.forEach((x) => (x.active = false));
     opened.active = true;
   });
 
   const changeField = action(
-    "editing.change",
+    'editing.change',
     (opened: Opened, field: string, newValue: any) => {
       const editModel = getEditModelByOpened(opened);
       (editModel.current as any)[field] = newValue;
@@ -95,11 +95,11 @@ export const makeEditorStore = () => {
     }
   );
 
-  const change = action("editing.change", (opened: Opened, newValue: any) => {
+  const change = action('editing.change', (opened: Opened, newValue: any) => {
     changeField(opened, opened.field, newValue);
   });
 
-  const remove = action("editing.remove", (id: string, src: SourceType) => {
+  const remove = action('editing.remove', (id: string, src: SourceType) => {
     const openModels = state.opened.filter((x) => x.src === src && x.id === id);
     state.edited = state.edited.filter((x) => !(x.id === id && x.src === src));
     for (let openModel of openModels) {
@@ -107,7 +107,7 @@ export const makeEditorStore = () => {
     }
   });
 
-  const close = action("editing.close", (opened: Opened) => {
+  const close = action('editing.close', (opened: Opened) => {
     const inx = state.opened.findIndex(
       (x) => isEqual(x, opened) && x.field === opened.field
     );
@@ -133,13 +133,13 @@ export const makeEditorStore = () => {
     state.opened = state.opened.filter((x) => !isEqual(x, opened));
   });
 
-  const markAsSaved = action("editing.save", (editModel: EditedItem) => {
+  const markAsSaved = action('editing.save', (editModel: EditedItem) => {
     editModel.original = { ...editModel.current };
   });
 
   const reset = action(
-    "editing.save",
-    (id: string, src: SourceType, data: TemplateItem) => {
+    'editing.save',
+    (id: string, src: SourceType, data: TemplateBase) => {
       const editModel = state.edited.find((x) => x.id === id && x.src === src);
       if (editModel) {
         editModel.current = observable(cloneDeep(data));

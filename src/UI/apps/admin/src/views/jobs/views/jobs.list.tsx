@@ -1,13 +1,11 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from 'react';
 import {
-  Job,
-  JobTriggerState,
   useDeleteJobMutation,
   useFireJobMutation,
   useJobsStateQuery,
   useToggleJobMutation,
   useUpdateJobMutation,
-} from "@entities/jobs";
+} from '@help-line/entities/admin/query';
 import {
   Button,
   Card,
@@ -17,14 +15,15 @@ import {
   Popconfirm,
   Switch,
   Tooltip,
-} from "antd";
-import { JobTriggerStateView } from "@views/jobs/components/job-trigger-state";
-import { boxCss, spacingCss, textCss } from "@shared/styles";
-import cn from "classnames";
-import { DeleteOutlined, EditOutlined, FireOutlined } from "@ant-design/icons";
-import css from "./jobs.module.scss";
-import groupBy from "lodash/groupBy";
-import cronstrue from "cronstrue";
+} from 'antd';
+import { JobTriggerStateView } from '../components/job-trigger-state';
+import { spacingCss, textCss } from '@help-line/style-utils';
+import cn from 'classnames';
+import { DeleteOutlined, EditOutlined, FireOutlined } from '@ant-design/icons';
+import css from './jobs.module.scss';
+import groupBy from 'lodash/groupBy';
+import cronstrue from 'cronstrue';
+import { Job, JobTriggerState } from '@help-line/entities/admin/api';
 
 const JobActions: React.FC<{ job: Job; onEdit?: () => void }> = ({
   job,
@@ -69,7 +68,7 @@ const JobActions: React.FC<{ job: Job; onEdit?: () => void }> = ({
         okText="Yes"
         cancelText="No"
         disabled={editMutation.isLoading || job.enabled}
-        okButtonProps={{ type: "primary", danger: true }}
+        okButtonProps={{ type: 'primary', danger: true }}
       >
         <Button
           type="text"

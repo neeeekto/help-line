@@ -1,24 +1,24 @@
-import React, { FormEvent, useCallback, useMemo } from "react";
+import React, { FormEvent, useCallback, useMemo } from 'react';
 import {
   EditedItem,
   Opened,
   SourceType,
-} from "@views/templates/state/editro.types";
-import { Context, Template } from "@entities/templates";
-import { boxCss, spacingCss } from "@shared/styles";
-import { Button, Input, Popover, Select, Typography } from "antd";
-import cn from "classnames";
-import groupBy from "lodash/groupBy";
-import ReactJson from "react-json-view";
-import { editorStore } from "@views/templates/state/editor.store";
-import { observer } from "mobx-react-lite";
+} from '@views/templates/state/editro.types';
+import { Context, Template } from '@entities/templates';
+import { boxCss, spacingCss } from '@help-line/style-utils';
+import { Button, Input, Popover, Select, Typography } from 'antd';
+import cn from 'classnames';
+import groupBy from 'lodash/groupBy';
+import ReactJson from 'react-json-view';
+import { editorStore } from '@views/templates/state/editor.store';
+import { observer } from 'mobx-react-lite';
 import {
   useContextQueries,
   useTemplateDescription,
-} from "@entities/templates/queries";
-import { compile } from "handlebars";
-import { getMainFieldForSrc } from "@views/templates/utils/editor.utils";
-import { Icon } from "@views/templates/components/Icon";
+} from '@entities/templates/queries';
+import { compile } from 'handlebars';
+import { getMainFieldForSrc } from '@views/templates/utils/editor.utils';
+import { Icon } from '@views/templates/components/Icon';
 
 export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
   ({ active }) => {
@@ -28,7 +28,7 @@ export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
       active
     ) as EditedItem<Template>;
     const toEditProps = useCallback(() => {
-      editorStore.open(edit, "props", "json");
+      editorStore.open(edit, 'props', 'json');
     }, [edit]);
 
     const usedContexts = useMemo(() => {
@@ -42,7 +42,7 @@ export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
     const duplicateContextWithAlias = useMemo(() => {
       const group = groupBy(
         usedContexts.filter((x) => x.alias),
-        "alias"
+        'alias'
       );
       return Object.keys(group)
         .filter((x) => group[x].length > 1)
@@ -51,7 +51,7 @@ export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
 
     const updateContext = useCallback(
       (contextsIds: string[]) => {
-        editorStore.changeField(active, "contexts", contextsIds);
+        editorStore.changeField(active, 'contexts', contextsIds);
       },
       [active]
     );
@@ -65,7 +65,7 @@ export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
           original: context,
         },
         getMainFieldForSrc(SourceType.Context),
-        "json"
+        'json'
       );
     }, []);
 
@@ -73,15 +73,15 @@ export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
       console.log(compile(edit.current.content)({}));
       editorStore.open(
         edit,
-        "preview",
-        "handlebars",
+        'preview',
+        'handlebars',
         compile(edit.current.content)({})
       );
     }, [edit]);
 
     const updateName = useCallback(
       (evt: FormEvent<HTMLInputElement>) => {
-        editorStore.changeField(active, "name", evt.currentTarget.value);
+        editorStore.changeField(active, 'name', evt.currentTarget.value);
       },
       [active]
     );
@@ -90,7 +90,7 @@ export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
       (id: string) => {
         editorStore.changeField(
           active,
-          "meta",
+          'meta',
           Object.assign(edit.current.meta || {}, { description: id })
         );
       },

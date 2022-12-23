@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from 'react';
 import {
   Button,
   Card,
@@ -8,19 +8,19 @@ import {
   Result,
   Tag,
   Typography,
-} from "antd";
-import groupBy from "lodash/groupBy";
-import { DeleteOutlined, RedoOutlined, SmileOutlined } from "@ant-design/icons";
-import { TimerInfo } from "./timer-info";
-import css from "./tickets-timers.module.scss";
-import { boxCss, spacingCss } from "@shared/styles";
+} from 'antd';
+import groupBy from 'lodash/groupBy';
+import { DeleteOutlined, RedoOutlined, SmileOutlined } from '@ant-design/icons';
+import { TimerInfo } from './timer-info';
+import css from './tickets-timers.module.scss';
+import { boxCss, spacingCss } from '@help-line/style-utils';
 import {
   useDeleteScheduleMutation,
   useReScheduleMutation,
   useSchedulesQuery,
-} from "@entities/helpdesk/queries";
-import { statuses } from "./ticket.utils";
-import { TicketSchedule, TicketScheduleStatus } from "@entities/helpdesk";
+} from '@entities/helpdesk/queries';
+import { statuses } from './ticket.utils';
+import { TicketSchedule, TicketScheduleStatus } from '@entities/helpdesk';
 
 const CardActions: React.FC<{ schedule: TicketSchedule }> = ({ schedule }) => {
   const rescheduleMutation = useReScheduleMutation(schedule.id);
@@ -62,7 +62,7 @@ const CardTitle: React.FC<{ schedule: TicketSchedule }> = ({ schedule }) => (
     <b className={spacingCss.marginRightLg}>{schedule.ticketId}</b>
     <Tag
       color={
-        schedule.status === TicketScheduleStatus.Problem ? "error" : "warning"
+        schedule.status === TicketScheduleStatus.Problem ? 'error' : 'warning'
       }
     >
       {schedule.status}
@@ -74,7 +74,7 @@ export const TicketsTimers: React.FC = () => {
   const schedulesQuery = useSchedulesQuery(statuses);
 
   const groups = useMemo(() => {
-    const groups = groupBy(schedulesQuery.data || [], "status");
+    const groups = groupBy(schedulesQuery.data || [], 'status');
     return Object.keys(groups).map((x) => ({ name: x, items: groups[x] }));
   }, [schedulesQuery]);
   return (

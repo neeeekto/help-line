@@ -42,6 +42,7 @@ export const UserMeta: React.FC<{
             onClick={onAdd}
             type="dashed"
             disabled={disabled}
+            data-testid={'add_meta'}
           >
             Add
           </Button>
@@ -70,6 +71,7 @@ export const UserMeta: React.FC<{
               type="text"
               onClick={onRemove}
               disabled={disabled}
+              data-testid={`delete_${name}`}
             >
               <DeleteOutlined />
             </Button>

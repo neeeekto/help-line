@@ -1,1 +1,1 @@
-export * from './create-ticket-view';
+export { CreateTicketView as default } from './create-ticket-view';

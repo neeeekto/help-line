@@ -1,19 +1,19 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from 'react';
 import {
-  Job,
   useJobsQuery,
   useToggleJobsMutation,
   useJobTasksQuery,
-} from "@entities/jobs";
-import cn from "classnames";
-import { boxCss, spacingCss, utilsCss } from "@shared/styles";
-import { Button, Drawer, Dropdown, Menu, Radio, Spin } from "antd";
-import { FullPageContainer } from "@shared/components/full-page-container";
-import { JobsList } from "./views/jobs.list";
-import { RadioChangeEvent } from "antd/lib/radio/interface";
-import { useBoolean } from "ahooks";
-import { JobsForm } from "@views/jobs/views/jobs.form";
-import { SelectInfo } from "rc-menu/lib/interface";
+} from '@help-line/entities/admin/query';
+import cn from 'classnames';
+import { boxCss, spacingCss } from '@help-line/style-utils';
+import { Button, Drawer, Dropdown, Menu, Radio, Spin } from 'antd';
+import { FullPageContainer } from '@help-line/components';
+import { JobsList } from './views/jobs.list';
+import { RadioChangeEvent } from 'antd/lib/radio/interface';
+import { useBoolean } from 'ahooks';
+import { JobsForm } from './views/jobs.form';
+import { SelectInfo } from 'rc-menu/lib/interface';
+import { Job } from '@help-line/entities/admin/api';
 
 const AddMenu: React.FC<{ onSelect?: (type: string) => void }> = ({
   onSelect,
@@ -40,16 +40,16 @@ const AddMenu: React.FC<{ onSelect?: (type: string) => void }> = ({
   );
 };
 
-export const JobsRoot: React.FC = () => {
+export const Jobs: React.FC = () => {
   const jobsQuery = useJobsQuery();
 
   const [showForm, showFormActions] = useBoolean(false);
   const [showAddMenu, showAddMenuActions] = useBoolean(false);
   const [edit, setEdit] = useState<{ entity?: Job; task: string }>({
-    task: "",
+    task: '',
   });
 
-  const [groupByField, setGroupByField] = useState<keyof Job>("group");
+  const [groupByField, setGroupByField] = useState<keyof Job>('group');
   const setGroupType = useCallback(
     (evt: RadioChangeEvent) => {
       setGroupByField(evt.target.value);
@@ -85,12 +85,11 @@ export const JobsRoot: React.FC = () => {
   );
 
   return (
-    <>
+    <FullPageContainer className={cn(boxCss.flex, boxCss.flexColumn)}>
       <div
         className={cn(
           boxCss.flex,
           spacingCss.paddingSm,
-          utilsCss.bgWhite,
           boxCss.justifyContentSpaceBetween
         )}
       >
@@ -120,8 +119,8 @@ export const JobsRoot: React.FC = () => {
           <Dropdown
             overlay={<AddMenu onSelect={toNew} />}
             placement="bottomLeft"
-            visible={showAddMenu}
-            onVisibleChange={showAddMenuActions.toggle}
+            open={showAddMenu}
+            onOpenChange={showAddMenuActions.toggle}
             arrow
           >
             <Button className={spacingCss.marginLeftSm} type="primary">
@@ -161,6 +160,6 @@ export const JobsRoot: React.FC = () => {
           />
         )}
       </Drawer>
-    </>
+    </FullPageContainer>
   );
 };

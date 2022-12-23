@@ -1,21 +1,21 @@
-import React, { useCallback, useState } from "react";
-import { observer } from "mobx-react-lite";
-import { Button, Tabs, Typography } from "antd";
-import { editorStore } from "../../state/editor.store";
-import cn from "classnames";
-import css from "./editor.module.scss";
-import MonacoEditor, { Monaco, OnMount } from "@monaco-editor/react";
-import { boxCss, spacingCss } from "@shared/styles";
-import { FullPageContainer } from "@shared/components/full-page-container";
-import { EditorTab } from "@views/templates/views/editor/editor-tab";
-import { EditedItem, Opened } from "@views/templates/state/editro.types";
+import React, { useCallback, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { Button, Tabs, Typography } from 'antd';
+import { editorStore } from '../../state/editor.store';
+import cn from 'classnames';
+import css from './editor.module.scss';
+import MonacoEditor, { Monaco, OnMount } from '@monaco-editor/react';
+import { boxCss, spacingCss } from '@help-line/style-utils';
+import { FullPageContainer } from '@help-line/components';
+import { EditorTab } from './editor-tab';
+import { EditedItem, Opened } from '../../state/editro.types';
 import {
   useTemplateItemValue,
   useTemplateValueFactory,
-} from "../../utils/editor.utils";
-import { editor, KeyCode, KeyMod } from "monaco-editor";
-import { useSaveAll } from "@views/templates/templates.hooks";
-import { useEditorSuggestions } from "@views/templates/views/editor/editor.suggestion";
+} from '../../utils/editor.utils';
+import { editor, KeyCode, KeyMod } from 'monaco-editor';
+import { useSaveAll } from '../../templates.hooks';
+import { useEditorSuggestions } from './editor.suggestion';
 
 const MonacoIde: React.FC<{ item: Opened }> = observer(({ item }) => {
   const editModel = editorStore.getEditModelByOpened(item);
@@ -23,7 +23,7 @@ const MonacoIde: React.FC<{ item: Opened }> = observer(({ item }) => {
   const updater = useTemplateValueFactory(item);
   const onChange = useCallback(
     (val?: string) => {
-      editorStore.change(item, updater(val || ""));
+      editorStore.change(item, updater(val || ''));
     },
     [item, updater]
   );

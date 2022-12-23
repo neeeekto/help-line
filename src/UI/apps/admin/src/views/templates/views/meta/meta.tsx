@@ -1,15 +1,15 @@
-import React, { FormEvent, FormEventHandler, useCallback } from "react";
-import { observer } from "mobx-react-lite";
-import { Button, Input, Select, Typography } from "antd";
-import { boxCss, spacingCss, textCss } from "@shared/styles";
-import cn from "classnames";
-import { editorStore } from "@views/templates/state/editor.store";
-import { Opened, SourceType } from "@views/templates/state/editro.types";
-import ReactJson from "react-json-view";
-import { Context, Template } from "@entities/templates";
-import { useContextQueries } from "@entities/templates/queries";
-import { TemplateMeta } from "@views/templates/views/meta/template.meta";
-import { ContextMeta } from "@views/templates/views/meta/context.meta";
+import React, { FormEvent, FormEventHandler, useCallback } from 'react';
+import { observer } from 'mobx-react-lite';
+import { Button, Input, Select, Typography } from 'antd';
+import { boxCss, spacingCss, textCss } from '@help-line/style-utils';
+import cn from 'classnames';
+import { editorStore } from '@views/templates/state/editor.store';
+import { Opened, SourceType } from '@views/templates/state/editro.types';
+import ReactJson from 'react-json-view';
+import { Context, Template } from '@entities/templates';
+import { useContextQueries } from '@entities/templates/queries';
+import { TemplateMeta } from '@views/templates/views/meta/template.meta';
+import { ContextMeta } from '@views/templates/views/meta/context.meta';
 
 const MetaContent: React.FC<{ className?: string; active: Opened }> = observer(
   ({ className, active }) => {
@@ -17,7 +17,7 @@ const MetaContent: React.FC<{ className?: string; active: Opened }> = observer(
 
     const updateGroup = useCallback(
       (evt: FormEvent<HTMLInputElement>) => {
-        editorStore.changeField(active, "group", evt.currentTarget.value);
+        editorStore.changeField(active, 'group', evt.currentTarget.value);
       },
       [active]
     );

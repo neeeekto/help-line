@@ -1,25 +1,24 @@
 import {
-  TemplateItemQueries,
-  useComponentQueries,
-  useContextQueries,
-  useTemplatesQueries,
-} from "@entities/templates/queries";
-import { CancellationToken, editor, languages, Position } from "monaco-editor";
-import { Monaco } from "@monaco-editor/react";
-import { SourceType } from "@views/templates/state/editro.types";
-import { TemplateItem } from "@entities/templates";
-import { useRef } from "react";
+  useComponentsQuery,
+  useContextsQuery,
+  useTemplatesQuery,
+} from '@help-line/entities/admin/query';
+import { CancellationToken, editor, languages, Position } from 'monaco-editor';
+import { Monaco } from '@monaco-editor/react';
+import { SourceType } from '../../state/editro.types';
+import { TemplateBase } from '@help-line/entities/admin/api';
+import { useRef } from 'react';
 import CompletionItem = languages.CompletionItem;
 
 interface Info {
   src: SourceType;
-  data: TemplateItem;
+  data: TemplateBase;
 }
 
 export const useEditorSuggestions = () => {
-  const templatesQuery = useTemplatesQueries().useListQuery();
-  const componentsQuery = useComponentQueries().useListQuery();
-  const contextQuery = useContextQueries().useListQuery();
+  const templatesQuery = useContextsQuery;
+  const componentsQuery = useComponentsQuery;
+  const contextQuery = useTemplatesQuery;
   const completionItemProvider = useRef<languages.CompletionItemProvider>({
     provideCompletionItems: (
       model: editor.ITextModel,
@@ -43,7 +42,7 @@ export const useEditorSuggestions = () => {
       };
       console.log(word, textUntilPosition);
       // Match handlebars opening delimiter
-      const rootScopes = ["ctx", "props", "data"];
+      const rootScopes = ['ctx', 'props', 'data'];
       if (textUntilPosition.match(/.*{{$/m)) {
         suggestions.push(
           ...rootScopes.map((x) => ({
@@ -66,7 +65,7 @@ export const useEditorSuggestions = () => {
     currentGetter: () => Info
   ) => {
     monaco.languages.registerCompletionItemProvider(
-      "handlebars",
+      'handlebars',
       completionItemProvider.current
     );
   };

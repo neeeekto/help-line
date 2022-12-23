@@ -1,11 +1,11 @@
-import React, { ChangeEvent, useCallback, useState } from "react";
-import { Button, Card, Input, List, Spin, Typography } from "antd";
-import { boxCss, spacingCss } from "@shared/styles";
-import cn from "classnames";
-import { SearchOutlined } from "@ant-design/icons";
-import { useSchedulesByTicketQuery } from "@entities/helpdesk/queries";
-import { TimerInfo } from "@views/tickets-timers/timer-info";
-import css from "./ticket-timers.module.scss";
+import React, { ChangeEvent, useCallback, useState } from 'react';
+import { Button, Card, Input, List, Spin, Typography } from 'antd';
+import { boxCss, spacingCss } from '@help-line/style-utils';
+import cn from 'classnames';
+import { SearchOutlined } from '@ant-design/icons';
+import { useSchedulesByTicketQuery } from '@entities/helpdesk/queries';
+import { TimerInfo } from '@views/tickets-timers/timer-info';
+import css from './ticket-timers.module.scss';
 
 const TicketTimersList: React.FC<{ ticketId: string }> = ({ ticketId }) => {
   const ticketTimersQuery = useSchedulesByTicketQuery(ticketId);
@@ -31,8 +31,8 @@ const TicketTimersList: React.FC<{ ticketId: string }> = ({ ticketId }) => {
 };
 
 export const TicketTimers: React.FC = () => {
-  const [ticketId, setTicketId] = useState("");
-  const [searchId, setSearchId] = useState("");
+  const [ticketId, setTicketId] = useState('');
+  const [searchId, setSearchId] = useState('');
 
   const onInput = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {

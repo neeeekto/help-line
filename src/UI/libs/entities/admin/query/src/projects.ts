@@ -3,6 +3,7 @@ import {
   ProjectAdminApi,
   Project,
   ProjectData,
+  CreateProjectData,
 } from '@help-line/entities/admin/api';
 import { useApi } from '@help-line/modules/api';
 import { createQueryKeys } from '@help-line/modules/query';
@@ -23,11 +24,15 @@ export const useCreateProjectMutation = () => {
   const client = useQueryClient();
   const api = useApi(ProjectAdminApi);
 
-  return useMutation([...adminProjectsQueryKeys.root, 'create'], api.create, {
-    onSuccess: () => {
-      return client.invalidateQueries(adminProjectsQueryKeys.list());
-    },
-  });
+  return useMutation(
+    [...adminProjectsQueryKeys.root, 'create'],
+    (data: CreateProjectData) => api.create(data),
+    {
+      onSuccess: () => {
+        return client.invalidateQueries(adminProjectsQueryKeys.list());
+      },
+    }
+  );
 };
 
 export const useUpdateProjectMutation = (projectId: Project['id']) => {

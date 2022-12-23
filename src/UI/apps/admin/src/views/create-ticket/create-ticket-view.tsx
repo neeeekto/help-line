@@ -22,11 +22,17 @@ import {
 import { useBoolean } from 'ahooks';
 import { useApi } from '@help-line/modules/api';
 
-export const CreateTicketView: React.FC = () => {
+export interface CreateTicketViewProps {
+  lastCreatedTicket?: string;
+}
+
+export const CreateTicketView: React.FC<CreateTicketViewProps> = ({
+  lastCreatedTicket,
+}) => {
   const [form] = Form.useForm();
   const helpdeskApi = useApi(HelpdeskAdminApi);
   const [processing, processingActions] = useBoolean(false);
-  const [ticketId, setTicketId] = useState('');
+  const [ticketId, setTicketId] = useState(lastCreatedTicket || '');
 
   const projectsQuery = useProjectsQuery();
   const [languages, setLanguages] = useState<string[]>([]);
@@ -72,7 +78,12 @@ export const CreateTicketView: React.FC = () => {
       )}
     >
       <Card className={cn(boxCss.fullWidth)} size={'small'}>
-        <Form form={form} layout="vertical" onFinish={onCreate}>
+        <Form
+          data-testid="submit-form"
+          form={form}
+          layout="vertical"
+          onFinish={onCreate}
+        >
           <div
             className={cn(
               boxCss.flex,
@@ -121,7 +132,13 @@ export const CreateTicketView: React.FC = () => {
               name="project"
               rules={[{ required: true, message: 'Please select project' }]}
             >
-              <Select onChange={setLanguageByProject} disabled={processing}>
+              <Select
+                data-testid="project-selector"
+                onChange={setLanguageByProject}
+                disabled={processing}
+                loading={projectsQuery.isLoading}
+                placeholder={'Select project'}
+              >
                 {projectsQuery.data?.map((x) => (
                   <Select.Option key={x.id} value={x.id} disabled={!x.active}>
                     {x.info.name}
@@ -134,7 +151,11 @@ export const CreateTicketView: React.FC = () => {
               name="language"
               rules={[{ required: true, message: 'Please select language' }]}
             >
-              <Select disabled={!form.getFieldValue('project') || processing}>
+              <Select
+                disabled={!form.getFieldValue('project') || processing}
+                data-testid="language-selector"
+                placeholder={'Select language'}
+              >
                 {languages.map((x) => (
                   <Select.Option key={x} value={x}>
                     {x.toUpperCase()}
