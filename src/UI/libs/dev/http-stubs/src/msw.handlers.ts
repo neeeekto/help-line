@@ -9,7 +9,7 @@ import {
 import { HttpStubRequest } from './create-stub-api';
 
 export namespace MswHandlers {
-  const makeHandler =
+  export const makeHandler =
     (handler: ResponseResolver<MockedRequest, RestContext, DefaultBodyType>) =>
     (req: HttpStubRequest) => {
       const mockUrl = [
@@ -37,6 +37,6 @@ export namespace MswHandlers {
   export const delay = (durationOrMode: DelayMode | number, once = false) =>
     makeHandler((req, res, ctx) => {
       const resFn = once ? res.once : res;
-      return resFn(ctx.delay(durationOrMode));
+      return resFn(ctx.delay(durationOrMode), ctx.status(200));
     });
 }

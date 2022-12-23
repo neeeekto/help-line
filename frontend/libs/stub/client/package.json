@@ -1,7 +1,0 @@
-{
-  "name": "stub-client",
-  "sideEffects": false,
-  "scripts": {
-    "generate-exports-index": "npx barrelsby --d \"./src\" --delete -q -e \"(.spec.ts|.test.ts)\""
-  }
-}

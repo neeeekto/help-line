@@ -2,7 +2,6 @@ import React from 'react';
 import { Migration, MigrationStatusType } from '@help-line/entities/admin/api';
 import { Alert, Timeline, Typography } from 'antd';
 import ReactTimeago from 'react-timeago';
-import ReactJson from 'react-json-view';
 
 export const MigrationDetails: React.FC<{ migration: Migration }> = ({
   migration,
@@ -44,13 +43,7 @@ export const MigrationDetails: React.FC<{ migration: Migration }> = ({
                 </div>
                 <div>
                   <Alert
-                    message={
-                      <ReactJson
-                        displayDataTypes={false}
-                        displayObjectSize={false}
-                        src={details || {}}
-                      />
-                    }
+                    message={JSON.stringify(details, null, 2)}
                     type="error"
                   />
                 </div>

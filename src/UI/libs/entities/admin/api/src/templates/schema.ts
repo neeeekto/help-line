@@ -3,7 +3,7 @@ import { TemplateBase, Template, Context, Component } from './types';
 
 const makeSchema = <T>(segment: string) => {
   return {
-    get: createApiAction<T, void>({
+    get: createApiAction<T[], void>({
       method: HttpMethod.GET,
       url: `/v1/template-renderer/${segment}/`,
     }),

@@ -4,7 +4,7 @@ export interface ProjectData {
   languages: string[];
 }
 
-export interface CreateProjectData extends ProjectData{
+export interface CreateProjectData extends ProjectData {
   projectId: string;
 }
 
@@ -15,5 +15,5 @@ export interface Project {
     image: string;
   };
   languages: string[];
-  active: true;
+  active: boolean;
 }

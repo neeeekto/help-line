@@ -9,6 +9,8 @@ import './styles/global';
 import { ThemeProvider } from './styles/theme-provider';
 import { AuthGuard } from '@help-line/modules/auth';
 import { AppRoutes } from './routes';
+import { MigrationsProvider } from './views/migrations';
+import { LayoutRoot } from './layout';
 
 setupI18n();
 const root = ReactDOM.createRoot(
@@ -20,7 +22,11 @@ root.render(
       <ThemeProvider>
         <AuthGuard>
           <BrowserRouter>
-            <AppRoutes />
+            <MigrationsProvider>
+              <LayoutRoot>
+                <AppRoutes />
+              </LayoutRoot>
+            </MigrationsProvider>
           </BrowserRouter>
         </AuthGuard>
       </ThemeProvider>

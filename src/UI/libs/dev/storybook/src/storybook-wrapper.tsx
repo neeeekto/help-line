@@ -4,12 +4,13 @@ import {
   QueryProvider,
 } from '@help-line/modules/application';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { MemoryRouter } from 'react-router-dom';
 
 export const StorybookWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <QueryProvider>
       <DefaultHttpProvider config={{ serverUrl: '', apiPrefix: '' }}>
-        {children}
+        <MemoryRouter>{children}</MemoryRouter>
       </DefaultHttpProvider>
       <ReactQueryDevtools position={'bottom-right'} />
     </QueryProvider>
