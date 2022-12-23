@@ -1,0 +1,16 @@
+body,
+html,
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+:root {
+  --primary-color: #1961aa;
+  --normal-color: #d9d9d9;
+  --white: #fff;
+  --black: #000;
+  --layout-header-background: #373d42;
+  --menu-dark-inline-submenu-bg: #373d42;
+  --link-color: #5dadff;
+}

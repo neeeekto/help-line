@@ -1,0 +1,16 @@
+.pointer {
+  cursor: pointer;
+}
+
+.noSelection {
+  user-select: none;
+}
+
+.lowAttention {
+  opacity: 0.3;
+  transition: all 0.3s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
