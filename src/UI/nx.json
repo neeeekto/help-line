@@ -51,8 +51,9 @@
     "@nrwl/react": {
       "application": {
         "style": "scss",
-        "unitTestRunner": "jest",
         "linter": "eslint",
+        "bundler": "vite",
+        "unitTestRunner": "jest",
         "babel": true
       },
       "component": {
@@ -60,8 +61,8 @@
       },
       "library": {
         "style": "scss",
-        "unitTestRunner": "jest",
-        "linter": "eslint"
+        "linter": "eslint",
+        "unitTestRunner": "jest"
       }
     }
   },
