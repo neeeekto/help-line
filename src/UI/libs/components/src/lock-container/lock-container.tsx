@@ -7,10 +7,7 @@ type LockContainerProps = PropsWithChildren<{
   text?: React.ReactNode;
 }>;
 
-export const LockContainer: React.FC<LockContainerProps> = ({
-  text,
-  children,
-}) => {
+export const LockContainer = ({ text, children }: LockContainerProps) => {
   return (
     <FullPageContainer useCenterPlacement className={css.root}>
       {children ? <>{children}</> : <Spin tip={text} />}

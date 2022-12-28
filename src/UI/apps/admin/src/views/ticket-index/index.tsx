@@ -6,7 +6,6 @@ import { helpdeskApi } from '@entities/helpdesk';
 import { Button, Input, message } from 'antd';
 import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
 import { DiffEditor } from '@monaco-editor/react';
-import { AxiosError } from 'axios';
 
 const TicketIndex: React.FC = () => {
   const [ticketId, setTicketId] = useState('');

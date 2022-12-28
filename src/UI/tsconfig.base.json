@@ -46,6 +46,7 @@
       "@help-line/modules/events": ["libs/modules/events/src/index.ts"],
       "@help-line/modules/http": ["libs/modules/http/src/index.ts"],
       "@help-line/modules/query": ["libs/modules/query/src/index.ts"],
+      "@help-line/modules/router": ["libs/modules/router/src/index.ts"],
       "@help-line/style-utils": ["libs/style-utils/src/index.ts"]
     }
   },

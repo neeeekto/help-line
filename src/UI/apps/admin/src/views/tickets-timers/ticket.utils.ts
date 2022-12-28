@@ -1,6 +1,6 @@
-import { TicketScheduleStatus } from "@entities/helpdesk";
+import { TicketScheduleStatus } from '@help-line/entities/admin/api';
 
-export const statuses: TicketScheduleStatus[] = [
+export const showStatusesPreset: TicketScheduleStatus[] = [
   TicketScheduleStatus.Problem,
   TicketScheduleStatus.Dead,
 ];

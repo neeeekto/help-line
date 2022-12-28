@@ -6,6 +6,7 @@ import {
   TicketSchedule,
   TicketScheduleStatus,
 } from '@help-line/entities/admin/api';
+import { Ticket } from '@help-line/entities/client/api';
 
 export const adminHelpdeskQueryKeys = createQueryKeys(
   ['admin', 'helpdesk'],
@@ -24,13 +25,14 @@ export const useSchedulesQuery = (statuses: TicketScheduleStatus[]) => {
   );
 };
 
-export const useSchedulesByTicketQuery = (ticketId: string) => {
+export const useSchedulesByTicketQuery = (ticketId: Ticket['id']) => {
   const api = useApi(HelpdeskAdminApi);
   return useQuery(
     adminHelpdeskQueryKeys.schedules.byTicket(ticketId),
     () => api.getSchedulesByTicket({ ticketId }),
     {
       refetchInterval: 1000 * 60,
+      enabled: !!ticketId,
     }
   );
 };
