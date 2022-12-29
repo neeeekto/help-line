@@ -1,9 +1,9 @@
 import React, { FormEvent, useCallback, useMemo, useState } from 'react';
-import { EditedItem, Opened } from '../../state/editro.types';
+import { EditedItem, Opened } from '../../state/types';
 import { Context, Template } from '@help-line/entities/admin/api';
 import { boxCss, spacingCss } from '@help-line/style-utils';
 import { AutoComplete, Input, Select, Tooltip, Typography } from 'antd';
-import { editorStore } from '../../state/editor.store';
+import { editorStore } from '../../state/store';
 import { observer } from 'mobx-react-lite';
 import { useContextsQuery } from '@help-line/entities/admin/query';
 import uniq from 'lodash/uniq';

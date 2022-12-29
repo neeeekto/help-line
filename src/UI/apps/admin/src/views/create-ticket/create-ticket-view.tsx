@@ -140,7 +140,11 @@ export const CreateTicketView: React.FC<CreateTicketViewProps> = ({
                 placeholder={'Select project'}
               >
                 {projectsQuery.data?.map((x) => (
-                  <Select.Option key={x.id} value={x.id} disabled={!x.active}>
+                  <Select.Option
+                    key={x.id}
+                    value={x.id}
+                    disabled={!x.activeTab}
+                  >
                     {x.info.name}
                   </Select.Option>
                 ))}

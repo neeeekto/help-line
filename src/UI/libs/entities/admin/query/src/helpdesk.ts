@@ -9,7 +9,7 @@ import {
 import { Ticket } from '@help-line/entities/client/api';
 
 export const adminHelpdeskQueryKeys = createQueryKeys(
-  ['admin', 'helpdesk'],
+  ['api', 'admin', 'helpdesk'],
   ({ makeKey }) => ({
     schedules: createQueryKeys(makeKey('schedules'), ({ makeKey }) => ({
       byStatuses: (statuses: TicketScheduleStatus[]) => makeKey(statuses),

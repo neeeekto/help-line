@@ -5,13 +5,13 @@ import {
 } from '@help-line/entities/admin/query';
 import { CancellationToken, editor, languages, Position } from 'monaco-editor';
 import { Monaco } from '@monaco-editor/react';
-import { SourceType } from '../../state/editro.types';
+import { ResourceType } from '../../editor-manager';
 import { TemplateBase } from '@help-line/entities/admin/api';
 import { useRef } from 'react';
 import CompletionItem = languages.CompletionItem;
 
 interface Info {
-  src: SourceType;
+  src: ResourceType;
   data: TemplateBase;
 }
 

@@ -29,6 +29,6 @@ export namespace AdminTemplateRendererStubs {
     ...createComponent(),
     contexts: [],
     name: faker.name.fullName(),
-    props: {},
+    props: JSON.parse(faker.datatype.json()),
   }));
 }

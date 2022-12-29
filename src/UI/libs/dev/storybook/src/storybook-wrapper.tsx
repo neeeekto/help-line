@@ -5,12 +5,16 @@ import {
 } from '@help-line/modules/application';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { MemoryRouter } from 'react-router-dom';
+import { InitialEntry } from '@remix-run/router';
 
-export const StorybookWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+export const StorybookWrapper = ({
+  children,
+  initialRoutes,
+}: PropsWithChildren<{ initialRoutes?: InitialEntry[] }>) => {
   return (
     <QueryProvider>
       <DefaultHttpProvider config={{ serverUrl: '', apiPrefix: '' }}>
-        <MemoryRouter>{children}</MemoryRouter>
+        <MemoryRouter initialEntries={initialRoutes}>{children}</MemoryRouter>
       </DefaultHttpProvider>
       <ReactQueryDevtools position={'bottom-right'} />
     </QueryProvider>

@@ -9,7 +9,7 @@ import { useApi } from '@help-line/modules/api';
 import { createQueryKeys } from '@help-line/modules/query';
 
 export const adminProjectsQueryKeys = createQueryKeys(
-  ['admin', 'projects'],
+  ['api', 'admin', 'projects'],
   ({ makeKey }) => ({
     list: () => makeKey('list'),
   })

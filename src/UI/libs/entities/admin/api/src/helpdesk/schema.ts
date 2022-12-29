@@ -4,7 +4,7 @@ import {
   TicketSchedule,
   TicketScheduleStatus,
 } from './types';
-import { Ticket } from '@help-line/entities/client/api';
+import { Ticket, TicketId } from '@help-line/entities/client/api';
 
 export const HelpdeskAdminApiSchema = {
   getSchedules: createApiAction<
@@ -40,12 +40,12 @@ export const HelpdeskAdminApiSchema = {
     data: (req) => req,
   }),
 
-  recreateTicketView: createApiAction<void, { ticketId: string }>({
+  recreateTicketView: createApiAction<void, { ticketId: TicketId }>({
     method: HttpMethod.POST,
     url: ({ ticketId }) => `/v1/helpdesk/ticket/${ticketId}/view/recreate/`,
   }),
 
-  getTicketView: createApiAction<Ticket, { ticketId: string }>({
+  getTicketView: createApiAction<Ticket, { ticketId: TicketId }>({
     method: HttpMethod.GET,
     url: ({ ticketId }) => `/v1/helpdesk/ticket/${ticketId}/view/`,
   }),

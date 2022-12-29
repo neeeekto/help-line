@@ -22,10 +22,17 @@ export namespace MswHandlers {
       );
     };
 
-  export const success = (result: any, once = false, code = 200) =>
+  export const success = (
+    result: any,
+    params?: { once?: false; code?: 200; delay?: DelayMode }
+  ) =>
     makeHandler((req, res, ctx) => {
-      const resFn = once ? res.once : res;
-      return resFn(ctx.json(result), ctx.status(code));
+      const resFn = params?.once ? res.once : res;
+      const handlers = [ctx.json(result), ctx.status(params?.code || 200)];
+      if (params?.delay) {
+        handlers.push(ctx.delay(params.delay));
+      }
+      return resFn(...handlers);
     });
 
   export const error = (code: number, error?: any, once = false) =>

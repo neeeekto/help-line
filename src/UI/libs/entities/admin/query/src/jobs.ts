@@ -4,7 +4,7 @@ import { useApi } from '@help-line/modules/api';
 import { createQueryKeys } from '@help-line/modules/query';
 
 export const adminJobsQueryKeys = createQueryKeys(
-  ['admin', 'jobs'],
+  ['api', 'admin', 'jobs'],
   ({ makeKey, root }) => ({
     list: () => makeKey('list'),
     tasks: () => makeKey('tasks'),

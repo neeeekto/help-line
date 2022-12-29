@@ -1,35 +1,37 @@
 import React, { FormEvent, useCallback, useMemo } from 'react';
-import {
-  EditedItem,
-  Opened,
-  SourceType,
-} from '@views/templates/state/editro.types';
-import { Context, Template } from '@entities/templates';
+import { EditedItem, SourceType } from '../../state/types';
+import { Context, Template } from '@help-line/entities/admin/api';
 import { boxCss, spacingCss } from '@help-line/style-utils';
 import { Button, Input, Popover, Select, Typography } from 'antd';
 import cn from 'classnames';
 import groupBy from 'lodash/groupBy';
-import ReactJson from 'react-json-view';
-import { editorStore } from '@views/templates/state/editor.store';
+import { editorStore } from '../../state/store';
 import { observer } from 'mobx-react-lite';
-import {
-  useContextQueries,
-  useTemplateDescription,
-} from '@entities/templates/queries';
 import { compile } from 'handlebars';
-import { getMainFieldForSrc } from '@views/templates/utils/editor.utils';
-import { Icon } from '@views/templates/components/Icon';
+import { Icon } from '../../components/Icon';
+import {
+  Resource,
+  ResourceType,
+  useOpenTabAction,
+  useResourcesByTypeQuery,
+  ValueAccessor,
+} from '../../editor-manager';
+import { makeTemplatePropsValueAccessor } from '../../editor-manager/value-accessors';
 
-export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
-  ({ active }) => {
-    const descriptions = useTemplateDescription();
-    const contextQuery = useContextQueries().useListQuery();
-    const edit = editorStore.getEditModelByOpened(
-      active
-    ) as EditedItem<Template>;
-    const toEditProps = useCallback(() => {
-      editorStore.open(edit, 'props', 'json');
-    }, [edit]);
+export const TemplateMeta: React.FC<{ resource: Resource }> = observer(
+  ({ resource }) => {
+    const contexts = useResourcesByTypeQuery<Context>(ResourceType.Context);
+    const open = useOpenTabAction();
+
+    const onEditProps = useCallback(() => {
+      open({
+        id: `${resource.id}_props`,
+        resource: resource.type,
+        language: 'json',
+        breadcrumb: [resource.type, resource.id, 'props'],
+        value: makeTemplatePropsValueAccessor() as ValueAccessor,
+      });
+    }, [open]);
 
     const usedContexts = useMemo(() => {
       return (
@@ -152,7 +154,7 @@ export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
             }
             title="Duplicates aliases"
             placement="rightBottom"
-            visible={duplicateContextWithAlias.length > 0}
+            open={duplicateContextWithAlias.length > 0}
           >
             <Select
               mode="multiple"
@@ -178,18 +180,18 @@ export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
           )}
         >
           <Typography.Text strong>Props</Typography.Text>
-          <Button size="small" type="text" onClick={toEditProps}>
+          <Button size="small" type="text" onClick={onEditProps}>
             Edit
           </Button>
         </div>
         <div className={spacingCss.marginTopSm}>
-          <ReactJson src={edit.current.props || {}} />
+          {/*<ReactJson src={edit.current.props || {}} />*/}
         </div>
         <div className={spacingCss.marginTopLg}>
           <Typography.Text strong>Description</Typography.Text>
         </div>
         <div className={spacingCss.marginTopSm}>
-          <Select
+          {/*<Select
             className={boxCss.fullWidth}
             value={edit.current.meta?.description}
             onChange={updateDescription}
@@ -199,7 +201,7 @@ export const TemplateMeta: React.FC<{ active: Opened<Template> }> = observer(
                 {x}
               </Select.Option>
             ))}
-          </Select>
+          </Select>*/}
         </div>
       </>
     );

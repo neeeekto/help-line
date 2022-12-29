@@ -5,7 +5,7 @@ import { WithType } from '@help-line/entities/share';
 import { createQueryKeys } from '@help-line/modules/query';
 
 export const adminMigrationsQueryKeys = createQueryKeys(
-  ['admin', 'migrations'],
+  ['api', 'admin', 'migrations'],
   ({ makeKey }) => ({
     list: () => makeKey('list'),
     params: () => makeKey('params'),

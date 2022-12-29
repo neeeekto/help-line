@@ -4,9 +4,9 @@ import {
   Template,
   TemplateBase,
 } from '@help-line/entities/admin/api';
-import { EditedItem, Opened, SourceType } from '../state/editro.types';
+import { ResourceType } from '../state';
 
-export const useTemplateItemValue = (opened: Opened, edit: EditedItem) => {
+/*export const useTemplateItemValue = (opened: Opened, edit: EditedItem) => {
   const value = (edit.current as any)[opened.field];
   switch (opened.lang) {
     case 'json':
@@ -41,7 +41,7 @@ export const useTemplateValueFactory = (opened: Opened) => {
         return value;
     }
   };
-};
+};*/
 
 export const createTemplateItem = (id: string, type: string) => {
   const commonData = {
@@ -50,7 +50,7 @@ export const createTemplateItem = (id: string, type: string) => {
     updatedAt: new Date(Date.now()).toISOString(),
   } as TemplateBase;
   switch (type) {
-    case SourceType.Template:
+    case ResourceType.Template:
       return {
         ...commonData,
         props: {},
@@ -58,12 +58,12 @@ export const createTemplateItem = (id: string, type: string) => {
         contexts: [],
         name: '',
       } as Template;
-    case SourceType.Context:
+    case ResourceType.Context:
       return {
         ...commonData,
         data: {},
       } as Context;
-    case SourceType.Component:
+    case ResourceType.Component:
       return {
         ...commonData,
         content: '',

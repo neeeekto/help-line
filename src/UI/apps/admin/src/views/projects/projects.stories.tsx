@@ -33,7 +33,7 @@ export const Primary = factory.create({
           MswHandlers.success([
             AdminProjectStubs.createProject({}),
             AdminProjectStubs.createProject({
-              active: false,
+              activeTab: false,
             }),
           ])
         ),

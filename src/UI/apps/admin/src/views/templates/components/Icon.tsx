@@ -1,18 +1,13 @@
 import React from 'react';
 import {
-  AppstoreAddOutlined,
   FileExclamationOutlined,
   FileTextOutlined,
   Html5Filled,
 } from '@ant-design/icons';
-import { SourceType } from '../state/editro.types';
+import { ResourceType } from '../state';
 
-export const Icon: React.FC<{ type: SourceType; field?: string }> = ({
-  type,
-  field,
-}) => {
-  if (type === SourceType.Context) return <FileExclamationOutlined />;
-  if (type === SourceType.Component) return <FileTextOutlined />;
-  if (field === 'props') return <AppstoreAddOutlined />;
+export const Icon: React.FC<{ type: ResourceType }> = ({ type }) => {
+  if (type === ResourceType.Context) return <FileExclamationOutlined />;
+  if (type === ResourceType.Component) return <FileTextOutlined />;
   return <Html5Filled />;
 };
