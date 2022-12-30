@@ -15,11 +15,12 @@ namespace HelpLine.Modules.UserAccess.Infrastructure.Configuration.Processing
 {
     internal class ProcessingModule : Autofac.Module
     {
-        private readonly IQueueFactory _queueFactory;
+        private readonly IQueue _queue;
 
-        public ProcessingModule(IQueueFactory queueFactory)
+
+        public ProcessingModule(IQueue queue)
         {
-            _queueFactory = queueFactory;
+            _queue = queue;
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -42,7 +43,7 @@ namespace HelpLine.Modules.UserAccess.Infrastructure.Configuration.Processing
                 .InstancePerLifetimeScope();
 
             builder.RegisterType<InternalCommandsQueue<InternalCommandTask>>()
-                .WithParameter("queue", _queueFactory.MakeQueue("HelpLine.UserAccess.Internal"))
+                .WithParameter("queue", _queue)
                 .As<IInternalCommandsQueue>()
                 .InstancePerLifetimeScope();
 

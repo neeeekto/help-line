@@ -26,14 +26,17 @@ namespace HelpLine.Modules.UserAccess.Tests.Application.SeedWork
             JobTaskQueue = JobTaskQueueFactory.MakeQueue(JobTaskQueueKey);
 
             var startup = UserAccessStartup.Initialize(
-                ConnectionString,
-                DbName,
-                BusServiceFactory,
-                BusServiceFactory,
-                ExecutionContext,
-                StorageFactory,
-                JobTaskQueue,
-                Logger);
+                new()
+                {
+                    Logger = Logger,
+                    ConnectionString = ConnectionString,
+                    DbName = DbName,
+                    EventBus = BusServiceFactory.MakeEventsBus("user-access"),
+                    InternalQueue = BusServiceFactory.MakeQueue("user-access"),
+                    JobQueue = JobTaskQueue,
+                    StorageFactory = StorageFactory,
+                }
+            );
             startup.EnableAppQueueHandling().EnableJobHandling();
 
             return new UserAccessModule();

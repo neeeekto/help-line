@@ -38,14 +38,18 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.SeedWork
             JobTaskQueue = JobTaskQueueFactory.MakeQueue("Jobs");
 
             var startup = HelpdeskStartup.Initialize(
-                ConnectionString,
-                DbName,
-                BusServiceFactory,
-                BusServiceFactory,
-                JobTaskQueue,
-                ExecutionContext,
-                Logger,
-                TemplateRenderer, EmailSender);
+                new()
+                {
+                    ConnectionString = ConnectionString,
+                    DbName = DbName,
+                    InternalQueue = BusServiceFactory.MakeQueue("help-desk"),
+                    EventBus = BusServiceFactory.MakeEventsBus("help-desk"),
+                    JobQueue = JobTaskQueue,
+                    ExecutionContextAccessor = ExecutionContext,
+                    Logger = Logger,
+                    TemplateRenderer = TemplateRenderer,
+                    EmailSender = EmailSender
+                });
             startup.EnableAppQueueHandling();
             startup.EnableJobHandling();
 
@@ -65,7 +69,8 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.SeedWork
 
         public async Task<Guid> CreateOperator(Guid? operatorId = null)
         {
-            var evt = new NewUserCreatedIntegrationEvent(Guid.NewGuid(), DateTime.UtcNow, operatorId ?? OperatorId, "test", "test",
+            var evt = new NewUserCreatedIntegrationEvent(Guid.NewGuid(), DateTime.UtcNow, operatorId ?? OperatorId,
+                "test", "test",
                 "test");
             BusServiceFactory.PublishInEventBus(evt);
             await BusServiceFactory.EmitAllEvents();
@@ -75,15 +80,16 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.SeedWork
 
         public async Task CreateProject(string[]? languages = null, string? projectId = null)
         {
-            languages ??= new[] {EngLangKey};
-            await Module.ExecuteCommandAsync(new CreateProjectCommand(projectId ?? ProjectId, new ProjectDataDto( "test", "img", languages )));
+            languages ??= new[] { EngLangKey };
+            await Module.ExecuteCommandAsync(new CreateProjectCommand(projectId ?? ProjectId,
+                new ProjectDataDto("test", "img", languages)));
             await BusServiceFactory.EmitAllQueues();
         }
+
         protected async Task CreateProject(string? projectId)
         {
             await CreateProject(null, projectId);
         }
-
 
 
         public async Task<string> CreateTicket(TicketTestData testData)

@@ -97,7 +97,7 @@ namespace HelpLine.Apps.Client.API
             services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
             services.AddSingleton(typeof(Corrector<>));
             services.AddAllCloseGenericTypes(typeof(IDataCorrector<>),
-                new[] {typeof(IDataCorrector<>).GetTypeInfo().Assembly});
+                new[] { typeof(IDataCorrector<>).GetTypeInfo().Assembly });
 
 
             services.AddProblemDetails(x =>
@@ -106,7 +106,6 @@ namespace HelpLine.Apps.Client.API
                 x.Map<NotFoundException>(ex => new NotFoundProblemDetails(ex));
                 x.Map<InvalidCommandException>(ex => new InvalidCommandProblemDetails(ex));
                 x.Map<BusinessRuleValidationException>(ex => new BusinessRuleValidationExceptionProblemDetails(ex));
-
             });
             services.AddApiVersioning(config =>
             {
@@ -222,31 +221,37 @@ namespace HelpLine.Apps.Client.API
             );
 
             UserAccessStartup.Initialize(
-                    _configuration[ConnectionString],
-                    _configuration[DbName],
-                    rabbitMqFactory,
-                    rabbitMqFactory,
-                    executionContextAccessor,
-                    cacheStorageFactory,
-                    jobQueue,
-                    _logger.ForContext("Context", "UserAccess")
+                    new UserAccessStartupConfig
+                    {
+                        Logger = _logger.ForContext("Context", "UserAccess"),
+                        ConnectionString = _configuration[ConnectionString],
+                        DbName = _configuration[DbName],
+                        EventBus = rabbitMqFactory.MakeEventsBus("ua-events"),
+                        InternalQueue = rabbitMqFactory.MakeQueue("ua-internal"),
+                        JobQueue = jobQueue,
+                        StorageFactory = cacheStorageFactory!,
+                        ExecutionContextAccessor = executionContextAccessor
+                    }
                 )
                 .EnableAppQueueHandling();
 
             HelpdeskStartup.Initialize(
-                    _configuration[ConnectionString],
-                    _configuration[DbName],
-                    rabbitMqFactory,
-                    rabbitMqFactory,
-                    jobQueue,
-                    executionContextAccessor,
-                    _logger.ForContext("Context", "Helpdesk"),
-                    new TemplateRenderer(),
-                    new MailgunEmailSender(new MailgunApiCaller(), new EmailConfiguration("", ""))
+                    new HelpdeskStartupConfig()
+                    {
+                        Logger = _logger.ForContext("Context", "Helpdesk"),
+                        ConnectionString = _configuration[ConnectionString],
+                        DbName = _configuration[DbName],
+                        JobQueue = jobQueue,
+                        EmailSender = new MailgunEmailSender(new MailgunApiCaller(), new EmailConfiguration("", "")),
+                        EventBus = rabbitMqFactory.MakeEventsBus("hd-events"),
+                        InternalQueue = rabbitMqFactory.MakeQueue("hd-internal"),
+                        TemplateRenderer = new TemplateRenderer(),
+                        ExecutionContextAccessor = executionContextAccessor
+                    }
                 )
                 .EnableAppQueueHandling();
 
-            QualityStartup.Initialize(
+            /*QualityStartup.Initialize(
                     _configuration[ConnectionString],
                     _configuration[DbName],
                     rabbitMqFactory,
@@ -254,7 +259,7 @@ namespace HelpLine.Apps.Client.API
                     executionContextAccessor,
                     _logger.ForContext("Context", "Quality")
                 )
-                .EnableAppQueueHandling();
+                .EnableAppQueueHandling();*/
         }
 
         private void SetupEvents(IApplicationBuilder app)

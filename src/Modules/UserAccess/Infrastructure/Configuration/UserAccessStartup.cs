@@ -24,59 +24,37 @@ namespace HelpLine.Modules.UserAccess.Infrastructure.Configuration
         private static IContainer _container;
 
         public static UserAccessStartup Initialize(
-            string connectionString,
-            string dbName,
-            IQueueFactory queueFactory,
-            IEventBusFactory busFactory,
-            IExecutionContextAccessor executionContextAccessor,
-            IStorageFactory storageFactory,
-            IJobTaskQueue jobTaskQueue,
-            ILogger logger)
+            UserAccessStartupConfig config)
         {
-            var moduleLogger = logger.ForContext("Module", "UserAccess");
+            var moduleLogger = config.Logger.ForContext("Module", "UserAccess");
 
             ConfigureCompositionRoot(
-                connectionString,
-                dbName,
-                queueFactory,
-                busFactory,
-                executionContextAccessor,
-                storageFactory,
-                jobTaskQueue,
-                logger);
+                config);
 
             return new UserAccessStartup(moduleLogger);
-
         }
 
         private static void ConfigureCompositionRoot(
-            string connectionString,
-            string dbName,
-            IQueueFactory queueFactory,
-            IEventBusFactory busFactory,
-            IExecutionContextAccessor executionContextAccessor,
-            IStorageFactory storageFactory,
-            IJobTaskQueue jobTaskQueue,
-            ILogger logger)
+            UserAccessStartupConfig config)
         {
             var containerBuilder = new ContainerBuilder();
 
-            containerBuilder.RegisterModule(new LoggingModule(logger));
+            containerBuilder.RegisterModule(new LoggingModule(config.Logger));
 
-            var loggerFactory = new SerilogLoggerFactory(logger);
-            containerBuilder.RegisterModule(new DataAccessModule(connectionString, dbName, loggerFactory));
+            var loggerFactory = new SerilogLoggerFactory(config.Logger);
+            containerBuilder.RegisterModule(new DataAccessModule(config.ConnectionString, config.DbName, loggerFactory));
             containerBuilder.RegisterModule(new DomainModule());
-            containerBuilder.RegisterModule(new JobsModule(jobTaskQueue));
-            containerBuilder.RegisterModule(new ApplicationModule(storageFactory));
-            containerBuilder.RegisterModule(new ProcessingModule(queueFactory));
-            containerBuilder.RegisterModule(new EventsBusModule(busFactory));
+            containerBuilder.RegisterModule(new JobsModule(config.JobQueue));
+            containerBuilder.RegisterModule(new ApplicationModule(config.StorageFactory));
+            containerBuilder.RegisterModule(new ProcessingModule(config.InternalQueue));
+            containerBuilder.RegisterModule(new EventsBusModule(config.EventBus));
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule());
             containerBuilder.RegisterModule(new MapperModule());
 
 
-            containerBuilder.RegisterInstance(executionContextAccessor);
-            containerBuilder.RegisterInstance(storageFactory);
+            containerBuilder.RegisterInstance(config.ExecutionContextAccessor);
+            containerBuilder.RegisterInstance(config.StorageFactory);
 
             _container = containerBuilder.Build();
 

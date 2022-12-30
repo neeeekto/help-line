@@ -16,7 +16,6 @@ using HelpLine.Modules.Helpdesk.Infrastructure.Configuration;
 using HelpLine.Modules.Helpdesk.Jobs;
 using HelpLine.Modules.Quality.Application.Contracts;
 using HelpLine.Modules.Quality.Infrastructure;
-using HelpLine.Modules.Quality.Infrastructure.Configuration;
 using HelpLine.Modules.UserAccess.Application.Contracts;
 using HelpLine.Modules.UserAccess.Infrastructure;
 using HelpLine.Modules.UserAccess.Infrastructure.Configuration;
@@ -111,7 +110,6 @@ namespace HelpLine.Apps.Admin.API
                     //options.CacheDuration = TimeSpan.FromMinutes(10);
                     options.SupportedTokens = SupportedTokens.Both;
                 });
-
         }
 
         private void ConfigureModulesAndServices(IServiceCollection services)
@@ -129,10 +127,7 @@ namespace HelpLine.Apps.Admin.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(opt =>
-            {
-                opt.AllowEmptyInputInBodyModelBinding = true;
-            }).AddJson();
+            services.AddControllers(opt => { opt.AllowEmptyInputInBodyModelBinding = true; }).AddJson();
 
             services.Configure<ILoggingBuilder>(lb =>
             {
@@ -143,7 +138,6 @@ namespace HelpLine.Apps.Admin.API
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
-
             services.AddProblemDetails(x =>
             {
                 x.IncludeExceptionDetails = (_, __) => true;
@@ -202,34 +196,40 @@ namespace HelpLine.Apps.Admin.API
                 executionContextAccessor);
 
             UserAccessStartup.Initialize(
-                    _configuration[ConnectionString],
-                    _configuration[DbName],
-                    rabbitMqFactory,
-                    rabbitMqFactory,
-                    executionContextAccessor,
-                    cacheStorageFactory,
-                    jobQueue,
-                    _logger.ForContext("Context", "UserAccess")
+                    new UserAccessStartupConfig
+                    {
+                        Logger = _logger.ForContext("Context", "UserAccess"),
+                        ConnectionString = _configuration[ConnectionString],
+                        DbName = _configuration[DbName],
+                        EventBus = rabbitMqFactory.MakeEventsBus("ua-events"),
+                        InternalQueue = rabbitMqFactory.MakeQueue("ua-internal"),
+                        JobQueue = jobQueue,
+                        StorageFactory = cacheStorageFactory!,
+                        ExecutionContextAccessor = executionContextAccessor
+                    }
                 )
                 .EnableAppQueueHandling()
                 .EnableJobHandling();
 
             HelpdeskStartup.Initialize(
-                    _configuration[ConnectionString],
-                    _configuration[DbName],
-                    rabbitMqFactory,
-                    rabbitMqFactory,
-                    jobQueue,
-                    executionContextAccessor,
-                    _logger.ForContext("Context", "Helpdesk"),
-                    new TemplateRenderer(),
-                    new MailgunEmailSender(new MailgunApiCaller(), new EmailConfiguration("", "")),
-                    migrationCollectorAndRegistry
+                    new HelpdeskStartupConfig()
+                    {
+                        Logger = _logger.ForContext("Context", "Helpdesk"),
+                        ConnectionString = _configuration[ConnectionString],
+                        DbName = _configuration[DbName],
+                        JobQueue = jobQueue,
+                        EmailSender = new MailgunEmailSender(new MailgunApiCaller(), new EmailConfiguration("", "")),
+                        EventBus = rabbitMqFactory.MakeEventsBus("hd-events"),
+                        InternalQueue = rabbitMqFactory.MakeQueue("hd-internal"),
+                        TemplateRenderer = new TemplateRenderer(),
+                        ExecutionContextAccessor = executionContextAccessor,
+                        MigrationCollector = migrationCollectorAndRegistry
+                    }
                 )
                 .EnableAppQueueHandling()
                 .EnableJobHandling();
 
-            QualityStartup.Initialize(
+            /*QualityStartup.Initialize(
                     _configuration[ConnectionString],
                     _configuration[DbName],
                     rabbitMqFactory,
@@ -238,7 +238,7 @@ namespace HelpLine.Apps.Admin.API
                     _logger.ForContext("Context", "Quality")
                 )
                 .EnableAppQueueHandling()
-                .EnableJobHandling();
+                .EnableJobHandling();*/
 
             // RUN ALL
             jobsStartup.Start().GetAwaiter().GetResult();

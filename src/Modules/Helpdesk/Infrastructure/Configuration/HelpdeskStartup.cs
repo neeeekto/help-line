@@ -27,73 +27,46 @@ namespace HelpLine.Modules.Helpdesk.Infrastructure.Configuration
         private static IContainer _container;
 
         public static HelpdeskStartup Initialize(
-            string connectionString,
-            string dbName,
-            IQueueFactory queueFactory,
-            IEventBusFactory busFactory,
-            IJobTaskQueue jobTaskQueue,
-            IExecutionContextAccessor executionContextAccessor,
-            ILogger logger,
-            ITemplateRenderer templateRenderer,
-            IEmailSender emailSender,
-            IMigrationCollector? migrationCollector = null
+            HelpdeskStartupConfig config
         )
         {
             ConfigureCompositionRoot(
-                connectionString,
-                dbName,
-                queueFactory,
-                busFactory,
-                jobTaskQueue,
-                executionContextAccessor,
-                logger,
-                templateRenderer,
-                emailSender,
-                migrationCollector);
+                config);
 
-            return new HelpdeskStartup(logger);
+            return new HelpdeskStartup(config.Logger);
         }
 
         private static void ConfigureCompositionRoot(
-            string connectionString,
-            string dbName,
-            IQueueFactory queueFactory,
-            IEventBusFactory busFactory,
-            IJobTaskQueue jobTaskQueue,
-            IExecutionContextAccessor executionContextAccessor,
-            ILogger logger,
-            ITemplateRenderer templateRenderer,
-            IEmailSender emailSender,
-            IMigrationCollector? migrationCollector = null
+            HelpdeskStartupConfig config
         )
         {
             var containerBuilder = new ContainerBuilder();
 
-            containerBuilder.RegisterModule(new LoggingModule(logger.ForContext("Module", "Helpdesk")));
+            containerBuilder.RegisterModule(new LoggingModule(config.Logger.ForContext("Module", "Helpdesk")));
 
-            var loggerFactory = new SerilogLoggerFactory(logger);
-            containerBuilder.RegisterModule(new DataAccessModule(connectionString, dbName, loggerFactory));
+            var loggerFactory = new SerilogLoggerFactory(config.Logger);
+            containerBuilder.RegisterModule(new DataAccessModule(config.ConnectionString, config.DbName, loggerFactory));
             containerBuilder.RegisterModule(new DomainModule());
-            containerBuilder.RegisterModule(new ProcessingModule(queueFactory));
-            containerBuilder.RegisterModule(new EventsBusModule(busFactory));
+            containerBuilder.RegisterModule(new ProcessingModule(config.InternalQueue));
+            containerBuilder.RegisterModule(new EventsBusModule(config.EventBus));
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule());
             containerBuilder.RegisterModule(new ApplicationModule());
             containerBuilder.RegisterModule(new MapperModule());
-            containerBuilder.RegisterModule(new JobsModule(jobTaskQueue));
+            containerBuilder.RegisterModule(new JobsModule(config.JobQueue));
 
-            containerBuilder.RegisterInstance(executionContextAccessor);
-            containerBuilder.RegisterInstance(templateRenderer);
-            containerBuilder.RegisterInstance(emailSender);
+            containerBuilder.RegisterInstance(config.ExecutionContextAccessor);
+            containerBuilder.RegisterInstance(config.TemplateRenderer);
+            containerBuilder.RegisterInstance(config.EmailSender);
 
             _container = containerBuilder.Build();
             HelpdeskCompositionRoot.SetContainer(_container);
-            if (migrationCollector != null)
+            if (config.MigrationCollector != null)
             {
                 var migrations = _container.Resolve<IEnumerable<IMigrationInstance>>();
                 foreach (var migration in migrations)
                 {
-                    migrationCollector.Add(() => migration);
+                    config.MigrationCollector.Add(() => migration);
                 }
             }
         }

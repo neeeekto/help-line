@@ -5,16 +5,17 @@ namespace HelpLine.Modules.UserAccess.Infrastructure.Configuration.EventsBus
 {
     internal class EventsBusModule : Autofac.Module
     {
-        private readonly IEventBusFactory _busFactory;
+        private readonly IEventsBus _bus;
 
-        public EventsBusModule(IEventBusFactory busFactory)
+
+        public EventsBusModule(IEventsBus bus)
         {
-            _busFactory = busFactory;
+            _bus = bus;
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterInstance(_busFactory.MakeEventsBus("HelpLine.UserAccess.EventBus"))
+            builder.RegisterInstance(_bus)
                 .As<IEventsBus>()
                 .SingleInstance();
         }

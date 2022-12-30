@@ -125,15 +125,18 @@ namespace HelpLine.Apps.External.API
             var jobQueue = new JobTaskQueueFactory(rabbitMqFactory).MakeQueue(_configuration["JobQueue"]);
 
             HelpdeskStartup.Initialize(
-                _configuration[ConnectionString],
-                _configuration[DbName],
-                rabbitMqFactory,
-                rabbitMqFactory,
-                jobQueue,
-                executionContextAccessor,
-                _logger.ForContext("Context", "Helpdesk"),
-                new TemplateRenderer(),
-                new MailgunEmailSender(new MailgunApiCaller(), new EmailConfiguration("", ""))
+                new HelpdeskStartupConfig()
+                {
+                    Logger = _logger.ForContext("Context", "Helpdesk"),
+                    ConnectionString = _configuration[ConnectionString],
+                    DbName = _configuration[DbName],
+                    JobQueue = jobQueue,
+                    EmailSender = new MailgunEmailSender(new MailgunApiCaller(), new EmailConfiguration("", "")),
+                    EventBus = rabbitMqFactory.MakeEventsBus("hd-events"),
+                    InternalQueue = rabbitMqFactory.MakeQueue("hd-internal"),
+                    TemplateRenderer = new TemplateRenderer(),
+                    ExecutionContextAccessor = executionContextAccessor
+                }
             );
             FilesStartup.Initialize(_logger.ForContext("Context", "Files"),
                 executionContextAccessor,

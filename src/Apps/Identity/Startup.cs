@@ -83,7 +83,7 @@ namespace HelpLine.Apps.Identity
             var secret = _configuration["ApiSecret"]!;
             foreach (var resource in resources)
             {
-                resource.ApiSecrets = new[] {new Secret(secret.Sha256())};
+                resource.ApiSecrets = new[] { new Secret(secret.Sha256()) };
             }
 
             services.AddIdentityServer()
@@ -145,14 +145,17 @@ namespace HelpLine.Apps.Identity
             var rabbitMqFactory = app.ApplicationServices.GetService<RabbitMqServiceFactory>();
             var jobQueue = new JobTaskQueueFactory(rabbitMqFactory).MakeQueue(_configuration["JobQueue"]);
             UserAccessStartup.Initialize(
-                _configuration["Db:ConnectionString"],
-                _configuration["Db:Name"],
-                rabbitMqFactory,
-                rabbitMqFactory,
-                new ExecutionContextAccessor(),
-                cacheStorageFactory,
-                jobQueue,
-                _logger
+                new UserAccessStartupConfig
+                {
+                    Logger = _logger,
+                    ConnectionString = _configuration["Db:ConnectionString"],
+                    DbName = _configuration["Db:Name"],
+                    EventBus = rabbitMqFactory.MakeEventsBus("ua-events"),
+                    InternalQueue = rabbitMqFactory.MakeQueue("ua-internal"),
+                    JobQueue = jobQueue,
+                    StorageFactory = cacheStorageFactory,
+                    ExecutionContextAccessor = new ExecutionContextAccessor()
+                }
             );
         }
 

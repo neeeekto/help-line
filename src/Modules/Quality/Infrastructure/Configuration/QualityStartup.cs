@@ -20,47 +20,32 @@ namespace HelpLine.Modules.Quality.Infrastructure.Configuration
         private static IContainer _container;
 
         public static QualityStartup Initialize(
-            string connectionString,
-            string dbName,
-            IQueueFactory queueFactory,
-            IEventBusFactory busFactory,
-            IExecutionContextAccessor executionContextAccessor,
-            ILogger logger)
+            QualityStartupConfig config)
         {
-            ConfigureCompositionRoot(connectionString,
-                dbName,
-                queueFactory,
-                busFactory,
-                executionContextAccessor,
-                logger);
+            ConfigureCompositionRoot(config);
 
-            return new QualityStartup(logger);
+            return new QualityStartup(config.Logger);
 
         }
 
         private static void ConfigureCompositionRoot(
-            string connectionString,
-            string dbName,
-            IQueueFactory queueFactory,
-            IEventBusFactory busFactory,
-            IExecutionContextAccessor executionContextAccessor,
-            ILogger logger)
+            QualityStartupConfig config)
         {
             var containerBuilder = new ContainerBuilder();
 
-            containerBuilder.RegisterModule(new LoggingModule(logger));
+            containerBuilder.RegisterModule(new LoggingModule(config.Logger));
 
-            var loggerFactory = new SerilogLoggerFactory(logger);
-            containerBuilder.RegisterModule(new DataAccessModule(connectionString, dbName, loggerFactory));
+            var loggerFactory = new SerilogLoggerFactory(config.Logger);
+            containerBuilder.RegisterModule(new DataAccessModule(config.ConnectionString, config.DbName, loggerFactory));
             containerBuilder.RegisterModule(new DomainModule());
-            containerBuilder.RegisterModule(new ProcessingModule(queueFactory));
-            containerBuilder.RegisterModule(new EventsBusModule(busFactory));
+            containerBuilder.RegisterModule(new ProcessingModule(config.InternalQueue));
+            containerBuilder.RegisterModule(new EventsBusModule(config.EventBus));
             containerBuilder.RegisterModule(new MediatorModule());
             containerBuilder.RegisterModule(new OutboxModule());
             containerBuilder.RegisterModule(new MapperModule());
 
 
-            containerBuilder.RegisterInstance(executionContextAccessor);
+            containerBuilder.RegisterInstance(config.ExecutionContextAccessor);
 
             _container = containerBuilder.Build();
 
