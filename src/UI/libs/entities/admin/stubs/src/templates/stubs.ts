@@ -17,18 +17,18 @@ export namespace AdminTemplateRendererStubs {
 
   export const createComponent = createStubFactory<Component>(() => ({
     ...createTemplateItemData(),
-    content: '',
+    content: faker.lorem.text(),
   }));
 
   export const createContext = createStubFactory<Context>(() => ({
     ...createTemplateItemData(),
-    data: {},
+    data: JSON.parse(faker.datatype.json()),
   }));
 
   export const createTemplate = createStubFactory<Template>(() => ({
     ...createComponent(),
     contexts: [],
     name: faker.name.fullName(),
-    props: {},
+    props: JSON.parse(faker.datatype.json()),
   }));
 }

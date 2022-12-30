@@ -1,28 +1,45 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { ChangeEvent, useCallback, useMemo, useState } from 'react';
 import {
   Button,
   Card,
   Collapse,
-  Divider,
+  Input,
   Popconfirm,
   Result,
+  Select,
+  Spin,
+  Table,
   Tag,
   Typography,
 } from 'antd';
 import groupBy from 'lodash/groupBy';
-import { DeleteOutlined, RedoOutlined, SmileOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  RedoOutlined,
+  SearchOutlined,
+  SmileOutlined,
+} from '@ant-design/icons';
 import { TimerInfo } from './timer-info';
 import css from './tickets-timers.module.scss';
 import { boxCss, spacingCss } from '@help-line/style-utils';
 import {
   useDeleteScheduleMutation,
   useReScheduleMutation,
+  useSchedulesByTicketQuery,
   useSchedulesQuery,
-} from '@entities/helpdesk/queries';
-import { statuses } from './ticket.utils';
-import { TicketSchedule, TicketScheduleStatus } from '@entities/helpdesk';
+} from '@help-line/entities/admin/query';
+import { showStatusesPreset } from './ticket.utils';
+import {
+  TicketSchedule,
+  TicketScheduleStatus,
+} from '@help-line/entities/admin/api';
+import { FullPageContainer } from '@help-line/components';
+import { TicketScheduleStatusLabel } from './ticket-schedule-status-label';
+import { TicketId } from '@help-line/entities/client/api';
+import cn from 'classnames';
+import { useDebounce } from 'ahooks';
 
-const CardActions: React.FC<{ schedule: TicketSchedule }> = ({ schedule }) => {
+const Actions: React.FC<{ schedule: TicketSchedule }> = ({ schedule }) => {
   const rescheduleMutation = useReScheduleMutation(schedule.id);
   const deleteMutation = useDeleteScheduleMutation(schedule.id);
 
@@ -43,76 +60,101 @@ const CardActions: React.FC<{ schedule: TicketSchedule }> = ({ schedule }) => {
           disabled={deleteMutation.isLoading}
           okButtonProps={{ danger: true }}
         >
-          <Button size="small" type="text" loading={deleteMutation.isLoading}>
-            <DeleteOutlined />
-          </Button>
+          <Button
+            size="small"
+            type="text"
+            loading={deleteMutation.isLoading}
+            icon={<DeleteOutlined />}
+          />
         </Popconfirm>
       )}
       {schedule.status === TicketScheduleStatus.Problem && (
-        <Button size="small" type="text" onClick={onReSchedule}>
-          <RedoOutlined />
-        </Button>
+        <Button
+          size="small"
+          type="text"
+          onClick={onReSchedule}
+          icon={<RedoOutlined />}
+        ></Button>
       )}
     </>
   );
 };
 
-const CardTitle: React.FC<{ schedule: TicketSchedule }> = ({ schedule }) => (
-  <div className={boxCss.flex}>
-    <b className={spacingCss.marginRightLg}>{schedule.ticketId}</b>
-    <Tag
-      color={
-        schedule.status === TicketScheduleStatus.Problem ? 'error' : 'warning'
-      }
-    >
-      {schedule.status}
-    </Tag>
-  </div>
-);
-
 export const TicketsTimers: React.FC = () => {
-  const schedulesQuery = useSchedulesQuery(statuses);
+  const [ticketIdFilter, setTicketIdFilter] = useState<TicketId>('');
+  const [statusFilter, setStatusFilter] =
+    useState<TicketScheduleStatus[]>(showStatusesPreset);
+  const ticketIdDebounce = useDebounce<TicketId>(ticketIdFilter);
+  const statusFilterDebounce =
+    useDebounce<TicketScheduleStatus[]>(statusFilter);
 
-  const groups = useMemo(() => {
-    const groups = groupBy(schedulesQuery.data || [], 'status');
-    return Object.keys(groups).map((x) => ({ name: x, items: groups[x] }));
-  }, [schedulesQuery]);
+  const schedulesQuery = useSchedulesQuery(statusFilterDebounce);
+  const ticketTimersQuery = useSchedulesByTicketQuery(ticketIdDebounce);
+
+  const onInput = useCallback(
+    (evt: ChangeEvent<HTMLInputElement>) => {
+      setTicketIdFilter(evt.currentTarget.value as TicketId);
+    },
+    [setTicketIdFilter]
+  );
+
+  const query = ticketIdDebounce ? ticketTimersQuery : schedulesQuery;
+
   return (
-    <Collapse ghost defaultActiveKey={groups.map((x) => x.name)}>
-      {groups.map((x) => (
-        <Collapse.Panel header={x.name} key={x.name}>
-          {x.items.map((t) => (
-            <Card
-              key={t.id}
-              size="small"
-              title={<CardTitle schedule={t} />}
-              className={css.timerCard}
-              bordered
-              extra={<CardActions schedule={t} />}
-            >
-              <TimerInfo timer={t} />
-              {t.details && (
-                <div className={spacingCss.marginTopSm}>
-                  <Typography.Text type="danger">{t.details}</Typography.Text>
-                </div>
-              )}
-            </Card>
+    <>
+      <Typography.Title level={4}>Timers</Typography.Title>
+      <div
+        className={cn(boxCss.flex, boxCss.alignItemsCenter, spacingCss.spaceXs)}
+      >
+        <Select
+          style={{ minWidth: 200 }}
+          className={boxCss.flex00Auto}
+          mode="multiple"
+          placeholder="Status filter"
+          defaultValue={statusFilter}
+          onChange={(val) => setStatusFilter(val)}
+        >
+          {Object.values(TicketScheduleStatus).map((v) => (
+            <Select.Option key={v}>{v}</Select.Option>
           ))}
-        </Collapse.Panel>
-      ))}
-      {groups.length === 0 && (
-        <div>
-          <Result
-            icon={<SmileOutlined />}
-            title="Great, there is no failed tickets timers!"
-            extra={
-              <Button type="primary" onClick={() => schedulesQuery.refetch()}>
-                Reload
-              </Button>
-            }
-          />
-        </div>
-      )}
-    </Collapse>
+        </Select>
+        <Input
+          prefix="Ticket ID: "
+          placeholder="X-XXXXXXX"
+          value={ticketIdFilter}
+          onChange={onInput}
+          allowClear
+        />
+      </div>
+      <Table
+        className={spacingCss.marginTopSm}
+        dataSource={query.data}
+        size={'small'}
+        pagination={false}
+        loading={query.isLoading}
+      >
+        <Table.Column dataIndex={'ticketId'} title={'Ticket'}></Table.Column>
+        <Table.Column
+          dataIndex={'status'}
+          title={'Status'}
+          render={(status) => <TicketScheduleStatusLabel status={status} />}
+        ></Table.Column>
+        <Table.Column
+          title={'Timer'}
+          render={(_, item) => <TimerInfo timer={item as TicketSchedule} />}
+        ></Table.Column>
+        <Table.Column
+          dataIndex={'details'}
+          title={'Details'}
+          width={'50%'}
+        ></Table.Column>
+
+        <Table.Column
+          dataIndex={''}
+          title={'Actions'}
+          render={(v, item) => <Actions schedule={item as TicketSchedule} />}
+        ></Table.Column>
+      </Table>
+    </>
   );
 };

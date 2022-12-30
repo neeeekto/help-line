@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 
 export namespace AdminProjectStubs {
   export const createProject = createStubFactory<Project>(() => ({
-    active: true,
+    activeTab: true,
     id: faker.datatype.uuid(),
     languages: Array(faker.datatype.number({ min: 1, max: 10 }))
       .fill(null)

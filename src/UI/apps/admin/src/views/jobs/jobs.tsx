@@ -136,7 +136,7 @@ export const Jobs: React.FC = () => {
           <Spin />
         ) : (
           <JobsList
-            jobs={jobsQuery.data!}
+            jobs={jobsQuery.data || []}
             groupBy={groupByField}
             onEdit={toEdit}
           />

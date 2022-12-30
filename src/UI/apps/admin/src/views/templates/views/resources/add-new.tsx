@@ -8,21 +8,18 @@ import React, {
 import cn from 'classnames';
 import { boxCss, spacingCss } from '@help-line/style-utils';
 import { Button, Input } from 'antd';
-import { editorStore } from '../../state/editor.store';
-import { observer } from 'mobx-react-lite';
-import { TemplateBase } from '@help-line/entities/admin/api';
 import css from './resources.module.scss';
 import { StopOutlined } from '@ant-design/icons';
 import { useClickAway } from 'ahooks';
 import { Icon } from '../../components/Icon';
-import { SourceType } from '../../state/editro.types';
+import { Resource, ResourceType } from '../../state';
 
 export const AddNew: React.FC<{
-  type: SourceType;
-  items: TemplateBase[];
+  type: ResourceType;
+  resources: Resource[];
   onAdd: (id: string) => void;
   onCancel: () => void;
-}> = observer(({ type, onAdd, items, onCancel }) => {
+}> = ({ type, onAdd, resources, onCancel }) => {
   const [id, setId] = useState('');
   const ref = useRef<any>();
   useClickAway(() => {
@@ -31,11 +28,10 @@ export const AddNew: React.FC<{
 
   const isUsed = useMemo(() => {
     return (
-      editorStore.state.edited.some(
-        (x) => x.src === type && x.id.toLowerCase() === id
-      ) || items.some((x) => x.id.toLowerCase() === id)
+      resources.some((x) => x.type === type && x.id.toLowerCase() === id) ||
+      resources.some((x) => x.id.toLowerCase() === id)
     );
-  }, [id, items]);
+  }, [id, resources]);
 
   const onChange = useCallback(
     (evt: ChangeEvent<HTMLInputElement>) => {
@@ -87,4 +83,4 @@ export const AddNew: React.FC<{
       </Button>
     </div>
   );
-});
+};

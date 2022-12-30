@@ -11,12 +11,15 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const createTemplateQueryKeys = (segment: string) =>
-  createQueryKeys(['admin', 'template-renderer', segment], ({ makeKey }) => ({
-    list: () => makeKey('list'),
-    save: (id: string) => makeKey('save', id),
-    saveList: (id: string[]) => makeKey('saveList', ...id),
-    delete: (id: string) => makeKey('delete', id),
-  }));
+  createQueryKeys(
+    ['api', 'admin', 'template-renderer', segment],
+    ({ makeKey }) => ({
+      list: () => makeKey('list'),
+      save: (id: string) => makeKey('save', id),
+      saveList: (id: string[]) => makeKey('saveList', ...id),
+      delete: (id: string) => makeKey('delete', id),
+    })
+  );
 
 export const adminTemplateQueryKeys = createTemplateQueryKeys('templates');
 

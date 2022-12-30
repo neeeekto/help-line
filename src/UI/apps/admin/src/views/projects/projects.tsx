@@ -4,7 +4,16 @@ import {
   useProjectsQuery,
 } from '@help-line/entities/admin/query';
 import { FullPageContainer } from '@help-line/components';
-import { Spin, List, Avatar, Switch, Tag, Button, Drawer } from 'antd';
+import {
+  Spin,
+  List,
+  Avatar,
+  Switch,
+  Tag,
+  Button,
+  Drawer,
+  Typography,
+} from 'antd';
 import css from './projects.module.scss';
 import cn from 'classnames';
 import { useBoolean } from 'ahooks';
@@ -70,6 +79,8 @@ export const Projects: React.FC = () => {
           spacingCss.marginBottomSm
         )}
       >
+        <Typography.Title level={4}>Projects</Typography.Title>
+
         <Button type="primary" onClick={add}>
           Add
         </Button>

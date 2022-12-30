@@ -1,36 +1,55 @@
-import React, { FormEvent, useCallback, useMemo, useState } from 'react';
-import { EditedItem, Opened } from '../../state/editro.types';
-import { Context, Template } from '@help-line/entities/admin/api';
+import React, { useCallback, useMemo } from 'react';
+import { Context } from '@help-line/entities/admin/api';
 import { boxCss, spacingCss } from '@help-line/style-utils';
-import { AutoComplete, Input, Select, Tooltip, Typography } from 'antd';
-import { editorStore } from '../../state/editor.store';
+import { AutoComplete, Select, Tooltip, Typography } from 'antd';
+import {
+  EditTab,
+  makeContextAliasValueAccessor,
+  makeContextExtendValueAccessor,
+  Resource,
+  ResourceType,
+  useEditStore,
+} from '../../state';
 import { observer } from 'mobx-react-lite';
-import { useContextsQuery } from '@help-line/entities/admin/query';
 import uniq from 'lodash/uniq';
 
-export const ContextMeta: React.FC<{ active: Opened<Context> }> = observer(
-  ({ active }) => {
-    const edit = editorStore.getEditModelByOpened(
-      active
-    ) as EditedItem<Context>;
-    const contextQuery = useContextsQuery();
+export const ContextMeta = observer(
+  ({ resource, tab }: { tab: EditTab; resource: Resource<Context> }) => {
+    const store$ = useEditStore();
+    const contextResources = store$.selectors.resourceByType<Context>(
+      ResourceType.Context
+    );
     const aliases = useMemo(() => {
       return uniq(
-        contextQuery.data?.filter((x) => x.alias).map((x) => x.alias!) || []
+        contextResources
+          .filter((x) => x.data.alias)
+          .map((x) => x.data.alias!) || []
       ).map((x) => ({ value: x }));
-    }, [contextQuery]);
+    }, [contextResources]);
+
+    const aliasAccessor = useMemo(
+      () =>
+        store$.createValueAccessor<Context>(makeContextAliasValueAccessor()),
+      [store$]
+    );
+
+    const extendAccessor = useMemo(
+      () =>
+        store$.createValueAccessor<Context>(makeContextExtendValueAccessor()),
+      [store$]
+    );
 
     const updateAlias = useCallback(
       (val: string) => {
-        editorStore.changeField(active, 'alias', val);
+        aliasAccessor().set(val);
       },
-      [active]
+      [aliasAccessor]
     );
     const updateExtend = useCallback(
-      (contextsId: string) => {
-        editorStore.changeField(active, 'extend', contextsId);
+      (contextId: string) => {
+        extendAccessor().set(contextId);
       },
-      [active]
+      [extendAccessor]
     );
     return (
       <>
@@ -52,7 +71,7 @@ export const ContextMeta: React.FC<{ active: Opened<Context> }> = observer(
         <div className={spacingCss.marginTopSm}>
           <AutoComplete
             className={boxCss.fullWidth}
-            value={edit.current.alias}
+            value={aliasAccessor().get()}
             options={aliases}
             onChange={updateAlias}
           />
@@ -77,13 +96,13 @@ export const ContextMeta: React.FC<{ active: Opened<Context> }> = observer(
             className={boxCss.fullWidth}
             onChange={updateExtend}
             allowClear
-            value={(edit.current as Context).extend}
+            value={extendAccessor().get()}
           >
-            {contextQuery.data
-              ?.filter((x) => x.id !== active.id)
+            {contextResources
+              ?.filter((x) => x.data.id !== resource.data.id)
               .map((x) => (
-                <Select.Option key={x.id} value={x.id}>
-                  {x.id}
+                <Select.Option key={x.data.id} value={x.data.id}>
+                  {x.data.id}
                 </Select.Option>
               ))}
           </Select>
