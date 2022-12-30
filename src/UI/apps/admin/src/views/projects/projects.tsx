@@ -24,13 +24,13 @@ import { Project } from '@help-line/entities/admin/api';
 const SwitchProject: React.FC<{ project: Project }> = ({ project }) => {
   const toggleProjectActivation = useToggleProjectMutation(project.id);
   const onChange = useCallback(
-    () => toggleProjectActivation.mutate(project.activeTab),
-    [toggleProjectActivation, project.activeTab]
+    () => toggleProjectActivation.mutate(project.active),
+    [toggleProjectActivation, project.active]
   );
 
   return (
     <Switch
-      checked={project.activeTab}
+      checked={project.active}
       size="small"
       onChange={onChange}
       loading={toggleProjectActivation.isLoading}

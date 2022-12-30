@@ -143,7 +143,7 @@ export const CreateTicketView: React.FC<CreateTicketViewProps> = ({
                   <Select.Option
                     key={x.id}
                     value={x.id}
-                    disabled={!x.activeTab}
+                    disabled={!x.active}
                   >
                     {x.info.name}
                   </Select.Option>
