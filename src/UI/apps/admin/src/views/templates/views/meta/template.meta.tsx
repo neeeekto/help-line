@@ -1,50 +1,49 @@
 import React, { FormEvent, useCallback, useMemo } from 'react';
-import { EditedItem, SourceType } from '../../state/types';
 import { Context, Template } from '@help-line/entities/admin/api';
 import { boxCss, spacingCss } from '@help-line/style-utils';
 import { Button, Input, Popover, Select, Typography } from 'antd';
 import cn from 'classnames';
+import { JSONTree } from 'react-json-tree';
 import groupBy from 'lodash/groupBy';
-import { editorStore } from '../../state/store';
 import { observer } from 'mobx-react-lite';
 import { compile } from 'handlebars';
 import { Icon } from '../../components/Icon';
 import {
+  makeTemplatePropsValueAccessor,
+  useEditStore,
+  EditTab,
   Resource,
   ResourceType,
-  useOpenTabAction,
-  useResourcesByTypeQuery,
   ValueAccessor,
-} from '../../editor-manager';
-import { makeTemplatePropsValueAccessor } from '../../editor-manager/value-accessors';
+  makeContextDataValueAccessor,
+} from '../../state';
 
-export const TemplateMeta: React.FC<{ resource: Resource }> = observer(
-  ({ resource }) => {
-    const contexts = useResourcesByTypeQuery<Context>(ResourceType.Context);
-    const open = useOpenTabAction();
+export const TemplateMeta = observer(
+  ({ resource, tab }: { resource: Resource<Template>; tab: EditTab }) => {
+    const store$ = useEditStore();
+    const contexts = store$.selectors.resourceByType<Context>(
+      ResourceType.Context
+    );
 
     const onEditProps = useCallback(() => {
-      open({
-        id: `${resource.id}_props`,
-        resource: resource.type,
+      store$.actions.openTab({
+        id: `${resource.id}.props`,
+        resource: resource.id,
         language: 'json',
-        breadcrumb: [resource.type, resource.id, 'props'],
+        breadcrumb: [resource.type, resource.data.id, 'props'],
         value: makeTemplatePropsValueAccessor() as ValueAccessor,
       });
-    }, [open]);
+    }, [open, resource]);
 
     const usedContexts = useMemo(() => {
-      return (
-        contextQuery.data?.filter((x) =>
-          edit.current.contexts.includes(x.id)
-        ) || []
-      );
-    }, [edit.current.contexts, contextQuery]);
+      const current = store$.edit.get(resource, 'contexts');
+      return contexts.filter((x) => current?.includes(x.id)) || [];
+    }, [resource, contexts]);
 
     const duplicateContextWithAlias = useMemo(() => {
       const group = groupBy(
-        usedContexts.filter((x) => x.alias),
-        'alias'
+        usedContexts.filter((x) => x.data.alias),
+        ['data', 'alias']
       );
       return Object.keys(group)
         .filter((x) => group[x].length > 1)
@@ -53,50 +52,60 @@ export const TemplateMeta: React.FC<{ resource: Resource }> = observer(
 
     const updateContext = useCallback(
       (contextsIds: string[]) => {
-        editorStore.changeField(active, 'contexts', contextsIds);
+        store$.edit.set(resource, 'contexts', contextsIds);
       },
-      [active]
+      [store$, resource]
     );
 
-    const openContext = useCallback((context: Context) => {
-      editorStore.open(
-        {
-          id: context.id,
-          src: SourceType.Context,
-          current: { ...context },
-          original: context,
-        },
-        getMainFieldForSrc(SourceType.Context),
-        'json'
-      );
-    }, []);
+    const openContext = useCallback(
+      (context: Context) => {
+        const valAccessor = makeContextDataValueAccessor();
+        store$.actions.openTab({
+          id: `${context.id}.${valAccessor.field}`,
+          resource: resource.id,
+          value: valAccessor as ValueAccessor,
+          breadcrumb: [resource.type, resource.data.id, 'context'],
+          language: 'json',
+        });
+      },
+      [store$, resource]
+    );
 
     const showPreview = useCallback(() => {
-      console.log(compile(edit.current.content)({}));
-      editorStore.open(
-        edit,
-        'preview',
-        'handlebars',
-        compile(edit.current.content)({})
-      );
-    }, [edit]);
+      store$.actions.openTab({
+        id: `${resource.id}.preview`,
+        title: `preview: ${resource.id}`,
+        resource: resource.id,
+        value: {
+          field: 'preview',
+          set: () => ({}),
+          get: (rsc, current) =>
+            compile(current?.content || rsc?.content || '')({}),
+        } as ValueAccessor<Template> as any,
+        breadcrumb: [resource.type, resource.data.id, 'preview'],
+        language: 'handlebars',
+        readonly: true,
+      });
+    }, [store$, resource]);
 
     const updateName = useCallback(
       (evt: FormEvent<HTMLInputElement>) => {
-        editorStore.changeField(active, 'name', evt.currentTarget.value);
+        store$.edit.set(resource, 'name', evt.currentTarget.value);
       },
-      [active]
+      [store$, resource]
     );
 
     const updateDescription = useCallback(
       (id: string) => {
-        editorStore.changeField(
-          active,
+        store$.edit.set(
+          resource,
           'meta',
-          Object.assign(edit.current.meta || {}, { description: id })
+          Object.assign(store$.edit.get(resource, 'meta') || {}, {
+            description: id,
+          })
         );
       },
-      [active]
+      [store$, resource]
     );
 
     return (
@@ -105,7 +114,11 @@ export const TemplateMeta: React.FC<{ resource: Resource }> = observer(
           <Typography.Text strong>Name</Typography.Text>
         </div>
         <div className={spacingCss.marginTopSm}>
-          <Input size="small" value={edit.current.name} onInput={updateName} />
+          <Input
+            size="small"
+            value={store$.edit.get(resource, 'name')}
+            onInput={updateName}
+          />
         </div>
         <div className={spacingCss.marginTopLg}>
           <Typography.Text strong>Actions</Typography.Text>
@@ -141,10 +154,10 @@ export const TemplateMeta: React.FC<{ resource: Resource }> = observer(
                       <Button
                         size="small"
                         type="text"
-                        key={`${c.alias}_${c.id}`}
-                        onClick={() => openContext(c)}
+                        key={`${c.data.alias}_${c.id}`}
+                        onClick={() => openContext(c.data)}
                       >
-                        <Icon type={SourceType.Context} />
+                        <Icon type={ResourceType.Context} />
                         {c.id}
                       </Button>
                     ))}
@@ -161,11 +174,11 @@ export const TemplateMeta: React.FC<{ resource: Resource }> = observer(
               size="small"
               className={boxCss.fullWidth}
               onChange={updateContext}
-              value={(edit.current as Template).contexts}
+              value={store$.edit.get(resource, 'contexts')}
             >
-              {contextQuery.data?.map((x) => (
-                <Select.Option key={x.id} value={x.id}>
-                  {x.id}
+              {contexts?.map((x) => (
+                <Select.Option key={x.data.id} value={x.data.id}>
+                  {x.data.id}
                 </Select.Option>
               ))}
             </Select>
@@ -185,7 +198,10 @@ export const TemplateMeta: React.FC<{ resource: Resource }> = observer(
           </Button>
         </div>
         <div className={spacingCss.marginTopSm}>
-          {/*<ReactJson src={edit.current.props || {}} />*/}
+          <JSONTree
+            theme={{ extend: 'default' }}
+            data={store$.edit.get(resource, 'props')}
+          ></JSONTree>
         </div>
         <div className={spacingCss.marginTopLg}>
           <Typography.Text strong>Description</Typography.Text>

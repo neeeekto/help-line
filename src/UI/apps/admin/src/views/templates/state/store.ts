@@ -9,6 +9,7 @@ import {
 } from './types';
 import {
   ComponentAdminApi,
+  Context,
   ContextAdminApi,
   TemplateAdminApi,
   TemplateBase,
@@ -43,8 +44,9 @@ export const makeEditorStore = (
     return values(state.resources);
   });
 
-  const resourceByType = computedFn((type: ResourceType) =>
-    resources.get().filter((x) => x.type === type)
+  const resourceByType = computedFn(
+    <T extends TemplateBase = TemplateBase>(type: ResourceType) =>
+      resources.get().filter((x) => x.type === type) as Array<Resource<T>>
   );
 
   const resourceByTab = computedFn(
@@ -206,11 +208,16 @@ export const makeEditorStore = (
     }
   );
 
-  const createValueManager = (accessor: ValueAccessor) => {
+  const createValueManager = <
+    I extends TemplateBase = TemplateBase,
+    T extends ValueAccessor<I> = ValueAccessor<I>
+  >(
+    accessor: T
+  ) => {
     const result = computed(() => {
       const tab = state.tabs[state.activeTab];
-      const resource = state.resources[tab.resource];
-      const cache = state.cache[resource.id];
+      const resource = state.resources[tab.resource] as Resource<I>;
+      const cache = state.cache[resource.id] as EditCache<I>;
       return {
         get: computedFn(() => accessor.get(resource?.data, cache?.value)),
         set: action((val?: string) => {
@@ -222,6 +229,25 @@ export const makeEditorStore = (
     return () => result.get();
   };
 
+  const getValue = <TItem extends TemplateBase, TField extends keyof TItem>(
+    resource: Resource<TItem>,
+    field: TField
+  ) => {
+    const cache = state.cache[resource.id] as EditCache<TItem>;
+    const val = cache?.value?.[field] || resource?.data?.[field];
+    return val as TItem[TField] | undefined;
+  };
+
+  const setValue = action(
+    <TField extends keyof TItem, TItem extends TemplateBase = TemplateBase>(
+      resource: Resource<TItem>,
+      field: TField,
+      value: TItem[TField]
+    ) => {
+      updateResource(resource.id, resource.hash, { [field]: value });
+    }
+  );
+
   return {
     state,
     selectors: {
@@ -232,6 +258,10 @@ export const makeEditorStore = (
       resourceByTab,
     },
     createValueAccessor: createValueManager,
+    edit: {
+      get: getValue,
+      set: setValue,
+    },
     init,
     actions: {
       clearEditing,

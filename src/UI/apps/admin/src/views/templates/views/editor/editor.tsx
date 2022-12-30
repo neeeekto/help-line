@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Typography } from 'antd';
 import cn from 'classnames';
+
 import css from './editor.module.scss';
 import MonacoEditor, { Monaco } from '@monaco-editor/react';
 import { boxCss, spacingCss } from '@help-line/style-utils';
@@ -18,17 +19,9 @@ const MonacoIde: React.FC<{ tab: EditTab; resource: Resource }> = observer(
     const saveMutation = useSaveResourceMutation(resource.id);
     const accessor = useMemo(
       () => store$.createValueAccessor(tab.value),
-      [store$, tab.resource]
+      [store$, tab.value]
     );
     const suggestion = useEditorSuggestions();
-
-    const onEdit = useCallback(
-      (val?: string) => {
-        accessor().set(val);
-      },
-      [accessor]
-    );
-
     const onSetup = useCallback(
       (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
         editor.addCommand(KeyMod.Shift | KeyCode.KeyS, async () => {
@@ -52,8 +45,13 @@ const MonacoIde: React.FC<{ tab: EditTab; resource: Resource }> = observer(
         defaultLanguage={tab.language}
         language={tab.language}
         value={accessor().get()}
-        options={{ readOnly: tab.readonly }}
-        onChange={onEdit}
+        options={{
+          readOnly: tab.readonly,
+          minimap: {
+            enabled: false,
+          },
+        }}
+        onChange={(value) => accessor().set(value)}
         onMount={onSetup}
       />
     );
@@ -114,7 +112,11 @@ export const Editor: React.FC = observer(() => {
             {current.tab.breadcrumb.join(' / ')}
           </Typography.Text>
         </div>
-        <MonacoIde tab={current.tab} resource={current.resource} />
+        <MonacoIde
+          key={current.tab.id}
+          tab={current.tab}
+          resource={current.resource}
+        />
       </FullPageContainer>
     </div>
   );

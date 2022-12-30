@@ -42,7 +42,13 @@ export const EditorTab = observer(({ tab }: { tab: EditTab }) => {
           <span className={spacingCss.marginRightSm}>
             <Icon type={resource?.type} />
           </span>
-          {resource?.data?.id}.{resource?.type}
+          {tab.title ? (
+            <>{tab.title}</>
+          ) : (
+            <>
+              {resource?.data?.id}.{resource?.type}
+            </>
+          )}
         </button>
       </Tooltip>
 

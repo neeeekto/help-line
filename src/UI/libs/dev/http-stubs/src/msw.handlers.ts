@@ -24,7 +24,7 @@ export namespace MswHandlers {
 
   export const success = (
     result: any,
-    params?: { once?: false; code?: 200; delay?: DelayMode }
+    params?: { once?: false; code?: 200; delay?: DelayMode | number }
   ) =>
     makeHandler((req, res, ctx) => {
       const resFn = params?.once ? res.once : res;

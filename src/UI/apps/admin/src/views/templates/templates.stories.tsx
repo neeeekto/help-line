@@ -33,6 +33,15 @@ export const Primary = factory.create({
     msw: {
       handlers: [
         adminComponentsStubApi
+          .delete({ id: '*' })
+          .handle(MswHandlers.success(null, { delay: 500 })),
+        adminTemplatesStubApi
+          .delete({ id: '*' })
+          .handle(MswHandlers.success(null, { delay: 500 })),
+        adminContextsStubApi
+          .delete({ id: '*' })
+          .handle(MswHandlers.success(null, { delay: 500 })),
+        adminComponentsStubApi
           .get()
           .handle(
             MswHandlers.success([

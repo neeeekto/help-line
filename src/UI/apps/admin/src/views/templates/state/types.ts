@@ -14,9 +14,9 @@ export interface Resource<T extends TemplateBase = TemplateBase> {
   isNew?: boolean;
 }
 
-export interface EditCache {
+export interface EditCache<T extends TemplateBase = TemplateBase> {
   resource: Resource['id'];
-  value: Partial<TemplateBase>;
+  value: Partial<T>;
   hash: Resource['hash'];
 }
 
@@ -26,11 +26,12 @@ export interface ValueAccessor<T extends TemplateBase = TemplateBase> {
   set: (val?: string) => Partial<T>;
 }
 
-export interface EditTab {
+export interface EditTab<T extends TemplateBase = TemplateBase> {
   id: string;
+  title?: string;
   resource: Resource['id'];
   language: string;
-  value: ValueAccessor;
+  value: ValueAccessor<T>;
   readonly?: boolean;
   breadcrumb: string[];
 }

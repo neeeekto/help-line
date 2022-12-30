@@ -28,7 +28,7 @@ export const ResourceItem = observer(
       const valAccessor = makeValueAccessorByResource(resource.type);
 
       store$.actions.openTab({
-        id: `${resource.id}_${valAccessor.field}`,
+        id: `${resource.id}.${valAccessor.field}`,
         resource: resource.id,
         value: valAccessor as ValueAccessor,
         breadcrumb: [resource.type, resource.data.id, valAccessor.field || ''],
@@ -97,10 +97,9 @@ export const ResourceItem = observer(
             type="text"
             size="small"
             className={css.itemDelButton}
+            icon={<DeleteOutlined />}
             loading={deleteMutation.isLoading}
-          >
-            <DeleteOutlined />
-          </Button>
+          ></Button>
         </Popconfirm>
       </div>
     );

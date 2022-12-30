@@ -33,8 +33,9 @@ export const makeTemplatePropsValueAccessor = (): ValueAccessor<Template> => ({
   set: (val) => ({
     props: tryParseJson(val, {}),
   }),
-  get: (rsc, current) =>
-    JSON.stringify(current?.props || rsc?.props || {}, null, 2),
+  get: (rsc, current) => {
+    return JSON.stringify(current?.props || rsc?.props || {}, null, 2);
+  },
 });
 
 export const makeContextDataValueAccessor = (): ValueAccessor<Context> => ({
@@ -42,6 +43,18 @@ export const makeContextDataValueAccessor = (): ValueAccessor<Context> => ({
   set: (val) => ({ data: tryParseJson(val, {}) }),
   get: (rsc, current) =>
     JSON.stringify(current?.data || rsc?.data || {}, null, 2),
+});
+
+export const makeContextAliasValueAccessor = (): ValueAccessor<Context> => ({
+  field: 'alias',
+  set: (val) => ({ alias: val }),
+  get: (rsc, current) => current?.alias || rsc?.alias || '',
+});
+
+export const makeContextExtendValueAccessor = (): ValueAccessor<Context> => ({
+  field: 'extend',
+  set: (val) => ({ extend: val }),
+  get: (rsc, current) => current?.extend || rsc?.extend || '',
 });
 
 export const makeValueAccessorByResource = (type: ResourceType) => {
