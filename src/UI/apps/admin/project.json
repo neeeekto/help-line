@@ -36,7 +36,9 @@
       "options": {
         "buildTarget": "admin:build",
         "port": 3001,
-        "hmr": true
+        "hmr": true,
+        "host": true,
+        "proxyConfig": "apps/admin/proxy.config.json"
       },
       "configurations": {
         "development": {

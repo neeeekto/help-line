@@ -20,7 +20,7 @@ namespace HelpLine.BuildingBlocks.IntegrationTests
         {
         }
 
-        public void Publish<T>(T evt) where T : IntegrationEvent
+        public async Task Publish<T>(T evt) where T : IntegrationEvent
         {
             Queue.Add(evt);
         }

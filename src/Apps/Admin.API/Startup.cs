@@ -1,3 +1,5 @@
+using System;
+using Amazon.SQS;
 using Hellang.Middleware.ProblemDetails;
 using HelpLine.Apps.Admin.API.Configuration.ExecutionContext;
 using HelpLine.Apps.Admin.API.Configuration.Extensions;
@@ -5,7 +7,7 @@ using HelpLine.Apps.Admin.API.Configuration.Json;
 using HelpLine.Apps.Admin.API.Configuration.Middlewares;
 using HelpLine.Apps.Admin.API.Configuration.Validation;
 using HelpLine.BuildingBlocks.Application;
-using HelpLine.BuildingBlocks.Bus.RabbitMQ;
+using HelpLine.BuildingBlocks.Bus.SQS;
 using HelpLine.BuildingBlocks.Domain;
 using HelpLine.BuildingBlocks.Infrastructure.Emails;
 using HelpLine.BuildingBlocks.Infrastructure.Storage;
@@ -34,7 +36,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using RabbitMQ.Client;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Compact;
@@ -83,12 +84,14 @@ namespace HelpLine.Apps.Admin.API
 
         private void ConfigureExternalServices(IServiceCollection services)
         {
-            var rabbitMqConnectionFactory = new ConnectionFactory
-            {
-                HostName = _configuration["RabbitMQ:Host"], DispatchConsumersAsync = true
-            };
-            services.AddSingleton(new RabbitMqServiceFactory(rabbitMqConnectionFactory,
-                _configuration["RabbitMQ:BrokerName"], _logger.ForContext("Context", "RabbitMq")));
+            var sqsClient = new AmazonSQSClient(_configuration["SQS:ACCESS_KEY"], _configuration["SQS:SECRET_KEY"], new AmazonSQSConfig()
+                {
+                    ServiceURL = _configuration["SQS:Server"],
+                    AuthenticationRegion = _configuration["SQS:Region"]
+                })
+            ;
+            services.AddSingleton(new SqsServiceFactory(sqsClient,
+                _logger.ForContext("Context", "SQS"), TimeSpan.FromSeconds(5), 10));
             services.AddSingleton<IStorageFactory>(
                 new RedisStorageFactory(_configuration["Redis:ConnectionString"], 0));
         }
@@ -154,22 +157,26 @@ namespace HelpLine.Apps.Admin.API
         private void InitModulesAndServices(IApplicationBuilder app)
         {
             var cacheStorageFactory = app.ApplicationServices.GetService<IStorageFactory>()!;
-            var rabbitMqFactory = app.ApplicationServices.GetService<RabbitMqServiceFactory>()!;
+            var sqsServiceFactory = app.ApplicationServices.GetService<SqsServiceFactory>()!;
             var httpContextAccessor = app.ApplicationServices.GetService<IHttpContextAccessor>()!;
             var executionContextAccessor = new ExecutionContextAccessor(httpContextAccessor);
-            var jobQueue = new JobTaskQueueFactory(rabbitMqFactory).MakeQueue(_configuration["JobQueue"]);
+            var jobQueue = new JobTaskQueueFactory(sqsServiceFactory).MakeQueue(_configuration["JobQueue"]);
 
             var jobsStartup = JobsStartup.Initialize(
-                _configuration[ConnectionString],
-                _configuration[DbName],
-                rabbitMqFactory,
-                _logger.ForContext("Context", "Jobs"),
-                executionContextAccessor,
-                new[]
+                new JobsStartupConfig()
                 {
-                    typeof(RunTicketTimersJob).Assembly,
-                    typeof(ClearZombieSessionsJob).Assembly,
-                });
+                    ConnectionString = _configuration[ConnectionString],
+                    DbName = _configuration[DbName],
+                    Queue = sqsServiceFactory.MakeQueue(_configuration["InternalQueue:Jobs"]),
+                    Logger = _logger.ForContext("Context", "Jobs"),
+                    ContextAccessor = executionContextAccessor,
+                    JobTasksAssemblie = new[]
+                    {
+                        typeof(RunTicketTimersJob).Assembly,
+                        typeof(ClearZombieSessionsJob).Assembly,
+                    }
+                }
+                );
 
             var migrationCollectorAndRegistry = new MigrationCollectorAndRegistry();
 
@@ -201,8 +208,8 @@ namespace HelpLine.Apps.Admin.API
                         Logger = _logger.ForContext("Context", "UserAccess"),
                         ConnectionString = _configuration[ConnectionString],
                         DbName = _configuration[DbName],
-                        EventBus = rabbitMqFactory.MakeEventsBus("ua-events"),
-                        InternalQueue = rabbitMqFactory.MakeQueue("ua-internal"),
+                        EventBus = sqsServiceFactory.MakeEventsBus(_configuration["BusQueue"]),
+                        InternalQueue = sqsServiceFactory.MakeQueue(_configuration["InternalQueue:UA"]),
                         JobQueue = jobQueue,
                         StorageFactory = cacheStorageFactory!,
                         ExecutionContextAccessor = executionContextAccessor
@@ -219,8 +226,8 @@ namespace HelpLine.Apps.Admin.API
                         DbName = _configuration[DbName],
                         JobQueue = jobQueue,
                         EmailSender = new MailgunEmailSender(new MailgunApiCaller(), new EmailConfiguration("", "")),
-                        EventBus = rabbitMqFactory.MakeEventsBus("hd-events"),
-                        InternalQueue = rabbitMqFactory.MakeQueue("hd-internal"),
+                        EventBus = sqsServiceFactory.MakeEventsBus(_configuration["BusQueue"]),
+                        InternalQueue = sqsServiceFactory.MakeQueue(_configuration["InternalQueue:HD"]),
                         TemplateRenderer = new TemplateRenderer(),
                         ExecutionContextAccessor = executionContextAccessor,
                         MigrationCollector = migrationCollectorAndRegistry

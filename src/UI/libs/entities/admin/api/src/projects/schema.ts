@@ -14,6 +14,7 @@ export const ProjectAdminApiSchema = {
   create: createApiAction<void, CreateProjectData>({
     method: HttpMethod.POST,
     url: `/v1/projects/`,
+    data: (req) => req,
   }),
 
   update: createApiAction<

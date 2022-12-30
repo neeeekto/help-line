@@ -26,7 +26,7 @@ namespace HelpLine.BuildingBlocks.Bus.RabbitMQ
             _client.StartConsuming();
         }
 
-        public void Add<T>(T message, byte priority)
+        public async Task Add<T>(T message, byte priority)
         {
             _client.Publish(message, priority);
         }

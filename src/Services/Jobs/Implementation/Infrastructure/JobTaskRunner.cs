@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using HelpLine.BuildingBlocks.Bus.Queue;
 using HelpLine.Services.Jobs.Application.Contracts;
 using HelpLine.Services.Jobs.Contracts;
@@ -13,7 +14,7 @@ namespace HelpLine.Services.Jobs.Infrastructure
             _queue = queue;
         }
 
-        public void RunAsync(JobTask task) => _queue.Add(task);
+        public Task RunAsync(JobTask task) => _queue.Add(task);
         public void Dispose() => _queue.Dispose();
     }
 

@@ -20,6 +20,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\BuildingBlocks\Application\HelpLine.BuildingBlocks.Application.csproj" />
       <ProjectReference Include="..\..\BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus.RabbitMQ\HelpLine.BuildingBlocks.Bus.RabbitMQ.csproj" />
+      <ProjectReference Include="..\..\BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus.SQS\HelpLine.BuildingBlocks.Bus.SQS.csproj" />
       <ProjectReference Include="..\..\BuildingBlocks\Infrastructure\HelpLine.BuildingBlocks.Infrastructure.csproj" />
       <ProjectReference Include="..\..\Modules\Helpdesk\Application\HelpLine.Modules.Helpdesk.Application.csproj" />
       <ProjectReference Include="..\..\Modules\Helpdesk\Infrastructure\HelpLine.Modules.Helpdesk.Infrastructure.csproj" />

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using HelpLine.Modules.Quality.Application.Configuration.Commands;
 using HelpLine.Modules.Quality.Application.Contracts;
 using HelpLine.BuildingBlocks.Infrastructure.InternalCommands;
@@ -16,16 +15,14 @@ namespace HelpLine.Modules.Quality.Infrastructure.Configuration.Processing.Inter
         }
 
 
-        public Task EnqueueAsync(ICommand command, byte priority = 4)
+        public async Task EnqueueAsync(ICommand command, byte priority = 4)
         {
-            _queue.Add(command.Id, command, priority);
-            return Task.CompletedTask;
+            await _queue.Add(command.Id, command, priority);
         }
 
-        public Task EnqueueAsync<T>(ICommand<T> command, byte priority = 4)
+        public async Task EnqueueAsync<T>(ICommand<T> command, byte priority = 4)
         {
-            _queue.Add(command.Id, command, priority);
-            return Task.CompletedTask;
+            await _queue.Add(command.Id, command, priority);
         }
     }
 }

@@ -269,3 +269,4 @@ Logs
 
 #Ignore uploaded files folder
 UploadedFiles
+**/appsettings.*.json

@@ -43,7 +43,7 @@ namespace HelpLine.Services.Jobs.Application.Commands.FireJob
                     ? descriptor.Make(request.Job.Id, (JobDataBase) request.Job.Data)
                     : descriptor.Make(request.Job.Id);
 
-                _taskRunner.RunAsync(task);
+                await _taskRunner.RunAsync(task);
             }
 
             return Unit.Value;

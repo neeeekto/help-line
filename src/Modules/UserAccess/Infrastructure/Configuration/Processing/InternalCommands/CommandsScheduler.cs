@@ -16,16 +16,14 @@ namespace HelpLine.Modules.UserAccess.Infrastructure.Configuration.Processing.In
         }
 
 
-        public Task EnqueueAsync(ICommand command, byte priority = 4)
+        public async Task EnqueueAsync(ICommand command, byte priority = 4)
         {
-            _queue.Add(command.Id, command, priority);
-            return Task.CompletedTask;
+            await _queue.Add(command.Id, command, priority);
         }
 
-        public Task EnqueueAsync<T>(ICommand<T> command, byte priority = 4)
+        public async Task EnqueueAsync<T>(ICommand<T> command, byte priority = 4)
         {
-            _queue.Add(command.Id, command, priority);
-            return Task.CompletedTask;
+            await _queue.Add(command.Id, command, priority);
         }
     }
 }

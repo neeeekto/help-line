@@ -27,7 +27,7 @@ namespace HelpLine.BuildingBlocks.IntegrationTests
         {
         }
 
-        public void Add<T>(T message, byte priority)
+        public async Task Add<T>(T message, byte priority)
         {
             Queue.Enqueue(message, priority);
         }

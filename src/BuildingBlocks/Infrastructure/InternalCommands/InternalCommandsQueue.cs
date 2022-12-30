@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using HelpLine.BuildingBlocks.Bus.Queue;
 using HelpLine.BuildingBlocks.Domain;
 using HelpLine.BuildingBlocks.Infrastructure.Serialization;
@@ -18,7 +19,7 @@ namespace HelpLine.BuildingBlocks.Infrastructure.InternalCommands
             _unitOfWork = unitOfWork;
         }
 
-        public void Add<T>(Guid id, T command, byte priority)
+        public async Task Add<T>(Guid id, T command, byte priority)
         {
             var cmd = new TInternalCommand
             {
@@ -32,9 +33,9 @@ namespace HelpLine.BuildingBlocks.Infrastructure.InternalCommands
                 }),
             };
             if (_unitOfWork.Transaction)
-                _unitOfWork.OnCommit += async () => _queue.Add(cmd, priority);
+                _unitOfWork.OnCommit += () => _queue.Add(cmd, priority);
             else
-                _queue.Add(cmd, priority);
+                await _queue.Add(cmd, priority);
         }
 
         public void StartConsuming<T>(InternalCommandTaskHandlerBase<T> handler) where T : InternalCommandTaskBase

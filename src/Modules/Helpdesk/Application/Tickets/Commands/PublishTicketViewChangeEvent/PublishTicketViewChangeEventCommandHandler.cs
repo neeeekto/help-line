@@ -20,7 +20,7 @@ namespace HelpLine.Modules.Helpdesk.Application.Tickets.Commands.PublishTicketVi
 
         public async Task<Unit> Handle(PublishTicketViewChangeEventCommand request, CancellationToken cancellationToken)
         {
-            _eventsBus.Publish(new TicketViewChangedNotification(request.Id, DateTime.UtcNow, request.TicketId, request.Project, request.NewEvents.ToArray()));
+            await _eventsBus.Publish(new TicketViewChangedNotification(request.Id, DateTime.UtcNow, request.TicketId, request.Project, request.NewEvents.ToArray()));
             return Unit.Value;
         }
     }

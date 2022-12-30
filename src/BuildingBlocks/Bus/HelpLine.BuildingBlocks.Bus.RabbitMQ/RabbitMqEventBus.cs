@@ -26,7 +26,7 @@ namespace HelpLine.BuildingBlocks.Bus.RabbitMQ
             _client.Dispose();
         }
 
-        public void Publish<T>(T @event) where T : IntegrationEvent
+        public async Task Publish<T>(T @event) where T : IntegrationEvent
         {
             _client.Publish(@event);
         }

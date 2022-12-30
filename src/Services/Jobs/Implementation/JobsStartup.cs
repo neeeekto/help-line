@@ -26,43 +26,32 @@ namespace HelpLine.Services.Jobs
         private static IContainer _container;
 
         public static JobsStartup Initialize(
-            string connectionString,
-            string dbName,
-            IQueueFactory queueFactory,
-            ILogger logger,
-            IExecutionContextAccessor contextAccessor,
-            IEnumerable<Assembly> jobTasksAssemblies
+            JobsStartupConfig config
         )
         {
-            ConfigureCompositionRoot(
-                connectionString, dbName, queueFactory, logger, contextAccessor, jobTasksAssemblies);
+            ConfigureCompositionRoot(config);
             return new JobsStartup();
         }
 
         private static void ConfigureCompositionRoot(
-            string connectionString,
-            string dbName,
-            IQueueFactory queueFactory,
-            ILogger logger,
-            IExecutionContextAccessor contextAccessor,
-            IEnumerable<Assembly> jobTasksAssemblies
+            JobsStartupConfig config
         )
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule(new DataModule(connectionString, dbName));
+            containerBuilder.RegisterModule(new DataModule(config.ConnectionString, config.DbName));
             containerBuilder.RegisterModule(new MediatorModule(ServiceInfo.Assembly));
             containerBuilder.RegisterModule(new ProcessingModule(ServiceInfo.Assembly));
             containerBuilder.RegisterModule(new QuartzAutofacFactoryModule());
             containerBuilder.RegisterModule(new QuartzAutofacJobsModule(ServiceInfo.Assembly));
 
-            containerBuilder.RegisterInstance(logger).As<ILogger>().SingleInstance();
-            containerBuilder.RegisterInstance(contextAccessor).As<IExecutionContextAccessor>().SingleInstance();
-            containerBuilder.RegisterInstance(new JobTasksCollection(jobTasksAssemblies)).SingleInstance();
+            containerBuilder.RegisterInstance(config.Logger).As<ILogger>().SingleInstance();
+            containerBuilder.RegisterInstance(config.ContextAccessor).As<IExecutionContextAccessor>().SingleInstance();
+            containerBuilder.RegisterInstance(new JobTasksCollection(config.JobTasksAssemblie)).SingleInstance();
             containerBuilder.RegisterType<JobTaskRunner>()
-                .WithParameter("queue", queueFactory.MakeQueue("HelpLine.Jobs"))
+                .WithParameter("queue", config.Queue)
                 .As<IJobTaskRunner>()
                 .SingleInstance();
-            containerBuilder.RegisterInstance(logger).As<ILogger>().SingleInstance();
+            containerBuilder.RegisterInstance(config.Logger).As<ILogger>().SingleInstance();
 
             _container = containerBuilder.Build();
         }
@@ -85,6 +74,5 @@ namespace HelpLine.Services.Jobs
             var mediator = scope.Resolve<IMediator>();
             await mediator.Send(new StopJobsCommand());
         }
-
     }
 }

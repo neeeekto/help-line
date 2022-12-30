@@ -15,16 +15,14 @@ namespace HelpLine.Modules.Helpdesk.Infrastructure.Configuration.Processing.Inte
         }
 
 
-        public Task EnqueueAsync(ICommand command, byte priority)
+        public async Task EnqueueAsync(ICommand command, byte priority)
         {
-            _queue.Add(command.Id, command, priority);
-            return Task.CompletedTask;
+            await _queue.Add(command.Id, command, priority);
         }
 
-        public Task EnqueueAsync<T>(ICommand<T> command, byte priority)
+        public async Task EnqueueAsync<T>(ICommand<T> command, byte priority)
         {
-            _queue.Add(command.Id, command, priority);
-            return Task.CompletedTask;
+            await _queue.Add(command.Id, command, priority);
         }
 
     }

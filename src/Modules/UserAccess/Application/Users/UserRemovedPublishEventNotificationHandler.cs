@@ -17,12 +17,11 @@ namespace HelpLine.Modules.UserAccess.Application.Users
         }
 
 
-        public Task Handle(UserRemovedNotification notification, CancellationToken cancellationToken)
+        public async Task Handle(UserRemovedNotification notification, CancellationToken cancellationToken)
         {
-            _eventsBus.Publish(new UserRemovedIntegrationEvent(notification.Id, notification.DomainEvent.OccurredOn,
+            await _eventsBus.Publish(new UserRemovedIntegrationEvent(notification.Id, notification.DomainEvent.OccurredOn,
                 notification.DomainEvent.UserId.Value));
 
-            return Task.CompletedTask;
         }
     }
 }

@@ -147,6 +147,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.Services.Migration
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.UnitTests", "BuildingBlocks\HelpLine.BuildingBlocks.UnitTests\HelpLine.BuildingBlocks.UnitTests.csproj", "{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelpLine.BuildingBlocks.Bus.SQS", "BuildingBlocks\Bus\HelpLine.BuildingBlocks.Bus.SQS\HelpLine.BuildingBlocks.Bus.SQS.csproj", "{E0F57B22-2584-4CEA-BA4D-00ACB5A28C27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -460,6 +462,12 @@ Global
 		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}.Default|Any CPU.ActiveCfg = Debug|Any CPU
 		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{E0F57B22-2584-4CEA-BA4D-00ACB5A28C27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0F57B22-2584-4CEA-BA4D-00ACB5A28C27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0F57B22-2584-4CEA-BA4D-00ACB5A28C27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0F57B22-2584-4CEA-BA4D-00ACB5A28C27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0F57B22-2584-4CEA-BA4D-00ACB5A28C27}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0F57B22-2584-4CEA-BA4D-00ACB5A28C27}.Default|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -528,6 +536,7 @@ Global
 		{B9141196-8CF1-4E83-BE35-580A90DD69C1} = {AC14BCB1-F872-4F2F-B7BB-60AA1D9B3F0E}
 		{9E612D58-5556-4AB1-A9C1-9EE19139A2DB} = {E91D4BE3-61FE-441C-A227-29850D414216}
 		{E5B1B800-CEAC-45F7-BA93-A33B38DDEAA0} = {E91D4BE3-61FE-441C-A227-29850D414216}
+		{E0F57B22-2584-4CEA-BA4D-00ACB5A28C27} = {F72DF9C1-1103-42F1-B564-388BF8218CD1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6B94C21A-AA6D-4D82-963E-C69C0353B938}

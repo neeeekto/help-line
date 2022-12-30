@@ -26,14 +26,17 @@ namespace HelpLine.Services.Jobs.Tests.SeedWork
         protected override void SetupOther()
         {
             Startup = JobsStartup.Initialize(
-                ConnectionString,
-                DbName,
-                BusServiceFactory,
-                Logger,
-                new ExecutionContextMock(),
-                new[]
+                new JobsStartupConfig()
                 {
-                    typeof(TestJobTask).Assembly,
+                    ConnectionString = ConnectionString,
+                    DbName = DbName,
+                    Queue = BusServiceFactory.MakeQueue("jobs"),
+                    Logger = Logger,
+                    ContextAccessor = new ExecutionContextMock(),
+                    JobTasksAssemblie = new[]
+                    {
+                        typeof(TestJobTask).Assembly,
+                    }
                 });
         }
 
