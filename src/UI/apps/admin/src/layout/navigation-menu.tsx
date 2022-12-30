@@ -35,8 +35,8 @@ const Navigation: React.FC<{
       <Menu.Item key="jobs" icon={<FontAwesomeIcon icon={faBusinessTime} />}>
         <Link to="/jobs">Jobs</Link>
       </Menu.Item>
-      <Menu.Item key="timers" icon={<FontAwesomeIcon icon={faClock} />}>
-        <Link to="/timers">Timers</Link>
+      <Menu.Item key="ticket-timers" icon={<FontAwesomeIcon icon={faClock} />}>
+        <Link to="/ticket-timers">Timers</Link>
       </Menu.Item>
       <Menu.Item key="ticket-index" icon={<FontAwesomeIcon icon={faIndent} />}>
         <Link to="/ticket-index">Indexes</Link>

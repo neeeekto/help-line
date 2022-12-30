@@ -51,5 +51,9 @@ export const DefaultHttpProvider: React.FC<DefaultHttpProviderProps> = ({
     new AuthInterceptor(authFacadeRef.current),
     ...(additionalInterceptors ?? []),
   ]);
-  return <HttpProvider interceptors={interceptors}>{children}</HttpProvider>;
+  return (
+    <HttpProvider interceptors={interceptors} serverUrl={config.serverUrl}>
+      {children}
+    </HttpProvider>
+  );
 };
