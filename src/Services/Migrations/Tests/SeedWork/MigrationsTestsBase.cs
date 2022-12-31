@@ -19,12 +19,16 @@ namespace HelpLine.Services.Migrations.Tests.SeedWork
         protected override void SetupOther()
         {
             Startup = MigrationsStartup.Initialize(
-                ConnectionString,
-                DbName,
-                Logger,
-                StorageFactory,
-                ExecutionContext,
-                RegistryAndCollector);
+                new MigrationsStartupConfig()
+                {
+                    ConnectionString = ConnectionString,
+                    DbName = DbName,
+                    Logger = Logger,
+                    StorageFactory = StorageFactory,
+                    ContextAccessor = ExecutionContext,
+                    Registry = RegistryAndCollector
+                }
+            );
             MigrationService = new MigrationService();
         }
 
