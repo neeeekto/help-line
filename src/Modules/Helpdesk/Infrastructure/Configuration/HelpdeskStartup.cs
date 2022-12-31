@@ -78,7 +78,7 @@ namespace HelpLine.Modules.Helpdesk.Infrastructure.Configuration
             _moduleLogger = moduleLogger;
         }
 
-        public HelpdeskStartup EnableAppQueueHandling()
+        public HelpdeskStartup EnableQueueAndBusHandling()
         {
             EventsBusStartup.Initialize(_moduleLogger);
             ProcessingStartup.Initialize(_moduleLogger);

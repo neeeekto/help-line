@@ -50,7 +50,7 @@ namespace HelpLine.Modules.Helpdesk.Tests.Application.SeedWork
                     TemplateRenderer = TemplateRenderer,
                     EmailSender = EmailSender
                 });
-            startup.EnableAppQueueHandling();
+            startup.EnableQueueAndBusHandling();
             startup.EnableJobHandling();
 
             return new HelpdeskModule();

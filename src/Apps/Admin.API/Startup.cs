@@ -84,14 +84,15 @@ namespace HelpLine.Apps.Admin.API
 
         private void ConfigureExternalServices(IServiceCollection services)
         {
-            var sqsClient = new AmazonSQSClient(_configuration["SQS:ACCESS_KEY"], _configuration["SQS:SECRET_KEY"], new AmazonSQSConfig()
-                {
-                    ServiceURL = _configuration["SQS:Server"],
-                    AuthenticationRegion = _configuration["SQS:Region"]
-                })
-            ;
+            var sqsClient = new AmazonSQSClient(_configuration["SQS:ACCESS_KEY"], _configuration["SQS:SECRET_KEY"],
+                    new AmazonSQSConfig()
+                    {
+                        ServiceURL = _configuration["SQS:Server"],
+                        AuthenticationRegion = _configuration["SQS:Region"]
+                    })
+                ;
             services.AddSingleton(new SqsServiceFactory(sqsClient,
-                _logger.ForContext("Context", "SQS"), TimeSpan.FromSeconds(5), 10));
+                _logger.ForContext("Context", "SQS"), TimeSpan.FromSeconds(5), 5));
             services.AddSingleton<IStorageFactory>(
                 new RedisStorageFactory(_configuration["Redis:ConnectionString"], 0));
         }
@@ -176,17 +177,20 @@ namespace HelpLine.Apps.Admin.API
                         typeof(ClearZombieSessionsJob).Assembly,
                     }
                 }
-                );
+            );
 
             var migrationCollectorAndRegistry = new MigrationCollectorAndRegistry();
 
             var migrationsStartup = MigrationsStartup.Initialize(
-                _configuration[ConnectionString],
-                _configuration[DbName],
-                _logger.ForContext("Context", "Migrations"),
-                cacheStorageFactory,
-                executionContextAccessor,
-                migrationCollectorAndRegistry
+                new MigrationsStartupConfig()
+                {
+                    ConnectionString = _configuration[ConnectionString],
+                    DbName = _configuration[DbName],
+                    Logger = _logger.ForContext("Context", "Migrations"),
+                    StorageFactory = cacheStorageFactory,
+                    ContextAccessor = executionContextAccessor,
+                    Registry = migrationCollectorAndRegistry
+                }
             );
 
 
@@ -233,7 +237,7 @@ namespace HelpLine.Apps.Admin.API
                         MigrationCollector = migrationCollectorAndRegistry
                     }
                 )
-                .EnableAppQueueHandling()
+                .EnableQueueAndBusHandling()
                 .EnableJobHandling();
 
             /*QualityStartup.Initialize(

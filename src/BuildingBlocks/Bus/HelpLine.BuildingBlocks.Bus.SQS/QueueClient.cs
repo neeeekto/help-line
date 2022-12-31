@@ -79,16 +79,19 @@ internal class QueueClient<THandler>
 
     private async Task Consume()
     {
-        var messages = await _sqs.ReceiveMessageAsync(new ReceiveMessageRequest()
+        _logger.Debug("Consume SQS queue from {queueUrl}", _queueUrl);
+        var response = await _sqs.ReceiveMessageAsync(new ReceiveMessageRequest()
         {
             QueueUrl = _queueUrl,
             MaxNumberOfMessages = _collectCount,
-            WaitTimeSeconds = 1
+            WaitTimeSeconds = 0,
+            
         });
 
-        if (messages is not null)
+        if (response is not null && response.Messages.Count > 0)
         {
-            foreach (var msg in messages.Messages)
+            _logger.Debug("Handle SQS messages from {queueUrl}, count: {count}", _queueUrl, response.Messages.Count);
+            foreach (var msg in response.Messages)
             {
                 var eventName = msg.MessageAttributes[KEY]?.StringValue;
                 if (eventName is null)

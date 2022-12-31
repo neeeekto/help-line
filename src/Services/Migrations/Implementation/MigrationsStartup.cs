@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Autofac;
 using HelpLine.BuildingBlocks.Application;
-using HelpLine.BuildingBlocks.Infrastructure.Storage;
 using HelpLine.BuildingBlocks.Services;
 using HelpLine.Services.Migrations.Application.Commands.RunAutoMigrations;
 using HelpLine.Services.Migrations.Infrastructure;
@@ -14,39 +13,24 @@ namespace HelpLine.Services.Migrations
     {
         private static IContainer _container;
 
-        public static MigrationsStartup Initialize(
-            string connectionString,
-            string dbName,
-            ILogger logger,
-            IStorageFactory storageFactory,
-            IExecutionContextAccessor contextAccessor,
-            IMigrationsRegistry registry
-        )
+        public static MigrationsStartup Initialize(MigrationsStartupConfig config)
         {
-            ConfigureCompositionRoot(
-                connectionString, dbName, logger, storageFactory, contextAccessor,  registry);
+            ConfigureCompositionRoot(config);
             return new MigrationsStartup();
         }
 
 
-        private static void ConfigureCompositionRoot(
-            string connectionString,
-            string dbName,
-            ILogger logger,
-            IStorageFactory storageFactory,
-            IExecutionContextAccessor contextAccessor,
-            IMigrationsRegistry registry
-        )
+        private static void ConfigureCompositionRoot(MigrationsStartupConfig config)
         {
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule(new DataModule(connectionString, dbName));
+            containerBuilder.RegisterModule(new DataModule(config.ConnectionString, config.DbName));
             containerBuilder.RegisterModule(new MediatorModule(ServiceInfo.Assembly));
             containerBuilder.RegisterModule(new ProcessingModule(ServiceInfo.Assembly));
 
-            containerBuilder.RegisterInstance(contextAccessor).As<IExecutionContextAccessor>().SingleInstance();
-            containerBuilder.RegisterInstance(logger).As<ILogger>().SingleInstance();
-            containerBuilder.RegisterInstance(storageFactory.Make("Migrations.State")).SingleInstance();
-            containerBuilder.RegisterInstance(registry).SingleInstance();
+            containerBuilder.RegisterInstance(config.ContextAccessor).As<IExecutionContextAccessor>().SingleInstance();
+            containerBuilder.RegisterInstance(config.Logger).As<ILogger>().SingleInstance();
+            containerBuilder.RegisterInstance(config.StorageFactory.Make("Migrations.State")).SingleInstance();
+            containerBuilder.RegisterInstance(config.Registry).SingleInstance();
 
             _container = containerBuilder.Build();
         }

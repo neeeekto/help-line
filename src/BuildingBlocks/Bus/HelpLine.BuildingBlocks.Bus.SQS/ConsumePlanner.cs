@@ -21,14 +21,14 @@ internal class ConsumePlanner
         if (_running)
             return;
         
-        _logger.Debug("ConsumePlanner started");
+        _logger.Debug("Consume planner started");
         _running = true;
 
         while (true)
         {
             if (_running)
             {
-                _logger.Debug("ConsumePlanner do");
+                _logger.Debug("Next SQS consume batch operation");
                 await Do();
                 await Task.Delay(_interval, cancellationToken);
             }

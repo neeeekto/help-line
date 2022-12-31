@@ -249,7 +249,7 @@ namespace HelpLine.Apps.Client.API
                         ExecutionContextAccessor = executionContextAccessor
                     }
                 )
-                .EnableAppQueueHandling();
+                .EnableQueueAndBusHandling();
 
             /*QualityStartup.Initialize(
                     _configuration[ConnectionString],
