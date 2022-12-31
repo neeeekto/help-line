@@ -7,7 +7,6 @@ export default defineConfig({
     react(),
     ViteTsConfigPathsPlugin({
       root: '../../',
-      projects: ['tsconfig.base.json'],
     }),
   ],
 });

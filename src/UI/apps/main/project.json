@@ -36,7 +36,9 @@
       "options": {
         "buildTarget": "main:build",
         "port": 4200,
-        "hmr": true
+        "hmr": true,
+        "host": true,
+        "proxyConfig": "apps/admin/proxy.config.json"
       },
       "configurations": {
         "development": {
@@ -92,6 +94,12 @@
         "ci": {
           "quiet": true
         }
+      }
+    },
+    "deploy:chromatic": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx chromatic --project-token=cd4322138b5b --storybook-build-dir "
       }
     },
     "test-storybook": {
