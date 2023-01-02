@@ -8,3 +8,5 @@ export * from './helpdesk/operators';
 export * from './helpdesk/projects';
 export * from './helpdesk/reminders';
 export * from './helpdesk/reopen-conditions';
+export * from './helpdesk/tags';
+export * from './system';

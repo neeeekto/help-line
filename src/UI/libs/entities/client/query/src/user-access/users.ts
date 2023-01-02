@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createQueryKeys } from '@help-line/modules/query';
 import {
-  clientOperatorsQueryKeys,
   Project,
   User,
   UserData,
@@ -10,6 +9,7 @@ import {
 } from '@help-line/entities/client/api';
 import { useApi } from '@help-line/modules/api';
 import { ROOT_QUERY_KEY } from '../constants';
+import { clientOperatorsQueryKeys } from '../helpdesk/operators';
 
 export const clientUsersQueryKeys = createQueryKeys(
   [ROOT_QUERY_KEY, 'users'],

@@ -12,7 +12,7 @@ export interface TagDescriptionContent {
 
 export interface TagDescriptionIssue {
   contents: LanguageDictionary<TagDescriptionContent>;
-  audience: string[];
+  audience: string[]; // Operator role in HD
 }
 
 export interface TagDescriptionData {

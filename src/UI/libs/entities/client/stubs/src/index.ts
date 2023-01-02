@@ -1,1 +1,1 @@
-export * from './lib/entities-client-stubs';
+export * from './helpdesk/tags';

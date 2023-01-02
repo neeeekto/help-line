@@ -13,7 +13,7 @@ import {
 import { useProjectsQuery } from '@help-line/entities/admin/query';
 import { boxCss, spacingCss } from '@help-line/style-utils';
 import { UserChannels } from './user-channels';
-import { notEmptyArrayValidator } from '@help-line/modules/application';
+import { notEmptyArrayValidator } from '@help-line/components';
 import { UserMeta } from './user-meta';
 import {
   CreateTicketRequest,
@@ -140,11 +140,7 @@ export const CreateTicketView: React.FC<CreateTicketViewProps> = ({
                 placeholder={'Select project'}
               >
                 {projectsQuery.data?.map((x) => (
-                  <Select.Option
-                    key={x.id}
-                    value={x.id}
-                    disabled={!x.active}
-                  >
+                  <Select.Option key={x.id} value={x.id} disabled={!x.active}>
                     {x.info.name}
                   </Select.Option>
                 ))}

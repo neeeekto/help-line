@@ -4,3 +4,8 @@ export * from './input.hooks';
 export * from './lock-container';
 export * from './tabs-page';
 export * from './time-ago';
+export * from './data-filter.hook';
+export * from './form.validators';
+export * from './aside-navigation';
+export * from './on-off-selector';
+export * from './trim-text';

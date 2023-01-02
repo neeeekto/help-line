@@ -1,11 +1,5 @@
 import { createQueryKeys } from '@help-line/modules/query';
-import {
-  Project,
-  User,
-  RolesClientApi,
-  RoleData,
-  Role,
-} from '@help-line/entities/client/api';
+import { RolesClientApi, RoleData, Role } from '@help-line/entities/client/api';
 import { useApi } from '@help-line/modules/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ROOT_QUERY_KEY } from '../constants';

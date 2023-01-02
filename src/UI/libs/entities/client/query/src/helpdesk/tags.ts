@@ -29,7 +29,11 @@ export const {
   args.projectId,
 ]);
 
-export const useSaveManyTagsMutation = (projectId: Project['id']) => {
+export const useSaveManyTagsMutation = ({
+  projectId,
+}: {
+  projectId: Project['id'];
+}) => {
   const api = useApi(TagsClientApi);
   const client = useQueryClient();
   return useMutation(

@@ -1,0 +1,34 @@
+.root {
+  width: 400px;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  --aside-panel-pading: 10px;
+}
+
+.card {
+  background: #fff;
+  padding: var(--aside-panel-pading);
+}
+
+.box:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.box:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.status {
+  font-size: 16px;
+  text-transform: uppercase;
+}
