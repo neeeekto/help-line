@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useRef } from 'react';
+import React, { PropsWithChildren, useEffect, useMemo, useRef } from 'react';
 import { TicketRootContext, TicketRootContextValue } from './context.ticket';
 import { TicketAside } from './containers/aside';
 import { TicketHeader } from './containers/header';
@@ -18,22 +18,17 @@ export const Ticket = ({
   readonly,
   onExecute,
 }: TicketProps) => {
-  const rootContextValue = useRef<TicketRootContextValue>({
-    ticket,
-    readonly,
-    onExecute: onExecute || (() => Promise.resolve()),
-  });
-  useEffect(() => {
-    rootContextValue.current = {
-      ...rootContextValue.current,
+  const ctxVal = useMemo(
+    () => ({
       ticket,
       readonly,
       onExecute: onExecute || (() => Promise.resolve()),
-    };
-  }, [ticket, readonly, onExecute]);
+    }),
+    [ticket, readonly, onExecute]
+  );
   return (
     <div className={className}>
-      <TicketRootContext.Provider value={rootContextValue.current}>
+      <TicketRootContext.Provider value={ctxVal}>
         {children}
       </TicketRootContext.Provider>
     </div>

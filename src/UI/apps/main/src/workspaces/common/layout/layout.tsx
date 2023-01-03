@@ -1,25 +1,18 @@
-import React, { useState } from "react";
-import { Layout } from "antd";
-import cl from "./layout.module.scss";
-import { Content } from "./content";
-import { Logo } from "@workspaces/common/layout/logo";
-import { User } from "@workspaces/common/layout/user";
-import { NavigationMenu } from "@workspaces/common/layout/navigation-menu";
-import { Footer } from "@workspaces/common/layout/footer";
+import React, { PropsWithChildren, useState } from 'react';
+import { Layout } from 'antd';
+import cl from './layout.module.scss';
+import { Content } from './content';
+import { Logo } from './logo';
+import { User } from './user';
+import { NavigationMenu } from './navigation-menu';
+import { ProjectSelector } from './footer';
+import { useProjectIdParam } from '../../../hooks/router.hooks';
+import cn from 'classnames';
+import { boxCss } from '@help-line/style-utils';
 
-const Aside: React.FC = () => {
-  return (
-    <>
-      <Logo />
-      <User />
-      <NavigationMenu className={cl.menu} />
-      <Footer />
-    </>
-  );
-};
-
-export const LayoutRoot: React.FC = ({ children }) => {
+export const LayoutRoot = ({ children }: PropsWithChildren) => {
   const [collapsed] = useState(false);
+  const projectId = useProjectIdParam();
 
   return (
     <Layout className={cl.box}>
@@ -28,8 +21,14 @@ export const LayoutRoot: React.FC = ({ children }) => {
         collapsible
         collapsed={collapsed}
         width={220}
+        theme={'dark'}
       >
-        <Aside />
+        <div className={cn(boxCss.flex, boxCss.flexColumn, boxCss.fullHeight)}>
+          <Logo />
+          <User />
+          <NavigationMenu projectId={projectId} className={cl.menu} />
+          {!!projectId && <ProjectSelector projectId={projectId} />}
+        </div>
       </Layout.Sider>
       <Layout className="site-layout">
         <Content>{children}</Content>

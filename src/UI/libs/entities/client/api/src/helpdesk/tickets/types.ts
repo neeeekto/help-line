@@ -329,7 +329,7 @@ export type TicketEvent =
   | TicketAssigmentEvent
   | TicketCreatedEvent;
 
-export type TicketId = ''; //0-000000
+export type TicketId = string; //0-000000
 export interface Ticket {
   id: TicketId;
   version: number;

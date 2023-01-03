@@ -1,18 +1,20 @@
-import React from "react";
-import { Avatar, Button } from "antd";
-import {UserOutlined, LogoutOutlined, CrownOutlined} from "@ant-design/icons";
-import css from "./layout.module.scss";
-import { spacingCss, textCss } from "@shared/styles";
-import cn from "classnames";
-import { observer } from "mobx-react-lite";
-import { useAuthStore$ } from "@core/auth";
+import React from 'react';
+import { Avatar, Button } from 'antd';
+import { UserOutlined, LogoutOutlined, CrownOutlined } from '@ant-design/icons';
+import css from './layout.module.scss';
+import { spacingCss, textCss } from '@help-line/style-utils';
+import cn from 'classnames';
+import { useAuthProfile, useLogoutAction } from '@help-line/modules/auth';
 
-export const User: React.FC = observer(() => {
-  const authStore = useAuthStore$();
-  const profile = authStore.profile.get();
+export const User = () => {
+  const logout = useLogoutAction();
+  const profile = useAuthProfile();
   return (
     <div className={css.user}>
-      <Avatar icon={profile?.isAdmin ? <CrownOutlined /> : <UserOutlined />} src={profile?.photo} />
+      <Avatar
+        icon={profile?.isAdmin ? <CrownOutlined /> : <UserOutlined />}
+        src={profile?.photo}
+      />
       <h4
         className={cn(
           spacingCss.marginLeftSm,
@@ -27,8 +29,8 @@ export const User: React.FC = observer(() => {
         className={spacingCss.marginLeftXs}
         type="link"
         icon={<LogoutOutlined />}
-        onClick={authStore.logoutGlobal}
+        onClick={() => logout.mutate()}
       />
     </div>
   );
-});
+};

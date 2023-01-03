@@ -1,1 +1,1 @@
-export const PROJECT_KEY = ':projectKey';
+export const PROJECT_KEY = 'projectId';

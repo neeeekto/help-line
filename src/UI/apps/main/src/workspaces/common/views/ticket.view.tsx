@@ -1,38 +1,35 @@
-import React, { useEffect } from "react";
-import { Ticket } from "@views/ticket";
-import cn from "classnames";
-import { boxCss, spacingCss } from "@shared/styles";
-import {
-  useTicketActionMutation,
-  useTicketQuery,
-} from "@entities/helpdesk/tickets/queries";
-import { Spin } from "antd";
-import { useSystemStore$ } from "@core/system";
-import { observer } from "mobx-react-lite";
-import { useTicketEvents } from "@entities/helpdesk/tickets";
+import React, { useEffect } from 'react';
+import cn from 'classnames';
 
-export const TicketView: React.FC = observer(() => {
-  const systemStore = useSystemStore$();
+import { Spin } from 'antd';
+import { useParams } from 'react-router-dom';
+import { TicketId, useTicketEvents } from '@help-line/entities/client/api';
+import {
+  useExecuteTicketMutation,
+  useTicketQuery,
+} from '../../../../../../libs/entities/client/query/src/helpdesk/ticket';
+import { Ticket } from '../../../views/ticket';
+import { boxCss, spacingCss } from '@help-line/style-utils';
+
+export const TicketView = () => {
+  const { ticketId } = useParams<{ ticketId: TicketId }>();
   const events = useTicketEvents();
   useEffect(() => {
-    events.commands.Subscribe("1-0000001");
+    events.commands.Subscribe(ticketId!);
     const unsub = events.add({
       OnUpdated: ({ newEventsIds }) => {
         console.log(newEventsIds);
       },
     });
     return () => {
-      events.commands.Unsubscribe("1-0000001").then(unsub);
+      events.commands.Unsubscribe(ticketId!).then(unsub);
     };
-  }, [events]);
+  }, [events, ticketId]);
 
-  const ticketQuery = useTicketQuery(
-    "1-0000001",
-    systemStore.state.currentProject!
-  );
-  const ticketActionMutation = useTicketActionMutation(
-    "1-0000001",
-    systemStore.state.currentProject!
+  const ticketQuery = useTicketQuery(ticketId!);
+  const ticketActionMutation = useExecuteTicketMutation(
+    ticketId!,
+    ticketQuery.data?.version || 0
   );
   if (ticketQuery.isLoading) {
     return <Spin />;
@@ -73,4 +70,4 @@ export const TicketView: React.FC = observer(() => {
       </div>
     </Ticket>
   );
-});
+};

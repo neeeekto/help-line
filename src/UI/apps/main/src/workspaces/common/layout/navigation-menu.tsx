@@ -1,197 +1,214 @@
-import React, { memo, useMemo } from "react";
-import { useLocation, Link } from "react-router-dom";
-import { observer } from "mobx-react-lite";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSystemStore$ } from "@core/system";
+import React, { useMemo } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  AsideNavigation,
-  MenuElement,
-} from "@shared/components/aside-navigation";
-import { PermissionCheckerParams } from "@core/auth";
-import { useProjectsQueries } from "@entities/helpdesk/projects";
+  faComments,
+  faTicketAlt,
+  faFilter,
+  faBusinessTime,
+  faCalendarAlt,
+  faCopy,
+  faRobot,
+  faCode,
+  faTerminal,
+  faReplyAll,
+  faCogs,
+  faBell,
+  faScroll,
+  faHistory,
+  faUserSlash,
+  faTags,
+  faTag,
+  faHourglassHalf,
+  faToolbox,
+  faCommentSlash,
+  faHammer,
+  faUserFriends,
+  faList,
+  faUserTag,
+  faUsers,
+  faUserShield,
+  faIdCard,
+} from '@fortawesome/free-solid-svg-icons';
+
+import { Project } from '@help-line/entities/client/api';
+import { AsideNavigation, MenuElement } from '@help-line/components';
+import { PermissionCheckerParams } from '@help-line/modules/auth';
 
 interface ItemData {
-  gameDeps: boolean;
+  needProject: boolean;
   permissions: string | string[];
   permissionsCheckParams?: PermissionCheckerParams;
 }
 
-export const NavigationMenu = observer<
-  React.PropsWithChildren<{ className?: string }>
->(({ className }) => {
-  const projectsQuery = useProjectsQueries();
-  const systemStore = useSystemStore$();
-  const location = useLocation();
-  const segments = useMemo(
-    () =>
-      location.pathname
-        .replace("#", "")
-        .split("/")
-        .filter((x) => !!x),
-    [location.pathname]
-  );
-
-  const menu = useMemo(
-    () =>
-      (
-        [
-          {
-            segment: `/${systemStore.state.currentProject}/hd`,
-            icon: <FontAwesomeIcon icon="comments" />,
-            content: "Helpdesk",
-            items: [
-              {
-                segment: "tickets",
-                icon: <FontAwesomeIcon icon="ticket-alt" />,
-                content: "Tickets",
-              },
-              {
-                segment: "filters",
-                icon: <FontAwesomeIcon icon="filter" />,
-                content: "Filters",
-              },
-              {
-                segment: `problems`,
-                icon: <FontAwesomeIcon icon="business-time" />,
-                content: "Problems",
-                items: [
-                  {
-                    segment: "current",
-                    icon: <FontAwesomeIcon icon="calendar-alt" />,
-                    content: "Current",
-                  },
-                  {
-                    segment: "templates",
-                    icon: <FontAwesomeIcon icon="copy" />,
-                    content: "Templates",
-                  },
-                ],
-              },
-              {
-                segment: `automations`,
-                icon: <FontAwesomeIcon icon="robot" />,
-                content: "Automations",
-                items: [
-                  {
-                    segment: "macros",
-                    icon: <FontAwesomeIcon icon="code" />,
-                    content: "Macros",
-                  },
-                  {
-                    segment: "actions",
-                    icon: <FontAwesomeIcon icon="terminal" />,
-                    content: "Actions",
-                  },
-                  {
-                    segment: "autoreply",
-                    icon: <FontAwesomeIcon icon="reply-all" />,
-                    content: "Autoreply",
-                  },
-                ],
-              },
-              {
-                segment: `settings`,
-                icon: <FontAwesomeIcon icon="cogs" />,
-                content: "Settings",
-                items: [
-                  {
-                    segment: "reminders",
-                    icon: <FontAwesomeIcon icon="bell" />,
-                    content: "Reminders",
-                  },
-                  {
-                    segment: "message-templates",
-                    icon: <FontAwesomeIcon icon="scroll" />,
-                    content: "Message Templates",
-                  },
-                  {
-                    segment: "reopen-conditions",
-                    icon: <FontAwesomeIcon icon="history" />,
-                    content: "Reopen Conditions",
-                  },
-
-                  {
-                    segment: "bans",
-                    icon: <FontAwesomeIcon icon="user-slash" />,
-                    content: "Bans",
-                  },
-                  {
-                    segment: "tags",
-                    icon: <FontAwesomeIcon icon="tags" />,
-                    content: "Tags",
-                  },
-                  {
-                    segment: "tags-descriptions",
-                    icon: <FontAwesomeIcon icon="tag" />,
-                    content: "Tags Descriptions",
-                  },
-                  {
-                    segment: "delays",
-                    icon: <FontAwesomeIcon icon="hourglass-half" />,
-                    content: "Delays",
-                  },
-                ],
-              },
-              {
-                segment: `other`,
-                content: "Other",
-                icon: <FontAwesomeIcon icon="toolbox" />,
-                items: [
-                  {
-                    segment: "unsubscribed",
-                    content: "Unsubscribed",
-                    icon: <FontAwesomeIcon icon="comment-slash" />,
-                  },
-                  {
-                    segment: "creation-options",
-                    icon: <FontAwesomeIcon icon="hammer" />,
-                    content: "Creation Options",
-                  },
-                ],
-              },
-              {
-                segment: `operators`,
-                content: "Operators",
-                icon: <FontAwesomeIcon icon="user-friends" />,
-                items: [
-                  {
-                    segment: `all`,
-                    content: "List",
-                    icon: <FontAwesomeIcon icon="list" />,
-                  },
-                  {
-                    segment: `roles`,
-                    content: "Roles",
-                    icon: <FontAwesomeIcon icon="user-tag" />,
-                  },
-                ],
-              },
-            ],
-            data: {
-              gameDeps: true,
+export const NavigationMenu = ({
+  className,
+  projectId,
+  hideDependsByProject,
+}: {
+  className?: string;
+  projectId?: Project['id'];
+  hideDependsByProject?: boolean;
+}) => {
+  const menu = useMemo(() => {
+    const onlyCommon = hideDependsByProject || !projectId;
+    return (
+      [
+        {
+          segment: `/${projectId}/hd`,
+          icon: <FontAwesomeIcon icon={faComments} />,
+          content: 'Helpdesk',
+          items: [
+            {
+              segment: 'tickets',
+              icon: <FontAwesomeIcon icon={faTicketAlt} />,
+              content: 'Tickets',
             },
+            {
+              segment: 'filters',
+              icon: <FontAwesomeIcon icon={faFilter} />,
+              content: 'Filters',
+            },
+            {
+              segment: `problems`,
+              icon: <FontAwesomeIcon icon={faBusinessTime} />,
+              content: 'Problems',
+              items: [
+                {
+                  segment: 'current',
+                  icon: <FontAwesomeIcon icon={faCalendarAlt} />,
+                  content: 'Current',
+                },
+                {
+                  segment: 'templates',
+                  icon: <FontAwesomeIcon icon={faCopy} />,
+                  content: 'Templates',
+                },
+              ],
+            },
+            {
+              segment: `automations`,
+              icon: <FontAwesomeIcon icon={faRobot} />,
+              content: 'Automations',
+              items: [
+                {
+                  segment: 'macros',
+                  icon: <FontAwesomeIcon icon={faCode} />,
+                  content: 'Macros',
+                },
+                {
+                  segment: 'actions',
+                  icon: <FontAwesomeIcon icon={faTerminal} />,
+                  content: 'Actions',
+                },
+                {
+                  segment: 'autoreply',
+                  icon: <FontAwesomeIcon icon={faReplyAll} />,
+                  content: 'Autoreply',
+                },
+              ],
+            },
+            {
+              segment: `settings`,
+              icon: <FontAwesomeIcon icon={faCogs} />,
+              content: 'Settings',
+              items: [
+                {
+                  segment: 'reminders',
+                  icon: <FontAwesomeIcon icon={faBell} />,
+                  content: 'Reminders',
+                },
+                {
+                  segment: 'message-templates',
+                  icon: <FontAwesomeIcon icon={faScroll} />,
+                  content: 'Message Templates',
+                },
+                {
+                  segment: 'reopen-conditions',
+                  icon: <FontAwesomeIcon icon={faHistory} />,
+                  content: 'Reopen Conditions',
+                },
+
+                {
+                  segment: 'bans',
+                  icon: <FontAwesomeIcon icon={faUserSlash} />,
+                  content: 'Bans',
+                },
+                {
+                  segment: 'tags',
+                  icon: <FontAwesomeIcon icon={faTags} />,
+                  content: 'Tags',
+                },
+                {
+                  segment: 'tags-descriptions',
+                  icon: <FontAwesomeIcon icon={faTag} />,
+                  content: 'Tags Descriptions',
+                },
+                {
+                  segment: 'delays',
+                  icon: <FontAwesomeIcon icon={faHourglassHalf} />,
+                  content: 'Delays',
+                },
+              ],
+            },
+            {
+              segment: `other`,
+              content: 'Other',
+              icon: <FontAwesomeIcon icon={faToolbox} />,
+              items: [
+                {
+                  segment: 'unsubscribed',
+                  content: 'Unsubscribed',
+                  icon: <FontAwesomeIcon icon={faCommentSlash} />,
+                },
+                {
+                  segment: 'creation-options',
+                  icon: <FontAwesomeIcon icon={faHammer} />,
+                  content: 'Creation Options',
+                },
+              ],
+            },
+            {
+              segment: `operators`,
+              content: 'Operators',
+              icon: <FontAwesomeIcon icon={faUserFriends} />,
+              items: [
+                {
+                  segment: `all`,
+                  content: 'List',
+                  icon: <FontAwesomeIcon icon={faList} />,
+                },
+                {
+                  segment: `roles`,
+                  content: 'Roles',
+                  icon: <FontAwesomeIcon icon={faUserTag} />,
+                },
+              ],
+            },
+          ],
+          data: {
+            needProject: true,
           },
-          {
-            segment: `/users-access`,
-            icon: <FontAwesomeIcon icon="user-shield" />,
-            content: "User Access",
-            items: [
-              {
-                segment: "users",
-                icon: <FontAwesomeIcon icon="users" />,
-                content: "Users",
-              },
-              {
-                segment: "roles",
-                icon: <FontAwesomeIcon icon="id-card" />,
-                content: "Roles",
-              },
-            ],
-          },
-        ] as MenuElement<ItemData>[]
-      ).filter((x) => (projectsQuery.data?.length ? true : !x.data?.gameDeps)),
-    [systemStore.state.currentProject, projectsQuery.data]
-  );
+        },
+        {
+          segment: `/users-access`,
+          icon: <FontAwesomeIcon icon={faUserShield} />,
+          content: 'User Access',
+          items: [
+            {
+              segment: 'users',
+              icon: <FontAwesomeIcon icon={faUsers} />,
+              content: 'Users',
+            },
+            {
+              segment: 'roles',
+              icon: <FontAwesomeIcon icon={faIdCard} />,
+              content: 'Roles',
+            },
+          ],
+        },
+      ] as MenuElement<ItemData>[]
+    ).filter((x) => (onlyCommon ? !x.data?.needProject : true));
+  }, [projectId, hideDependsByProject]);
 
   return <AsideNavigation menu={menu} className={className} />;
-});
+};
