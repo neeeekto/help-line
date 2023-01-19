@@ -4,15 +4,10 @@ using System.Threading.Tasks;
 using HelpLine.Apps.Client.API.Configuration.Utils;
 using HelpLine.Apps.Client.API.Features.Helpdesk.Requests;
 using HelpLine.Modules.Helpdesk.Application.Contracts;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.AddBan;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.RemoveBan;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Commands.SetBanSetting;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Models;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries;
 using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetBans;
-using HelpLine.Modules.Helpdesk.Application.Tickets.Aux.Queries.GetBanSettings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
