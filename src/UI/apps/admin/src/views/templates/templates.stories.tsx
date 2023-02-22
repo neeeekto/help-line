@@ -17,15 +17,13 @@ import { MswHandlers } from '../../../../../libs/dev/http-stubs/src';
 
 export default {
   component: TemplatesView,
-  title: 'views/TemplatesView',
+  title: 'views/Templates',
 } as ComponentMeta<typeof TemplatesView>;
 
 const factory = makeStoryFactory(() => (
-  <StorybookWrapper>
-    <LayoutRoot>
-      <TemplatesView />
-    </LayoutRoot>
-  </StorybookWrapper>
+  <LayoutRoot>
+    <TemplatesView />
+  </LayoutRoot>
 ));
 
 export const Primary = factory.create({

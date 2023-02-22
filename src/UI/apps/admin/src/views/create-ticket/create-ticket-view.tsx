@@ -20,7 +20,7 @@ import {
   HelpdeskAdminApi,
 } from '@help-line/entities/admin/api';
 import { useBoolean } from 'ahooks';
-import { useApi } from '@help-line/modules/api';
+import { useInjection } from 'inversify-react';
 
 export interface CreateTicketViewProps {
   lastCreatedTicket?: string;
@@ -30,7 +30,7 @@ export const CreateTicketView: React.FC<CreateTicketViewProps> = ({
   lastCreatedTicket,
 }) => {
   const [form] = Form.useForm();
-  const helpdeskApi = useApi(HelpdeskAdminApi);
+  const helpdeskApi = useInjection(HelpdeskAdminApi);
   const [processing, processingActions] = useBoolean(false);
   const [ticketId, setTicketId] = useState(lastCreatedTicket || '');
 

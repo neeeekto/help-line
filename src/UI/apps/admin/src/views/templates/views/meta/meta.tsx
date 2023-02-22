@@ -21,7 +21,7 @@ const MetaContent: React.FC<{
 
   const updateGroup = useCallback(
     (evt: FormEvent<HTMLInputElement>) => {
-      groupValAccessor().set(evt.currentTarget.value);
+      groupValAccessor.set(evt.currentTarget.value);
     },
     [groupValAccessor]
   );
@@ -37,7 +37,7 @@ const MetaContent: React.FC<{
       <div className={spacingCss.marginTopSm}>
         <Input
           size="small"
-          value={groupValAccessor().get()}
+          value={groupValAccessor.get()}
           onInput={updateGroup}
         />
       </div>

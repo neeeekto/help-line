@@ -41,9 +41,9 @@ namespace HelpLine.Apps.Admin.API.Controllers
             return Ok(items);
         }
 
-        [HttpPatch]
+        [HttpPut]
         [Route("templates")]
-        public async Task<ActionResult> UpdateTemplate(Template data)
+        public async Task<ActionResult> UpdateTemplate(Template[] data)
         {
             await _templateRenderer.ExecuteAsync(new SaveTemplateCommand(data));
             return Ok();
@@ -65,9 +65,9 @@ namespace HelpLine.Apps.Admin.API.Controllers
             return Ok(items);
         }
 
-        [HttpPatch]
+        [HttpPut]
         [Route("contexts")]
-        public async Task<ActionResult> UpdateContext(Context data)
+        public async Task<ActionResult> UpdateContext(Context[] data)
         {
             await _templateRenderer.ExecuteAsync(new SaveContextCommand(data));
             return Ok();
@@ -89,9 +89,9 @@ namespace HelpLine.Apps.Admin.API.Controllers
             return Ok(items);
         }
 
-        [HttpPatch]
+        [HttpPut]
         [Route("components")]
-        public async Task<ActionResult> UpdateComponent(Component data)
+        public async Task<ActionResult> UpdateComponent(Component[] data)
         {
             await _templateRenderer.ExecuteAsync(new SaveComponentCommand(data));
             return Ok();

@@ -1,16 +1,17 @@
-import React, { useCallback } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Button, Result, Row, Spin } from 'antd';
 import { boxCss } from '@help-line/style-utils';
 import cn from 'classnames';
 
-export const QuerySimpleLoading: React.FC<
-  React.PropsWithChildren<{
-    query: UseQueryResult;
-    loading?: React.ReactElement;
-    error?: React.ReactElement;
-  }>
-> = (props) => {
+interface Props {
+  query: UseQueryResult;
+  loading?: React.ReactElement;
+  error?: React.ReactElement;
+  children?: ReactNode | undefined | (() => ReactNode);
+}
+
+export const QuerySimpleLoading = (props: Props) => {
   if (props.query.isLoading && !props.query.isFetched) {
     if (props.loading) {
       return <>{props.loading}</>;
@@ -40,6 +41,8 @@ export const QuerySimpleLoading: React.FC<
       );
     }
   }
-
-  return <>{props.children}</>;
+  if (typeof props.children === 'function') {
+    return <>{props.children()}</>;
+  }
+  return <>{props.children || null}</>;
 };

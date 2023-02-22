@@ -41,13 +41,13 @@ export const ContextMeta = observer(
 
     const updateAlias = useCallback(
       (val: string) => {
-        aliasAccessor().set(val);
+        aliasAccessor.set(val);
       },
       [aliasAccessor]
     );
     const updateExtend = useCallback(
       (contextId: string) => {
-        extendAccessor().set(contextId);
+        extendAccessor.set(contextId);
       },
       [extendAccessor]
     );
@@ -71,7 +71,7 @@ export const ContextMeta = observer(
         <div className={spacingCss.marginTopSm}>
           <AutoComplete
             className={boxCss.fullWidth}
-            value={aliasAccessor().get()}
+            value={aliasAccessor.get()}
             options={aliases}
             onChange={updateAlias}
           />
@@ -96,7 +96,7 @@ export const ContextMeta = observer(
             className={boxCss.fullWidth}
             onChange={updateExtend}
             allowClear
-            value={extendAccessor().get()}
+            value={extendAccessor.get()}
           >
             {contextResources
               ?.filter((x) => x.data.id !== resource.data.id)

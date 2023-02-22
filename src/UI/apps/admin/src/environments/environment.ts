@@ -4,9 +4,8 @@
 import { IEnvironment } from '@help-line/modules/application';
 
 export const environment: IEnvironment = {
-  apiPrefix: (import.meta as any).env['VITE_API_PREFIX'] || 'api',
   production: (import.meta as any).env['NODE_ENV'] === 'production',
-  serverUrl: (import.meta as any).env['VITE_API_SERVER'] || '',
+  apiUrl: (import.meta as any).env['VITE_API_SERVER'] || '',
   oauth: {
     authority: (import.meta as any).env['VITE_OAUTH_AUTHORITY']!,
     client_id: (import.meta as any).env['VITE_OAUTH_CLIENT_ID']!,

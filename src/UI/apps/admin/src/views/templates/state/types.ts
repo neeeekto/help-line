@@ -18,12 +18,23 @@ export interface EditCache<T extends TemplateBase = TemplateBase> {
   resource: Resource['id'];
   value: Partial<T>;
   hash: Resource['hash'];
+  temp?: any;
+}
+
+export interface ValueAccessorSetResult<T> {
+  update: Partial<T>;
+  temp?: any;
 }
 
 export interface ValueAccessor<T extends TemplateBase = TemplateBase> {
   field?: string;
-  get: (rsc?: T, current?: Partial<T>) => string;
-  set: (val?: string) => Partial<T>;
+  get: (rsc?: T, current?: Partial<T>, temp?: any) => string;
+  set: (
+    val?: string,
+    cache?: Partial<T>,
+    current?: Partial<T>
+  ) => ValueAccessorSetResult<T>;
+  equal?: (currentValue: Partial<T>, newValue: Partial<T>) => boolean;
 }
 
 export interface EditTab<T extends TemplateBase = TemplateBase> {

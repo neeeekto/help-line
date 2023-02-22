@@ -5,8 +5,8 @@ import {
   ProjectData,
   CreateProjectData,
 } from '@help-line/entities/admin/api';
-import { useApi } from '@help-line/modules/api';
 import { createQueryKeys } from '@help-line/modules/query';
+import { useInjection } from 'inversify-react';
 
 export const adminProjectsQueryKeys = createQueryKeys(
   ['api', 'admin', 'projects'],
@@ -16,13 +16,13 @@ export const adminProjectsQueryKeys = createQueryKeys(
 );
 
 export const useProjectsQuery = () => {
-  const api = useApi(ProjectAdminApi);
+  const api = useInjection(ProjectAdminApi);
   return useQuery(adminProjectsQueryKeys.list(), () => api.get());
 };
 
 export const useCreateProjectMutation = () => {
   const client = useQueryClient();
-  const api = useApi(ProjectAdminApi);
+  const api = useInjection(ProjectAdminApi);
 
   return useMutation(
     [...adminProjectsQueryKeys.root, 'create'],
@@ -37,7 +37,7 @@ export const useCreateProjectMutation = () => {
 
 export const useUpdateProjectMutation = (projectId: Project['id']) => {
   const client = useQueryClient();
-  const api = useApi(ProjectAdminApi);
+  const api = useInjection(ProjectAdminApi);
 
   return useMutation(
     [...adminProjectsQueryKeys.root, 'update', projectId],
@@ -52,7 +52,7 @@ export const useUpdateProjectMutation = (projectId: Project['id']) => {
 
 export const useActivateProjectMutation = (projectId: string) => {
   const client = useQueryClient();
-  const api = useApi(ProjectAdminApi);
+  const api = useInjection(ProjectAdminApi);
 
   return useMutation(
     [...adminProjectsQueryKeys.root, 'activate', projectId],
@@ -67,7 +67,7 @@ export const useActivateProjectMutation = (projectId: string) => {
 
 export const useDeactivateProjectMutation = (projectId: string) => {
   const client = useQueryClient();
-  const api = useApi(ProjectAdminApi);
+  const api = useInjection(ProjectAdminApi);
 
   return useMutation(
     [...adminProjectsQueryKeys.root, 'deactivate', projectId],
@@ -82,7 +82,7 @@ export const useDeactivateProjectMutation = (projectId: string) => {
 
 export const useToggleProjectMutation = (projectId: string) => {
   const client = useQueryClient();
-  const api = useApi(ProjectAdminApi);
+  const api = useInjection(ProjectAdminApi);
 
   return useMutation(
     [...adminProjectsQueryKeys.root, 'toggle', projectId],

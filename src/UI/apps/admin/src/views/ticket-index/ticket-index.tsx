@@ -6,11 +6,11 @@ import { HelpdeskAdminApi } from '@help-line/entities/admin/api';
 import { Button, Input, message, Tooltip, Typography } from 'antd';
 import { ReloadOutlined, SearchOutlined } from '@ant-design/icons';
 import { DiffEditor } from '@monaco-editor/react';
-import { useApi } from '@help-line/modules/api';
+import { useInjection } from 'inversify-react';
 import { TicketId } from '@help-line/entities/client/api';
 
 export const TicketIndex: React.FC = () => {
-  const helpdeskApi = useApi(HelpdeskAdminApi);
+  const helpdeskApi = useInjection(HelpdeskAdminApi);
   const [ticketId, setTicketId] = useState<TicketId>('');
   const [original, setOriginal] = useState<any[]>([]);
   const [diff, setDiff] = useState<[string, string]>(['', '']);

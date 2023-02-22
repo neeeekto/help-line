@@ -7,7 +7,7 @@ import {
   ProjectApiRequest,
 } from '@help-line/entities/client/api';
 import { useQuery } from '@tanstack/react-query';
-import { useApi } from '@help-line/modules/api';
+import { useInjection } from 'inversify-react';
 
 const clientPreviewQueryKeys = createQueryKeys(
   [ROOT_QUERY_KEY, 'preview'],
@@ -22,7 +22,7 @@ const clientPreviewQueryKeys = createQueryKeys(
 export const useTicketFeedbackPreviewQuery = (
   req: EmailFeedbackPreviewRequest & ProjectApiRequest
 ) => {
-  const api = useApi(PreviewClientApi);
+  const api = useInjection(PreviewClientApi);
   return useQuery(clientPreviewQueryKeys.feedback(req), () =>
     api.getFeedback(req)
   );
@@ -31,7 +31,7 @@ export const useTicketFeedbackPreviewQuery = (
 export const useTicketMessagesPreviewQuery = (
   req: EmailMessagePreviewRequest & ProjectApiRequest
 ) => {
-  const api = useApi(PreviewClientApi);
+  const api = useInjection(PreviewClientApi);
 
   return useQuery(clientPreviewQueryKeys.messages(req), () =>
     api.getMessage(req)

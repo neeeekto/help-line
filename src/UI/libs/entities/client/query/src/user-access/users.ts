@@ -7,9 +7,9 @@ import {
   UserInfo,
   UsersClientApi,
 } from '@help-line/entities/client/api';
-import { useApi } from '@help-line/modules/api';
 import { ROOT_QUERY_KEY } from '../constants';
 import { clientOperatorsQueryKeys } from '../helpdesk/operators';
+import { useInjection } from 'inversify-react';
 
 export const clientUsersQueryKeys = createQueryKeys(
   [ROOT_QUERY_KEY, 'users'],
@@ -24,14 +24,14 @@ export const clientUsersQueryKeys = createQueryKeys(
 );
 
 export const useUsersQuery = (projectId?: Project['id']) => {
-  const api = useApi(UsersClientApi);
+  const api = useInjection(UsersClientApi);
   return useQuery(clientUsersQueryKeys.list.byProject(projectId), () =>
     api.get({ projectId })
   );
 };
 
 export const useUserQuery = (userId: User['id']) => {
-  const api = useApi(UsersClientApi);
+  const api = useInjection(UsersClientApi);
 
   return useQuery(clientUsersQueryKeys.detail.byUser(userId), () =>
     api.getById({ userId })
@@ -40,7 +40,7 @@ export const useUserQuery = (userId: User['id']) => {
 
 export const useCreateUserMutation = () => {
   const client = useQueryClient();
-  const api = useApi(UsersClientApi);
+  const api = useInjection(UsersClientApi);
 
   return useMutation((data: UserData) => api.create({ data }), {
     onSuccess: () =>
@@ -53,7 +53,7 @@ export const useCreateUserMutation = () => {
 
 export const useUpdateInfoUserMutation = (userId: User['id']) => {
   const client = useQueryClient();
-  const api = useApi(UsersClientApi);
+  const api = useInjection(UsersClientApi);
 
   return useMutation(
     [...clientUsersQueryKeys.root, 'update', userId],
@@ -72,7 +72,7 @@ export const useUpdateInfoUserMutation = (userId: User['id']) => {
 
 export const useRemoveUserMutation = (userId: User['id']) => {
   const client = useQueryClient();
-  const api = useApi(UsersClientApi);
+  const api = useInjection(UsersClientApi);
 
   return useMutation(
     [...clientUsersQueryKeys.root, 'delete', userId],

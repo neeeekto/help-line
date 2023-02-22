@@ -21,20 +21,13 @@ const MonacoIde: React.FC<{ tab: EditTab; resource: Resource }> = observer(
       () => store$.createValueAccessor(tab.value),
       [store$, tab.value]
     );
-    const suggestion = useEditorSuggestions();
+    const setupSuggestion = useEditorSuggestions();
     const onSetup = useCallback(
       (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
         editor.addCommand(KeyMod.Shift | KeyCode.KeyS, async () => {
           saveMutation.mutate();
         });
-        /*editor.addCommand(
-        KeyMod.Shift | KeyMod.CtrlCmd | KeyCode.KeyS,
-        saveAllHandler
-      );
-      editor.addCommand(
-        KeyMod.Shift | KeyMod.WinCtrl | KeyCode.KeyS,
-        saveAllHandler
-      );*/
+        setupSuggestion(editor, monaco);
       },
       []
     );
@@ -44,14 +37,14 @@ const MonacoIde: React.FC<{ tab: EditTab; resource: Resource }> = observer(
         height="100%"
         defaultLanguage={tab.language}
         language={tab.language}
-        value={accessor().get()}
+        value={accessor.get()}
         options={{
           readOnly: tab.readonly,
           minimap: {
             enabled: false,
           },
         }}
-        onChange={(value) => accessor().set(value)}
+        onChange={accessor.set}
         onMount={onSetup}
       />
     );

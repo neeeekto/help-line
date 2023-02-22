@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useApi } from '@help-line/modules/api';
 import { createQueryKeys } from '@help-line/modules/query';
 import {
   HelpdeskAdminApi,
@@ -7,6 +6,7 @@ import {
   TicketScheduleStatus,
 } from '@help-line/entities/admin/api';
 import { Ticket } from '@help-line/entities/client/api';
+import { useInjection } from 'inversify-react';
 
 export const adminHelpdeskQueryKeys = createQueryKeys(
   ['api', 'admin', 'helpdesk'],
@@ -19,14 +19,14 @@ export const adminHelpdeskQueryKeys = createQueryKeys(
 );
 
 export const useSchedulesQuery = (statuses: TicketScheduleStatus[]) => {
-  const api = useApi(HelpdeskAdminApi);
+  const api = useInjection(HelpdeskAdminApi);
   return useQuery(adminHelpdeskQueryKeys.schedules.byStatuses(statuses), () =>
     api.getSchedules({ statuses })
   );
 };
 
 export const useSchedulesByTicketQuery = (ticketId: Ticket['id']) => {
-  const api = useApi(HelpdeskAdminApi);
+  const api = useInjection(HelpdeskAdminApi);
   return useQuery(
     adminHelpdeskQueryKeys.schedules.byTicket(ticketId),
     () => api.getSchedulesByTicket({ ticketId }),
@@ -39,7 +39,7 @@ export const useSchedulesByTicketQuery = (ticketId: Ticket['id']) => {
 
 export const useReScheduleMutation = (scheduleId: TicketSchedule['id']) => {
   const client = useQueryClient();
-  const api = useApi(HelpdeskAdminApi);
+  const api = useInjection(HelpdeskAdminApi);
   return useMutation(
     [...adminHelpdeskQueryKeys.root, 'schedules', 're', scheduleId],
     () => api.reschedule({ scheduleId }),
@@ -51,7 +51,7 @@ export const useReScheduleMutation = (scheduleId: TicketSchedule['id']) => {
 
 export const useDeleteScheduleMutation = (scheduleId: TicketSchedule['id']) => {
   const client = useQueryClient();
-  const api = useApi(HelpdeskAdminApi);
+  const api = useInjection(HelpdeskAdminApi);
   return useMutation(
     [...adminHelpdeskQueryKeys.root, 'schedules', 'delete', scheduleId],
     () => api.delete({ scheduleId }),

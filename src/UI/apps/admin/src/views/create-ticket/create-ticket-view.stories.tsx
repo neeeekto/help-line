@@ -20,11 +20,9 @@ export default {
 
 const factory = makeStoryFactory(
   (args: ComponentProps<typeof CreateTicketView>) => (
-    <StorybookWrapper>
-      <LayoutRoot>
-        <CreateTicketView {...args} />
-      </LayoutRoot>
-    </StorybookWrapper>
+    <LayoutRoot>
+      <CreateTicketView {...args} />
+    </LayoutRoot>
   )
 );
 

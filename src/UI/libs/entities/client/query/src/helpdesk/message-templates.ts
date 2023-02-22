@@ -3,8 +3,8 @@ import {
   MessageTemplate,
   MessageTemplateClientApi,
 } from '@help-line/entities/client/api';
-import { useApi } from '@help-line/modules/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useInjection } from 'inversify-react';
 
 export const {
   useDeleteMessageTemplateMutation,
@@ -23,7 +23,7 @@ export const useChangeOrderMessageTemplateMutation = (
   templateId: MessageTemplate['id'],
   projectId: string
 ) => {
-  const api = useApi(MessageTemplateClientApi);
+  const api = useInjection(MessageTemplateClientApi);
   const client = useQueryClient();
 
   return useMutation(

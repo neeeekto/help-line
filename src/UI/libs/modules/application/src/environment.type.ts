@@ -1,7 +1,6 @@
 export interface IEnvironment {
   production: boolean;
-  serverUrl: string;
-  apiPrefix: string;
+  apiUrl: string;
   oauth: {
     authority: string;
     client_id: string;

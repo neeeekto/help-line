@@ -1,8 +1,8 @@
 import { createQueryKeys } from '@help-line/modules/query';
 import { RolesClientApi, RoleData, Role } from '@help-line/entities/client/api';
-import { useApi } from '@help-line/modules/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ROOT_QUERY_KEY } from '../constants';
+import { useInjection } from 'inversify-react';
 
 export const clientRolesQueryKeys = createQueryKeys(
   [ROOT_QUERY_KEY, 'roles'],
@@ -12,12 +12,12 @@ export const clientRolesQueryKeys = createQueryKeys(
 );
 
 export const useRolesQuery = () => {
-  const api = useApi(RolesClientApi);
+  const api = useInjection(RolesClientApi);
   return useQuery(clientRolesQueryKeys.list(), () => api.get());
 };
 
 export const useCreateRoleMutation = () => {
-  const api = useApi(RolesClientApi);
+  const api = useInjection(RolesClientApi);
   const client = useQueryClient();
 
   return useMutation(
@@ -30,7 +30,7 @@ export const useCreateRoleMutation = () => {
 };
 
 export const useUpdateRoleMutation = (roleId: Role['id']) => {
-  const api = useApi(RolesClientApi);
+  const api = useInjection(RolesClientApi);
   const client = useQueryClient();
 
   return useMutation(
@@ -43,7 +43,7 @@ export const useUpdateRoleMutation = (roleId: Role['id']) => {
 };
 
 export const useDeleteRoleMutation = (roleId: Role['id']) => {
-  const api = useApi(RolesClientApi);
+  const api = useInjection(RolesClientApi);
   const client = useQueryClient();
 
   return useMutation(

@@ -4,8 +4,8 @@ import {
   ReopenCondition,
   ReopenConditionsClientApi,
 } from '@help-line/entities/client/api';
-import { useApi } from '@help-line/modules/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useInjection } from 'inversify-react';
 
 export const {
   useReopenConditionListQuery,
@@ -23,7 +23,7 @@ export const useSwitchReopenConditionMutation = (
   projectId: Project['id'],
   toId: ReopenCondition['id']
 ) => {
-  const api = useApi(ReopenConditionsClientApi);
+  const api = useInjection(ReopenConditionsClientApi);
   const client = useQueryClient();
   return useMutation(
     [...clientReopenConditionQueryKeys.root, 'switch', toId],
@@ -41,7 +41,7 @@ export const useToggleReopenConditionMutation = (
   projectId: Project['id'],
   reopenConditionId: ReopenCondition['id']
 ) => {
-  const api = useApi(ReopenConditionsClientApi);
+  const api = useInjection(ReopenConditionsClientApi);
   const client = useQueryClient();
   return useMutation(
     [...clientReopenConditionQueryKeys.root, 'toggle', reopenConditionId],

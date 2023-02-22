@@ -1,12 +1,12 @@
 import React, { FormEvent, useCallback, useMemo } from 'react';
-import { Context, Template } from '@help-line/entities/admin/api';
+import { Component, Context, Template } from '@help-line/entities/admin/api';
 import { boxCss, spacingCss } from '@help-line/style-utils';
 import { Button, Input, Popover, Select, Typography } from 'antd';
 import cn from 'classnames';
 import { JSONTree } from 'react-json-tree';
 import groupBy from 'lodash/groupBy';
 import { observer } from 'mobx-react-lite';
-import { compile } from 'handlebars';
+import { compile, registerPartial } from 'handlebars';
 import { Icon } from '../../components/Icon';
 import {
   makeTemplatePropsValueAccessor,
@@ -29,6 +29,7 @@ export const TemplateMeta = observer(
       store$.actions.openTab({
         id: `${resource.id}.props`,
         resource: resource.id,
+        title: `${resource.data.id}.props`,
         language: 'json',
         breadcrumb: [resource.type, resource.data.id, 'props'],
         value: makeTemplatePropsValueAccessor() as ValueAccessor,
@@ -79,11 +80,29 @@ export const TemplateMeta = observer(
         value: {
           field: 'preview',
           set: () => ({}),
-          get: (rsc, current) =>
-            compile(current?.content || rsc?.content || '')({}),
+          get: (rsc, current) => {
+            try {
+              const compiler = compile(current?.content || rsc?.content || '');
+              const components = store$.selectors.resourceByType<Component>(
+                ResourceType.Component
+              );
+
+              return compiler(
+                {},
+                {
+                  partials: components.reduce((res, c) => {
+                    res[c.data.id] = c.data.content;
+                    return res;
+                  }, {} as any),
+                }
+              );
+            } catch (e) {
+              return e.message;
+            }
+          },
         } as ValueAccessor<Template> as any,
         breadcrumb: [resource.type, resource.data.id, 'preview'],
-        language: 'handlebars',
+        language: 'html',
         readonly: true,
       });
     }, [store$, resource]);

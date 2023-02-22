@@ -5,8 +5,8 @@ import {
   TagDescriptionsClientApi,
   TagsClientApi,
 } from '@help-line/entities/client/api';
-import { useApi } from '@help-line/modules/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useInjection } from 'inversify-react';
 
 export const {
   useSaveTagDescriptionMutation,
@@ -34,7 +34,7 @@ export const useSaveManyTagsMutation = ({
 }: {
   projectId: Project['id'];
 }) => {
-  const api = useApi(TagsClientApi);
+  const api = useInjection(TagsClientApi);
   const client = useQueryClient();
   return useMutation(
     [...clientTagQueryKeys.root, projectId, 'save-many'],

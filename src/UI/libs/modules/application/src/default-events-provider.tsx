@@ -15,7 +15,7 @@ export const DefaultEventsProvider: React.FC<DefaultEventsProviderProps> = ({
   const tokenResolver = useCallback(() => user?.access_token, [user]);
 
   return (
-    <EventsProvider authTokenResolver={tokenResolver} serverUrl={env.serverUrl}>
+    <EventsProvider authTokenResolver={tokenResolver} serverUrl={env.apiUrl}>
       {children}
     </EventsProvider>
   );

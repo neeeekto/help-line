@@ -11,6 +11,7 @@ import {
 } from '../../../../../libs/entities/admin/stubs/src';
 import { MswHandlers } from '../../../../../libs/dev/http-stubs/src';
 import { MigrationStatusType } from '../../../../../libs/entities/admin/api/src';
+import { DiProvider } from '../../di';
 
 export default {
   component: MigrationsProvider,
@@ -19,9 +20,7 @@ export default {
 
 const factory = makeStoryFactory(
   (args: ComponentProps<typeof MigrationsProvider>) => (
-    <StorybookWrapper>
-      <MigrationsProvider {...args}>Content</MigrationsProvider>
-    </StorybookWrapper>
+    <MigrationsProvider {...args}>Content</MigrationsProvider>
   )
 );
 

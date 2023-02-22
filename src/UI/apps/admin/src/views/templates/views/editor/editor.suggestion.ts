@@ -1,14 +1,9 @@
-import {
-  useComponentsQuery,
-  useContextsQuery,
-  useTemplatesQuery,
-} from '@help-line/entities/admin/query';
 import { CancellationToken, editor, languages, Position } from 'monaco-editor';
 import { Monaco } from '@monaco-editor/react';
-import { ResourceType } from '../../editor-manager';
-import { TemplateBase } from '@help-line/entities/admin/api';
+import { Component, TemplateBase } from '@help-line/entities/admin/api';
 import { useRef } from 'react';
 import CompletionItem = languages.CompletionItem;
+import { ResourceType, useEditStore } from '../../state';
 
 interface Info {
   src: ResourceType;
@@ -16,9 +11,7 @@ interface Info {
 }
 
 export const useEditorSuggestions = () => {
-  const templatesQuery = useContextsQuery;
-  const componentsQuery = useComponentsQuery;
-  const contextQuery = useTemplatesQuery;
+  const store$ = useEditStore();
   const completionItemProvider = useRef<languages.CompletionItemProvider>({
     provideCompletionItems: (
       model: editor.ITextModel,
@@ -40,30 +33,29 @@ export const useEditorSuggestions = () => {
         startColumn: word.startColumn,
         endColumn: word.endColumn,
       };
-      console.log(word, textUntilPosition);
       // Match handlebars opening delimiter
-      const rootScopes = ['ctx', 'props', 'data'];
-      if (textUntilPosition.match(/.*{{$/m)) {
-        suggestions.push(
-          ...rootScopes.map((x) => ({
-            label: x,
-            kind: languages.CompletionItemKind.Field,
-            insertText: `${x}.`,
-            range: range,
-          }))
+      if (/.*{{#?>\s?$/m.test(textUntilPosition)) {
+        const components = store$.selectors.resourceByType<Component>(
+          ResourceType.Component
         );
+        for (const comp of components) {
+          // Push handlebars snippets
+          suggestions.push({
+            label: comp.id,
+            kind: languages.CompletionItemKind.Keyword,
+            insertText: `${comp.data.id}`,
+            range: range,
+          });
+        }
       }
+      console.log(textUntilPosition, suggestions);
       return {
         suggestions,
       };
     },
   } as languages.CompletionItemProvider);
 
-  return (
-    editor: editor.IStandaloneCodeEditor,
-    monaco: Monaco,
-    currentGetter: () => Info
-  ) => {
+  return (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     monaco.languages.registerCompletionItemProvider(
       'handlebars',
       completionItemProvider.current

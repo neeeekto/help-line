@@ -1,8 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import {
-  makeStoryFactory,
-  StorybookWrapper,
-} from '../../../../../libs/dev/storybook/src';
+import { makeStoryFactory } from '../../../../../libs/dev/storybook/src';
 import { LayoutRoot } from '../../layout';
 import React from 'react';
 import { TicketIndex } from './ticket-index';
@@ -15,11 +12,9 @@ export default {
 } as ComponentMeta<typeof TicketIndex>;
 
 const factory = makeStoryFactory(() => (
-  <StorybookWrapper>
-    <LayoutRoot>
-      <TicketIndex />
-    </LayoutRoot>
-  </StorybookWrapper>
+  <LayoutRoot>
+    <TicketIndex />
+  </LayoutRoot>
 ));
 
 export const Primary = factory.create({

@@ -1,17 +1,17 @@
-import { PropsWithChildren, useEffect, useMemo } from 'react';
+import { PropsWithChildren, useMemo } from 'react';
 import { EditStoreContext } from './context';
-import { useApi } from '@help-line/modules/api';
 import {
   ComponentAdminApi,
   ContextAdminApi,
   TemplateAdminApi,
 } from '@help-line/entities/admin/api';
 import { makeEditorStore } from './store';
+import { useInjection } from 'inversify-react';
 
 export const EditorStoreProvider = ({ children }: PropsWithChildren) => {
-  const templateApi = useApi(TemplateAdminApi);
-  const contextApi = useApi(ContextAdminApi);
-  const componentApi = useApi(ComponentAdminApi);
+  const templateApi = useInjection(TemplateAdminApi);
+  const contextApi = useInjection(ContextAdminApi);
+  const componentApi = useInjection(ComponentAdminApi);
 
   const store = useMemo(
     () => makeEditorStore(templateApi, contextApi, componentApi),

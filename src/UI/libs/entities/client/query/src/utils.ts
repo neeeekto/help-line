@@ -1,6 +1,7 @@
 import { createQueryKeys } from '@help-line/modules/query';
 import { ROOT_QUERY_KEY } from './constants';
-import { ApiCctor, useApi } from '@help-line/modules/api';
+import { useInjection } from 'inversify-react';
+import { interfaces } from 'inversify';
 import {
   QueryKey,
   useMutation,
@@ -23,7 +24,7 @@ export const makeQueryAndMutationForRudApi = <
 >(
   name: TName,
   key: QueryKey,
-  cctor: ApiCctor<IRudApi<TEntity, TSaveData, TId, TShareArgs>>,
+  cctor: interfaces.Newable<IRudApi<TEntity, TSaveData, TId, TShareArgs>>,
   shareArgToKeys: (args: TShareArgs) => QueryKey = () => []
 ) => {
   const queryKeys = createQueryKeys(
@@ -34,12 +35,12 @@ export const makeQueryAndMutationForRudApi = <
   );
 
   const useListQuery = (args: TShareArgs) => {
-    const api = useApi(cctor);
+    const api = useInjection(cctor);
     return useQuery(queryKeys.list(args), () => api.get(args));
   };
 
   const useSaveMutation = (params: { id: TId } & TShareArgs) => {
-    const api = useApi(cctor);
+    const api = useInjection(cctor);
     const client = useQueryClient();
     return useMutation(
       [...queryKeys.root, 'save', params.id],
@@ -51,7 +52,7 @@ export const makeQueryAndMutationForRudApi = <
   };
 
   const useDeleteMutation = (params: { id: TId } & TShareArgs) => {
-    const api = useApi(cctor);
+    const api = useInjection(cctor);
     const client = useQueryClient();
     return useMutation(
       [...queryKeys.root, 'delete', params.id],
@@ -95,7 +96,9 @@ export const makeQueryAndMutationForCrudApi = <
 >(
   name: TName,
   key: QueryKey,
-  cctor: ApiCctor<ICrudApi<TEntity, TCreateData, TUpdateData, TId, TShareArgs>>,
+  cctor: interfaces.Newable<
+    ICrudApi<TEntity, TCreateData, TUpdateData, TId, TShareArgs>
+  >,
   shareArgToKeys: (args: TShareArgs) => QueryKey = () => []
 ) => {
   const queryKeys = createQueryKeys(
@@ -106,12 +109,12 @@ export const makeQueryAndMutationForCrudApi = <
   );
 
   const useListQuery = (args: TShareArgs) => {
-    const api = useApi(cctor);
+    const api = useInjection(cctor);
     return useQuery(queryKeys.list(args), () => api.get(args));
   };
 
   const useCreateMutation = (params: TShareArgs) => {
-    const api = useApi(cctor);
+    const api = useInjection(cctor);
     const client = useQueryClient();
     return useMutation(
       [...queryKeys.root, 'create'],
@@ -123,7 +126,7 @@ export const makeQueryAndMutationForCrudApi = <
   };
 
   const useUpdateMutation = (params: { id: TId } & TShareArgs) => {
-    const api = useApi(cctor);
+    const api = useInjection(cctor);
     const client = useQueryClient();
     return useMutation(
       [...queryKeys.root, 'create'],
@@ -135,7 +138,7 @@ export const makeQueryAndMutationForCrudApi = <
   };
 
   const useDeleteMutation = (params: { id: TId } & TShareArgs) => {
-    const api = useApi(cctor);
+    const api = useInjection(cctor);
     const client = useQueryClient();
     return useMutation(
       [...queryKeys.root, 'delete', params.id],

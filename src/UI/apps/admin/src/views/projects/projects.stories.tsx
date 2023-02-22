@@ -18,11 +18,9 @@ export default {
 } as ComponentMeta<typeof Projects>;
 
 const factory = makeStoryFactory((args: ComponentProps<typeof Projects>) => (
-  <StorybookWrapper>
-    <LayoutRoot>
-      <Projects {...args} />
-    </LayoutRoot>
-  </StorybookWrapper>
+  <LayoutRoot>
+    <Projects {...args} />
+  </LayoutRoot>
 ));
 
 export const Primary = factory.create({

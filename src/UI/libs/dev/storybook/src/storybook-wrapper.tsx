@@ -1,8 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import {
-  DefaultHttpProvider,
-  QueryProvider,
-} from '@help-line/modules/application';
+import { QueryProvider } from '@help-line/modules/application';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { MemoryRouter } from 'react-router-dom';
 import { InitialEntry } from '@remix-run/router';
@@ -13,9 +10,7 @@ export const StorybookWrapper = ({
 }: PropsWithChildren<{ initialRoutes?: InitialEntry[] }>) => {
   return (
     <QueryProvider>
-      <DefaultHttpProvider config={{ serverUrl: '', apiPrefix: '' }}>
-        <MemoryRouter initialEntries={initialRoutes}>{children}</MemoryRouter>
-      </DefaultHttpProvider>
+      <MemoryRouter initialEntries={initialRoutes}>{children}</MemoryRouter>
       <ReactQueryDevtools position={'bottom-right'} />
     </QueryProvider>
   );

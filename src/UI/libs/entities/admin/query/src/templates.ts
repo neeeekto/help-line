@@ -1,5 +1,4 @@
 import { createQueryKeys } from '@help-line/modules/query';
-import { useApi } from '@help-line/modules/api';
 import {
   ContextAdminApi,
   Template,
@@ -9,6 +8,7 @@ import {
   Component,
 } from '@help-line/entities/admin/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInjection } from 'inversify-react';
 
 const createTemplateQueryKeys = (segment: string) =>
   createQueryKeys(
@@ -24,13 +24,13 @@ const createTemplateQueryKeys = (segment: string) =>
 export const adminTemplateQueryKeys = createTemplateQueryKeys('templates');
 
 export const useTemplatesQuery = () => {
-  const api = useApi(TemplateAdminApi);
+  const api = useInjection(TemplateAdminApi);
   return useQuery(adminTemplateQueryKeys.list(), () => api.get());
 };
 
 export const useTemplateSaveMutation = (id: string) => {
   const client = useQueryClient();
-  const api = useApi(TemplateAdminApi);
+  const api = useInjection(TemplateAdminApi);
   return useMutation(
     adminTemplateQueryKeys.save(id),
     (req: Template) => api.save([req]),
@@ -42,7 +42,7 @@ export const useTemplateSaveMutation = (id: string) => {
 
 export const useTemplatesSaveMutation = (ids: string[]) => {
   const client = useQueryClient();
-  const api = useApi(TemplateAdminApi);
+  const api = useInjection(TemplateAdminApi);
   return useMutation(
     adminTemplateQueryKeys.saveList(ids),
     (req: Template[]) => api.save(req),
@@ -54,7 +54,7 @@ export const useTemplatesSaveMutation = (ids: string[]) => {
 
 export const useTemplateDeleteMutation = (id: string) => {
   const client = useQueryClient();
-  const api = useApi(TemplateAdminApi);
+  const api = useInjection(TemplateAdminApi);
   return useMutation(
     adminTemplateQueryKeys.delete(id),
     () => api.delete({ id }),
@@ -67,13 +67,13 @@ export const useTemplateDeleteMutation = (id: string) => {
 export const adminContextQueryKeys = createTemplateQueryKeys('contexts');
 
 export const useContextsQuery = () => {
-  const api = useApi(ContextAdminApi);
+  const api = useInjection(ContextAdminApi);
   return useQuery(adminContextQueryKeys.list(), () => api.get());
 };
 
 export const useContextSaveMutation = (id: string) => {
   const client = useQueryClient();
-  const api = useApi(ContextAdminApi);
+  const api = useInjection(ContextAdminApi);
   return useMutation(
     adminContextQueryKeys.save(id),
     (req: Context) => api.save([req]),
@@ -85,7 +85,7 @@ export const useContextSaveMutation = (id: string) => {
 
 export const useContextsSaveMutation = (ids: string[]) => {
   const client = useQueryClient();
-  const api = useApi(ContextAdminApi);
+  const api = useInjection(ContextAdminApi);
   return useMutation(
     adminContextQueryKeys.saveList(ids),
     (req: Context[]) => api.save(req),
@@ -97,7 +97,7 @@ export const useContextsSaveMutation = (ids: string[]) => {
 
 export const useContextDeleteMutation = (id: string) => {
   const client = useQueryClient();
-  const api = useApi(ContextAdminApi);
+  const api = useInjection(ContextAdminApi);
   return useMutation(
     adminContextQueryKeys.delete(id),
     () => api.delete({ id }),
@@ -110,13 +110,13 @@ export const useContextDeleteMutation = (id: string) => {
 export const adminComponentQueryKeys = createTemplateQueryKeys('components');
 
 export const useComponentsQuery = () => {
-  const api = useApi(ComponentAdminApi);
+  const api = useInjection(ComponentAdminApi);
   return useQuery(adminComponentQueryKeys.list(), () => api.get());
 };
 
 export const useComponentSaveMutation = (id: string) => {
   const client = useQueryClient();
-  const api = useApi(ComponentAdminApi);
+  const api = useInjection(ComponentAdminApi);
   return useMutation(
     adminComponentQueryKeys.save(id),
     (req: Component) => api.save([req]),
@@ -128,7 +128,7 @@ export const useComponentSaveMutation = (id: string) => {
 
 export const useComponentsSaveMutation = (ids: string[]) => {
   const client = useQueryClient();
-  const api = useApi(ComponentAdminApi);
+  const api = useInjection(ComponentAdminApi);
   return useMutation(
     adminComponentQueryKeys.saveList(ids),
     (req: Component[]) => api.save(req),
@@ -140,7 +140,7 @@ export const useComponentsSaveMutation = (ids: string[]) => {
 
 export const useComponentDeleteMutation = (id: string) => {
   const client = useQueryClient();
-  const api = useApi(ComponentAdminApi);
+  const api = useInjection(ComponentAdminApi);
   return useMutation(
     adminComponentQueryKeys.delete(id),
     () => api.delete({ id }),

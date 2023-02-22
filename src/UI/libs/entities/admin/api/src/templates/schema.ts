@@ -9,7 +9,7 @@ const makeSchema = <T>(segment: string) => {
     }),
 
     save: createApiAction<void, T[]>({
-      method: HttpMethod.PATCH,
+      method: HttpMethod.PUT,
       url: `/v1/template-renderer/${segment}/`,
       data: (req) => req,
     }),

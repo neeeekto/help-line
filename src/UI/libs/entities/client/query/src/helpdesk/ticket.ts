@@ -1,15 +1,12 @@
-import { makeQueryAndMutationForRudApi } from '../utils';
 import {
-  Operator,
-  Project,
   TicketAction,
   TicketClientApi,
   TicketId,
 } from '@help-line/entities/client/api';
-import { useApi } from '@help-line/modules/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createQueryKeys } from '@help-line/modules/query';
 import { ROOT_QUERY_KEY } from '../constants';
+import { useInjection } from 'inversify-react';
 
 export const clientTicketQueryKeys = createQueryKeys(
   [ROOT_QUERY_KEY, 'ticket'],
@@ -22,7 +19,7 @@ export const clientTicketQueryKeys = createQueryKeys(
 );
 
 export const useTicketQuery = (ticketId: TicketId) => {
-  const api = useApi(TicketClientApi);
+  const api = useInjection(TicketClientApi);
   return useQuery(
     clientTicketQueryKeys.atCurrent(ticketId),
     () => api.getById({ ticketId }),
@@ -33,7 +30,7 @@ export const useTicketQuery = (ticketId: TicketId) => {
 };
 
 export const useTicketAdDateQuery = (ticketId: TicketId, date: Date) => {
-  const api = useApi(TicketClientApi);
+  const api = useInjection(TicketClientApi);
   return useQuery(clientTicketQueryKeys.atDate(ticketId, date), () =>
     api.getByIdAtDate({ ticketId, date })
   );
@@ -43,7 +40,7 @@ export const useExecuteTicketMutation = (
   ticketId: TicketId,
   version: number
 ) => {
-  const api = useApi(TicketClientApi);
+  const api = useInjection(TicketClientApi);
   const qClient = useQueryClient();
   return useMutation(
     [...clientTicketQueryKeys.root, ticketId, 'execute'],

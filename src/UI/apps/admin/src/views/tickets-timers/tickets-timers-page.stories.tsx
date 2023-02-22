@@ -19,11 +19,9 @@ export default {
 } as ComponentMeta<typeof TicketTimersPage>;
 
 const factory = makeStoryFactory(() => (
-  <StorybookWrapper>
-    <LayoutRoot>
-      <TicketTimersPage />
-    </LayoutRoot>
-  </StorybookWrapper>
+  <LayoutRoot>
+    <TicketTimersPage />
+  </LayoutRoot>
 ));
 
 const TICKET_ID = AdminHelpdeskStubs.createTicketId();

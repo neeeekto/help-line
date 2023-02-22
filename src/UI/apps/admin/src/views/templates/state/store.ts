@@ -104,7 +104,12 @@ export const makeEditorStore = (
 
   const updateResource = action(
     'editing.edit',
-    (id: Resource['id'], hash: string, data: Partial<TemplateBase>) => {
+    (
+      id: Resource['id'],
+      hash: string,
+      data: Partial<TemplateBase>,
+      temp?: any
+    ) => {
       state.cache[id] = {
         resource: id,
         hash,
@@ -112,6 +117,7 @@ export const makeEditorStore = (
           ...state.cache[id]?.value,
           ...data,
         },
+        temp,
       };
     }
   );
@@ -141,6 +147,7 @@ export const makeEditorStore = (
   const clearEditing = action(
     'editing.cancel',
     (resourceId: Resource['id']) => {
+      console.log('Clear edt', resourceId);
       delete state.cache[resourceId];
     }
   );
@@ -178,15 +185,20 @@ export const makeEditorStore = (
     async (...resourcesIds: Array<Resource['id']>) => {
       const resourcesForSave = resourcesIds.map((x) => state.resources[x]);
       await Promise.all(
-        Object.keys(ResourceType).map((x) => {
+        Object.values(ResourceType).map((x) => {
           const resourceByType = resourcesForSave.filter((r) => r.type === x);
           if (resourceByType.length === 0) {
             return Promise.resolve();
           }
-          const data: any[] = resourceByType.map((rsc) => ({
-            ...rsc.data,
-            ...(state.cache[rsc.id] || {}),
-          }));
+          const data: any[] = resourceByType.map((rsc) => {
+            const cache = state.cache[rsc.id] || {};
+
+            return {
+              ...rsc.data,
+              ...cache.value,
+            };
+          });
+          console.log('Save resource', x, JSON.stringify(data));
           switch (x) {
             case ResourceType.Template:
               return templateApi.save(data);
@@ -204,38 +216,49 @@ export const makeEditorStore = (
       newResources.forEach((x) => {
         state.resources[x.id].isNew = false;
       });
+
       await init();
+      resourcesIds.map((id) => clearEditing(id));
     }
   );
 
   const createValueManager = <
-    I extends TemplateBase = TemplateBase,
-    T extends ValueAccessor<I> = ValueAccessor<I>
+    TValue extends TemplateBase = TemplateBase,
+    TValueAccessor extends ValueAccessor<TValue> = ValueAccessor<TValue>
   >(
-    accessor: T
+    accessor: TValueAccessor
   ) => {
-    const result = computed(() => {
+    const getter = computedFn(() => {
       const tab = state.tabs[state.activeTab];
-      const resource = state.resources[tab.resource] as Resource<I>;
-      const cache = state.cache[resource.id] as EditCache<I>;
-      return {
-        get: computedFn(() => accessor.get(resource?.data, cache?.value)),
-        set: action((val?: string) => {
-          updateResource(resource.id, resource.hash, accessor.set(val));
-        }),
-      };
+      const resource = state.resources[tab.resource] as Resource<TValue>;
+      const cache = state.cache[resource.id] as EditCache<TValue>;
+      console.log('createValueManager get');
+      return accessor.get(resource?.data, cache?.value, cache?.temp);
     });
-
-    return () => result.get();
+    const setter = action((val?: string) => {
+      const tab = state.tabs[state.activeTab];
+      const resource = state.resources[tab.resource] as Resource<TValue>;
+      const cache = state.cache[resource.id] as EditCache<TValue>;
+      const setResult = accessor.set(val, cache?.value, resource?.data);
+      if (accessor.equal?.(cache?.value || resource?.data, setResult.update)) {
+        return;
+      }
+      updateResource(
+        resource.id,
+        resource.hash,
+        setResult.update,
+        setResult.temp
+      );
+    });
+    return { get: getter, set: setter };
   };
 
   const getValue = <TItem extends TemplateBase, TField extends keyof TItem>(
     resource: Resource<TItem>,
     field: TField
-  ) => {
+  ): TItem[TField] | undefined => {
     const cache = state.cache[resource.id] as EditCache<TItem>;
-    const val = cache?.value?.[field] || resource?.data?.[field];
-    return val as TItem[TField] | undefined;
+    return cache?.value?.[field] || resource?.data?.[field];
   };
 
   const setValue = action(

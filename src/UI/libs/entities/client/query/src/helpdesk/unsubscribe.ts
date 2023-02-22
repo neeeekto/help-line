@@ -1,4 +1,3 @@
-import { useApi } from '@help-line/modules/api';
 import {
   Operator,
   Project,
@@ -8,6 +7,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ROOT_QUERY_KEY, T_20_MIN } from '../constants';
 import { createQueryKeys } from '@help-line/modules/query';
+import { useInjection } from 'inversify-react';
 
 export const clientUnsubscribesQueryKeys = createQueryKeys(
   [ROOT_QUERY_KEY, 'unsubscribe'],
@@ -17,7 +17,7 @@ export const clientUnsubscribesQueryKeys = createQueryKeys(
 );
 
 export const useUnsubscribesQueries = (projectId: Project['id']) => {
-  const api = useApi(UnsubscribeClientApi);
+  const api = useInjection(UnsubscribeClientApi);
   return useQuery(clientUnsubscribesQueryKeys.list(projectId), () =>
     api.get({ projectId })
   );
@@ -27,7 +27,7 @@ export const useDeleteUnsubscribeMutation = (
   projectId: Project['id'],
   unsubscribeId: Unsubscribe['id']
 ) => {
-  const api = useApi(UnsubscribeClientApi);
+  const api = useInjection(UnsubscribeClientApi);
   const client = useQueryClient();
 
   return useMutation(

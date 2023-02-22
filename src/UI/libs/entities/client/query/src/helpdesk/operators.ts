@@ -7,10 +7,10 @@ import {
   Project,
   Ticket,
 } from '@help-line/entities/client/api';
-import { useApi } from '@help-line/modules/api';
 import { createQueryKeys } from '@help-line/modules/query';
 import { ROOT_QUERY_KEY } from '../constants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInjection } from 'inversify-react';
 
 export const clientOperatorsQueryKeys = createQueryKeys(
   [ROOT_QUERY_KEY, 'operators'],
@@ -24,7 +24,7 @@ export const clientOperatorsQueryKeys = createQueryKeys(
 );
 
 export const useOperatorsQuery = (projectId: Project['id']) => {
-  const api = useApi(OperatorsClientApi);
+  const api = useInjection(OperatorsClientApi);
   return useQuery(clientOperatorsQueryKeys.get.list(projectId), () =>
     api.get({ projectId })
   );
@@ -35,7 +35,7 @@ export const useChangeFavoriteMutation = (
   operatorId: Operator['id']
 ) => {
   const client = useQueryClient();
-  const api = useApi(OperatorsClientApi);
+  const api = useInjection(OperatorsClientApi);
   return useMutation(
     [...clientOperatorsQueryKeys.root, 'favorite', operatorId],
     (data: { ticketId: Ticket['id']; needAdd: boolean }) => {
@@ -55,7 +55,7 @@ export const useSetOperatorRoleMutation = (
   operatorId: Operator['id']
 ) => {
   const client = useQueryClient();
-  const api = useApi(OperatorsClientApi);
+  const api = useInjection(OperatorsClientApi);
   return useMutation(
     [clientOperatorsQueryKeys.root, projectId, operatorId, 'roles'],
     (rolesIds: string[]) => api.setRoles({ projectId, operatorId, rolesIds }),
@@ -79,7 +79,7 @@ export const {
   (args) => [args.projectId]
 );
 export const useOperatorRoleQuery = (roleId: OperatorRole['id']) => {
-  const operatorRoleApi = useApi(OperatorsRolesClientApi);
+  const operatorRoleApi = useInjection(OperatorsRolesClientApi);
   return useQuery([...clientOperatorRoleQueryKeys.root, 'one', roleId], () =>
     operatorRoleApi.getOne({ roleId })
   );

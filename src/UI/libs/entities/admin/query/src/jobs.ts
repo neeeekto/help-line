@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { JobsAdminApi, Job, JobData } from '@help-line/entities/admin/api';
-import { useApi } from '@help-line/modules/api';
 import { createQueryKeys } from '@help-line/modules/query';
+import { useInjection } from 'inversify-react';
 
 export const adminJobsQueryKeys = createQueryKeys(
   ['api', 'admin', 'jobs'],
@@ -15,17 +15,17 @@ export const adminJobsQueryKeys = createQueryKeys(
 );
 
 export const useJobsQuery = () => {
-  const api = useApi(JobsAdminApi);
+  const api = useInjection(JobsAdminApi);
   return useQuery(adminJobsQueryKeys.list(), () => api.get());
 };
 
 export const useJobTasksQuery = () => {
-  const api = useApi(JobsAdminApi);
+  const api = useInjection(JobsAdminApi);
   return useQuery(adminJobsQueryKeys.tasks(), () => api.getTasks());
 };
 
 export const useJobsStateQuery = (jobIds: Array<Job['id']>) => {
-  const api = useApi(JobsAdminApi);
+  const api = useInjection(JobsAdminApi);
   return useQuery(adminJobsQueryKeys.state.for(jobIds), () =>
     api.getState({ jobIds })
   );
@@ -33,7 +33,7 @@ export const useJobsStateQuery = (jobIds: Array<Job['id']>) => {
 
 export const useCreateJobMutation = (task: string) => {
   const client = useQueryClient();
-  const api = useApi(JobsAdminApi);
+  const api = useInjection(JobsAdminApi);
   return useMutation(
     [...adminJobsQueryKeys.root, 'create', task],
     (data: JobData) => api.create({ task, data }),
@@ -49,7 +49,7 @@ export const useCreateJobMutation = (task: string) => {
 
 export const useUpdateJobMutation = (jobId: Job['id']) => {
   const client = useQueryClient();
-  const api = useApi(JobsAdminApi);
+  const api = useInjection(JobsAdminApi);
   return useMutation(
     [...adminJobsQueryKeys.root, 'update', jobId],
     (data: JobData) => api.update({ jobId, data }),
@@ -65,7 +65,7 @@ export const useUpdateJobMutation = (jobId: Job['id']) => {
 
 export const useDeleteJobMutation = (jobId: Job['id']) => {
   const client = useQueryClient();
-  const api = useApi(JobsAdminApi);
+  const api = useInjection(JobsAdminApi);
   return useMutation(
     [...adminJobsQueryKeys.root, 'delete', jobId],
     () => api.delete({ jobId }),
@@ -81,7 +81,7 @@ export const useDeleteJobMutation = (jobId: Job['id']) => {
 
 export const useToggleJobMutation = (jobId: Job['id']) => {
   const client = useQueryClient();
-  const api = useApi(JobsAdminApi);
+  const api = useInjection(JobsAdminApi);
   return useMutation(
     [...adminJobsQueryKeys.root, 'toggle', jobId],
     (enable: boolean) => api.toggle({ jobId, enable }),
@@ -103,7 +103,7 @@ export const useToggleJobMutation = (jobId: Job['id']) => {
 
 export const useToggleJobsMutation = (jobsIds: Job['id'][]) => {
   const client = useQueryClient();
-  const api = useApi(JobsAdminApi);
+  const api = useInjection(JobsAdminApi);
   return useMutation(
     [...adminJobsQueryKeys.root, 'toggle', jobsIds],
     (enable: boolean) =>
@@ -128,7 +128,7 @@ export const useToggleJobsMutation = (jobsIds: Job['id'][]) => {
 };
 
 export const useFireJobMutation = (jobId: Job['id']) => {
-  const api = useApi(JobsAdminApi);
+  const api = useInjection(JobsAdminApi);
   return useMutation(
     [...adminJobsQueryKeys.root, 'fire', jobId],
     () => api.fire({ jobId }),

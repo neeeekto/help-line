@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useApi } from '@help-line/modules/api';
 import { MigrationAdminApi } from '@help-line/entities/admin/api';
 import { WithType } from '@help-line/entities/share';
 import { createQueryKeys } from '@help-line/modules/query';
+import { useInjection } from 'inversify-react';
 
 export const adminMigrationsQueryKeys = createQueryKeys(
   ['api', 'admin', 'migrations'],
@@ -13,12 +13,12 @@ export const adminMigrationsQueryKeys = createQueryKeys(
 );
 
 export const useMigrationsQuery = () => {
-  const api = useApi(MigrationAdminApi);
+  const api = useInjection(MigrationAdminApi);
   return useQuery(adminMigrationsQueryKeys.list(), () => api.get());
 };
 
 export const useMigrationsParamsQuery = () => {
-  const api = useApi(MigrationAdminApi);
+  const api = useInjection(MigrationAdminApi);
   return useQuery(adminMigrationsQueryKeys.params(), () =>
     api.getParamsDescriptions()
   );
@@ -26,7 +26,7 @@ export const useMigrationsParamsQuery = () => {
 
 export const useRunMigrationMutation = (migration: string) => {
   const client = useQueryClient();
-  const api = useApi(MigrationAdminApi);
+  const api = useInjection(MigrationAdminApi);
   return useMutation(
     [...adminMigrationsQueryKeys.root, 'run'],
     (params?: WithType<string>) => api.run({ migration, params }),
