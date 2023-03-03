@@ -14,6 +14,7 @@ export default {
     '../src/**/*.stories.@(js|jsx|ts|tsx)',
   ],
   addons: [
+    '@storybook/addon-essentials',
     ...rootMain.addons,
     '@nrwl/react/plugins/storybook',
     '@storybook/addon-interactions',

@@ -70,9 +70,7 @@
       "options": {
         "uiFramework": "@storybook/react",
         "port": 4400,
-        "config": {
-          "configFolder": "apps/admin/.storybook"
-        }
+        "configDir": "apps/admin/.storybook"
       },
       "configurations": {
         "ci": {
@@ -82,13 +80,11 @@
     },
     "build-storybook": {
       "executor": "@nrwl/storybook:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{options.outputDir}"],
       "options": {
         "uiFramework": "@storybook/react",
-        "outputPath": "dist/storybook/admin",
-        "config": {
-          "configFolder": "apps/admin/.storybook"
-        }
+        "configDir": "apps/admin/.storybook",
+        "outputDir": "dist/storybook/admin"
       },
       "configurations": {
         "ci": {
