@@ -86,7 +86,7 @@ describe('AuthInterceptor', () => {
 
   test.each([400, 403, 404, 409, 500, 503])(
     'should ignore %d error',
-    (code) => {
+    async (code) => {
       expect.assertions(1);
       const req: HttpRequest = {};
       when(authFacadeMock.logout()).thenReturn(Promise.resolve());
@@ -94,7 +94,7 @@ describe('AuthInterceptor', () => {
         new HttpError({ config: req, status: code, data: null })
       );
 
-      return interceptor.intercept(req, instance(nextMock)).catch((e) => {
+      await interceptor.intercept(req, instance(nextMock)).catch((e) => {
         const err = e as HttpError;
         expect(err.status).toBe(code);
         verify(authFacadeMock.logout()).never();

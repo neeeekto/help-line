@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import { AuthStore } from './store';
 import { Events } from './events';
 import { UserManager } from 'oidc-client';
 

@@ -2,10 +2,10 @@
 export default {
   displayName: 'modules-events',
   preset: '../../../jest.preset.js',
+  testEnvironment: 'node',
   transform: {
-    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/react/plugins/jest',
-    '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nrwl/react/babel'] }],
+    '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../../coverage/libs/modules/events',
 };

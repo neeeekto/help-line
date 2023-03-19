@@ -1,16 +1,20 @@
-import { LanguageDictionary, WithType } from '@entities/common';
-import { Message, TicketReminderData } from '@entities/helpdesk/tickets';
+import { LanguageDictionary, WithType } from '@help-line/entities/share';
+import { Message, TicketReminderData } from '../tickets';
 
 export interface SavedReminderItemBase {
   delay: string; // TimeSpan
   message: LanguageDictionary<Message>;
 }
 
-export interface SequentialSavedReminderItem extends SavedReminderItemBase, WithType<'TicketReminderItemBase'> {
+export interface SequentialSavedReminderItem
+  extends SavedReminderItemBase,
+    WithType<'TicketReminderItemBase'> {
   next: TicketReminderData;
 }
 
-export interface FinalSavedReminderItem extends SavedReminderItemBase, WithType<'TicketReminderItemBase'> {
+export interface FinalSavedReminderItem
+  extends SavedReminderItemBase,
+    WithType<'TicketReminderItemBase'> {
   resolve: boolean;
 }
 

@@ -1,5 +1,5 @@
 {
-  "name": "modules-common",
+  "name": "@help-line/modules/common",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/modules/common/src",
   "projectType": "library",
@@ -10,8 +10,7 @@
       "options": {
         "outputPath": "dist/libs/modules/common",
         "main": "libs/modules/common/src/index.ts",
-        "tsConfig": "libs/modules/common/tsconfig.lib.json",
-        "assets": ["libs/modules/common/*.md"]
+        "tsConfig": "libs/modules/common/tsconfig.lib.json"
       }
     },
     "lint": {

@@ -5,22 +5,20 @@ import {
   TicketInitiator,
 } from '../types';
 
-export namespace TicketInitiatorUtils {
-  export function isOperatorInitiator(
+export const TicketInitiatorUtils = {
+  isOperatorInitiator: (
     initiator: TicketInitiator
-  ): initiator is OperatorInitiator {
+  ): initiator is OperatorInitiator => {
     return (initiator as OperatorInitiator).$type === 'OperatorInitiatorView';
-  }
+  },
 
-  export function isUserInitiator(
-    initiator: TicketInitiator
-  ): initiator is UserInitiator {
+  isUserInitiator: (initiator: TicketInitiator): initiator is UserInitiator => {
     return (initiator as UserInitiator).$type === 'UserInitiatorView';
-  }
+  },
 
-  export function isSystemInitiator(
+  isSystemInitiator: (
     initiator: SystemInitiator
-  ): initiator is SystemInitiator {
+  ): initiator is SystemInitiator => {
     return (initiator as SystemInitiator).$type === 'SystemInitiatorView';
-  }
-}
+  },
+};

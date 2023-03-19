@@ -1,6 +1,11 @@
 import React, { PropsWithChildren } from 'react';
-import { QueryProvider } from '@help-line/modules/application';
+import { TestQueryProvider } from './test-query-provider';
+import { TestDiProvider } from './test-di-provider';
 
 export const UnitTestWrapper: React.FC<PropsWithChildren> = ({ children }) => {
-  return <QueryProvider>{children}</QueryProvider>;
+  return (
+    <TestDiProvider>
+      <TestQueryProvider>{children}</TestQueryProvider>
+    </TestDiProvider>
+  );
 };

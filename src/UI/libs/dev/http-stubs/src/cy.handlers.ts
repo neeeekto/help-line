@@ -1,6 +1,8 @@
 import { HttpStubRequest } from './create-stub-api';
 import { RouteHandler } from 'cypress/types/net-stubbing';
 
+declare var cy: any;
+
 export namespace CyApiHandlers {
   const makeHandler = (response: RouteHandler) => (req: HttpStubRequest) => {
     return cy.intercept(

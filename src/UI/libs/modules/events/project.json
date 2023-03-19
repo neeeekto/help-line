@@ -1,35 +1,24 @@
 {
-  "name": "modules-events",
+  "name": "@help-line/modules/events",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/modules/events/src",
   "projectType": "library",
-  "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/modules/events",
+        "main": "libs/modules/events/src/index.ts",
         "tsConfig": "libs/modules/events/tsconfig.lib.json",
-        "project": "libs/modules/events/package.json",
-        "entryFile": "libs/modules/events/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/modules/events/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "assets": []
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/modules/events/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/modules/events/**/*.ts"]
       }
     },
     "test": {
@@ -38,7 +27,14 @@
       "options": {
         "jestConfig": "libs/modules/events/jest.config.ts",
         "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
-  }
+  },
+  "tags": []
 }

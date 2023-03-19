@@ -1,7 +1,7 @@
 import { Ticket, TicketStatusKind, TicketStatusType } from '../types';
 
-export namespace TicketActionUtils {
-  export const checkCanReject = (ticket: Ticket) => {
+export const TicketActionUtils = {
+  checkCanReject: (ticket: Ticket) => {
     if (
       ticket.status.kind === TicketStatusKind.Closed ||
       ticket.status.type === TicketStatusType.ForReject ||
@@ -14,5 +14,5 @@ export namespace TicketActionUtils {
     }
 
     return true;
-  };
-}
+  },
+};

@@ -1,11 +1,6 @@
-import { makeRudSchema } from '../../api.presets';
-import {
-  makeHeaderWithProject,
-  ProjectApiRequest,
-  Tag,
-  Unsubscribe,
-} from '@help-line/entities/client/api';
+import { Unsubscribe } from './types';
 import { createApiAction, HttpMethod } from '@help-line/modules/http';
+import { makeHeaderWithProject, ProjectApiRequest } from '../../schema.share';
 
 export const UnsubscribeClientApiSchema = {
   get: createApiAction<Unsubscribe[], ProjectApiRequest>({

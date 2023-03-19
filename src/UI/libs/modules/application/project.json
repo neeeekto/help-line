@@ -1,30 +1,10 @@
 {
-  "name": "modules-application",
+  "name": "@help-line/modules/application",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/modules/application/src",
   "projectType": "library",
-  "tags": [],
+  "tags": ["application"],
   "targets": {
-    "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/modules/application",
-        "tsConfig": "libs/modules/application/tsconfig.lib.json",
-        "project": "libs/modules/application/package.json",
-        "entryFile": "libs/modules/application/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/modules/application/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
@@ -32,12 +12,28 @@
         "lintFilePatterns": ["libs/modules/application/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "jestConfig": "libs/modules/application/jest.config.ts",
-        "passWithNoTests": true
+        "outputPath": "dist/libs/modules/application"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/libs/modules/application"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../../coverage/libs/modules/application"
       }
     }
   }

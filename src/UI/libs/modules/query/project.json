@@ -1,15 +1,28 @@
 {
-  "name": "modules-query",
+  "name": "@help-line/modules/query",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/modules/query/src",
   "projectType": "library",
-  "tags": [],
   "targets": {
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/modules/query"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs modules-query {args.ver} {args.tag}"
+      },
+      "dependsOn": ["build"]
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/modules/query/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/modules/query/**/*.ts"]
       }
     },
     "test": {
@@ -18,7 +31,14 @@
       "options": {
         "jestConfig": "libs/modules/query/jest.config.ts",
         "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
-  }
+  },
+  "tags": ["query"]
 }

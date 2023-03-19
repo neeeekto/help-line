@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { EventsService } from './events.service';
+import { EventsService } from '@help-line/modules/events';
 
 export interface EventsContextData {
   accessTokenFactory(): string;

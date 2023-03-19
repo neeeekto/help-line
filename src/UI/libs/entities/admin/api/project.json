@@ -5,13 +5,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/entities/admin/api",
         "main": "libs/entities/admin/api/src/index.ts",
         "tsConfig": "libs/entities/admin/api/tsconfig.lib.json",
-        "assets": ["libs/entities/admin/api/*.md"]
+        "assets": []
       }
     },
     "lint": {
@@ -27,8 +27,14 @@
       "options": {
         "jestConfig": "libs/entities/admin/api/jest.config.ts",
         "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
   },
-  "tags": ["modules"]
+  "tags": []
 }

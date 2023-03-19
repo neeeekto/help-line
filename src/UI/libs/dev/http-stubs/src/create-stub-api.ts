@@ -1,6 +1,6 @@
 import { HttpRequest, IApiAction } from '@help-line/modules/http';
 import { callOrGetValue } from '@help-line/modules/common';
-import { DeepPartial, OptionalKeys, RequiredKeys } from 'ts-essentials';
+import { DeepPartial } from 'ts-essentials';
 
 export interface HttpStubRequest
   extends Readonly<

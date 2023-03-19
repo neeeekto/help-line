@@ -1,7 +1,10 @@
-import { FnMapper } from './events.type';
-import { EventsService, IEventsService } from './events.service';
+import {
+  EventsService,
+  IEventsService,
+  FnMapper,
+} from '@help-line/modules/events';
 import { useContext, useEffect } from 'react';
-import { EventsContext } from './events.contexts';
+import { EventsContext } from '../events.contexts';
 
 const useEventsService = <TEvents extends FnMapper, TCommands extends FnMapper>(
   hubKey: string,

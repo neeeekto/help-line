@@ -1,4 +1,3 @@
-import { EventsContextData } from './events.contexts';
 import {
   HubConnection,
   HubConnectionBuilder,
@@ -15,6 +14,11 @@ export interface IEventsService<
   delete(handler: Partial<EmitFns<TEvents>>): void;
 }
 
+export interface IEventsServiceConfig {
+  serverUrl: string;
+  accessTokenFactory: () => string;
+}
+
 export class EventsService<
   TEvents extends FnMapper = FnMapper,
   TCommands extends FnMapper = FnMapper
@@ -27,15 +31,14 @@ export class EventsService<
   private init: Promise<any>;
 
   constructor(
-    serverUrl: string,
     hubKey: string,
-    accessTokenFactory: EventsContextData['accessTokenFactory'],
     commands: TCommands,
-    events: TEvents
+    events: TEvents,
+    config: IEventsServiceConfig
   ) {
     this.connection = new HubConnectionBuilder()
-      .withUrl(`${serverUrl}/hubs/${hubKey}`, {
-        accessTokenFactory,
+      .withUrl(`${config.serverUrl}/hubs/${hubKey}`, {
+        accessTokenFactory: config.accessTokenFactory,
       })
       .withAutomaticReconnect()
       .build();

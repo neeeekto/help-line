@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useCallback } from 'react';
-import { EventsProvider } from '@help-line/modules/events';
+import { EventsProvider } from './events.provider';
 import { useAuthUser } from '@help-line/modules/auth';
 import { IEnvironment } from './environment.type';
 

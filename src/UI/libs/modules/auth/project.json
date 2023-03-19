@@ -3,28 +3,8 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/modules/auth/src",
   "projectType": "library",
-  "tags": [],
+  "tags": ["application"],
   "targets": {
-    "build": {
-      "executor": "@nrwl/web:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/modules/auth",
-        "tsConfig": "libs/modules/auth/tsconfig.lib.json",
-        "project": "libs/modules/auth/package.json",
-        "entryFile": "libs/modules/auth/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/modules/auth/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
@@ -32,12 +12,28 @@
         "lintFilePatterns": ["libs/modules/auth/**/*.{ts,tsx,js,jsx}"]
       }
     },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+    "build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "jestConfig": "libs/modules/auth/jest.config.ts",
-        "passWithNoTests": true
+        "outputPath": "dist/libs/modules/auth"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": ["coverage/libs/modules/auth"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../../coverage/libs/modules/auth"
       }
     }
   }

@@ -1,17 +1,17 @@
 {
-  "name": "entities-client-api",
+  "name": "@help-line/entities/client/api",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/entities/client/api/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/entities/client/api",
         "main": "libs/entities/client/api/src/index.ts",
         "tsConfig": "libs/entities/client/api/tsconfig.lib.json",
-        "assets": ["libs/entities/client/api/*.md"]
+        "assets": []
       }
     },
     "lint": {
@@ -27,6 +27,12 @@
       "options": {
         "jestConfig": "libs/entities/client/api/jest.config.ts",
         "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
   },

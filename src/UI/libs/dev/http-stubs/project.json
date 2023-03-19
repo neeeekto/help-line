@@ -1,5 +1,5 @@
 {
-  "name": "dev-http-stubs",
+  "name": "@help-line/dev/http-stubs",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/dev/http-stubs/src",
   "projectType": "library",
@@ -19,14 +19,6 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/dev/http-stubs/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "libs/dev/http-stubs/jest.config.ts",
-        "passWithNoTests": true
       }
     }
   },

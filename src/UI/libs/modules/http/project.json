@@ -1,5 +1,5 @@
 {
-  "name": "modules-http",
+  "name": "@help-line/modules/http",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/modules/http/src",
   "projectType": "library",
@@ -10,8 +10,7 @@
       "options": {
         "outputPath": "dist/libs/modules/http",
         "main": "libs/modules/http/src/index.ts",
-        "tsConfig": "libs/modules/http/tsconfig.lib.json",
-        "assets": ["libs/modules/http/*.md"]
+        "tsConfig": "libs/modules/http/tsconfig.lib.json"
       }
     },
     "lint": {

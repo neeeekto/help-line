@@ -5,7 +5,6 @@ import {
   EmailFeedbackPreviewRequest,
   EmailMessagePreviewRequest,
 } from './types';
-import { Ticket } from '../tickets';
 
 export const PreviewClientApiSchema = {
   getFeedback: createApiAction<

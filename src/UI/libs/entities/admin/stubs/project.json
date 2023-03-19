@@ -1,32 +1,25 @@
 {
-  "name": "entities-admin-stubs",
+  "name": "@help-line/entities/admin/stubs",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/entities/admin/stubs/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/entities/admin/stubs",
         "main": "libs/entities/admin/stubs/src/index.ts",
         "tsConfig": "libs/entities/admin/stubs/tsconfig.lib.json",
-        "assets": ["libs/entities/admin/stubs/*.md"]
+        "assets": []
       }
     },
+
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/entities/admin/stubs/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "libs/entities/admin/stubs/jest.config.ts",
-        "passWithNoTests": true
       }
     }
   },

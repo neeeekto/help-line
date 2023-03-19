@@ -1,5 +1,5 @@
 {
-  "name": "dev-e2e-tests",
+  "name": "@help-line/dev/e2e-tests",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/dev/e2e-tests/src",
   "projectType": "library",
@@ -19,14 +19,6 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/dev/e2e-tests/**/*.ts"]
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "libs/dev/e2e-tests/jest.config.ts",
-        "passWithNoTests": true
       }
     }
   },

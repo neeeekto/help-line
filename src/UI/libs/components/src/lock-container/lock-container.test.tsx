@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import LockContainer from './lock-container';
+import { LockContainer } from './lock-container';
 
 describe('LockContainer', () => {
   it('should render successfully', () => {

@@ -1,6 +1,6 @@
 import { useAuthUser, useLogoutByNetworkAction } from '@help-line/modules/auth';
 import { useEffect, useRef } from 'react';
-import { AuthFacade } from '@help-line/modules/application';
+import { AuthFacade } from '../interceptors';
 
 export const useAuthHttpAccessorRef = () => {
   const user = useAuthUser();

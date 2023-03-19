@@ -1,35 +1,24 @@
 {
-  "name": "entities-admin-query",
+  "name": "@help-line/entities/admin/query",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/entities/admin/query/src",
   "projectType": "library",
-  "tags": ["entities query"],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/entities/admin/query",
+        "main": "libs/entities/admin/query/src/index.ts",
         "tsConfig": "libs/entities/admin/query/tsconfig.lib.json",
-        "project": "libs/entities/admin/query/package.json",
-        "entryFile": "libs/entities/admin/query/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "libs/entities/admin/query/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "assets": []
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/entities/admin/query/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/entities/admin/query/**/*.ts"]
       }
     },
     "test": {
@@ -38,7 +27,14 @@
       "options": {
         "jestConfig": "libs/entities/admin/query/jest.config.ts",
         "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
       }
     }
-  }
+  },
+  "tags": []
 }

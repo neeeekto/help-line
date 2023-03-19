@@ -4,7 +4,7 @@ import ViteTsConfigPathsPlugin from 'vite-tsconfig-paths';
 export default {
   ...rootMain,
 
-  core: { ...rootMain.core, builder: '@storybook/builder-vite' },
+  core: { builder: '@storybook/builder-vite' },
   features: {
     interactionsDebugger: true,
   },

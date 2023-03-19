@@ -1,11 +1,9 @@
 import { createApiAction, HttpMethod } from '@help-line/modules/http';
 import { Operator, OperatorRole, OperatorRoleData } from './types';
-import {
-  makeHeaderWithProject,
-  ProjectApiRequest,
-  Ticket,
-} from '@help-line/entities/client/api';
+
 import { makeCrudSchema } from '../../api.presets';
+import { makeHeaderWithProject, ProjectApiRequest } from '../../schema.share';
+import { Ticket } from '../tickets';
 
 export const OperatorsClientApiSchema = {
   get: createApiAction<Operator[], ProjectApiRequest>({
