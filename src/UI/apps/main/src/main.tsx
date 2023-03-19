@@ -9,8 +9,7 @@ import './styles/global';
 import { ThemeProvider } from './styles/theme-provider';
 import { AuthGuard } from '@help-line/modules/auth';
 import { AppRoutes } from './routes';
-import { MigrationsProvider } from './views/migrations';
-import { LayoutRoot } from './layout';
+import { DiProvider } from './di';
 
 setupI18n();
 const root = ReactDOM.createRoot(
@@ -19,17 +18,15 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <RootWrapper env={environment}>
-      <ThemeProvider>
-        <AuthGuard>
-          <BrowserRouter>
-            <MigrationsProvider>
-              <LayoutRoot>
-                <AppRoutes />
-              </LayoutRoot>
-            </MigrationsProvider>
-          </BrowserRouter>
-        </AuthGuard>
-      </ThemeProvider>
+      <DiProvider>
+        <ThemeProvider>
+          <AuthGuard>
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+          </AuthGuard>
+        </ThemeProvider>
+      </DiProvider>
     </RootWrapper>
   </StrictMode>
 );

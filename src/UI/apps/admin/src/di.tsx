@@ -26,6 +26,7 @@ export const DiProvider = (props: PropsWithChildren & { apiUrl?: string }) => {
       [new AuthInterceptor(authHttpAccessor)]
     );
     diContainer.bind(HttpClient).toConstantValue(httpClient);
+
     diContainer
       .bind(MigrationAdminApi)
       .toConstantValue(new MigrationAdminApi(httpClient));
