@@ -2,11 +2,11 @@ import { render, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MigrationAction } from './migration-action';
 import { AdminMigrationsStubs } from '@help-line/entities/admin/stubs';
-import { UnitTestWrapper } from '@help-line/dev/unit-tests';
 import { MigrationStatusType } from '@help-line/entities/admin/api';
 import { ComponentProps } from 'react';
 import * as mutationQueries from '@help-line/entities/admin/query';
 import { expect } from '@storybook/jest';
+import { UnitTestWrapper } from '../../unit-test-wrapper';
 
 describe('MigrationAction', () => {
   const renderComponent = (args: ComponentProps<typeof MigrationAction>) =>

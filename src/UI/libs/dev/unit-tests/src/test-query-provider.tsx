@@ -11,11 +11,6 @@ export const TestQueryProvider = ({ children }: PropsWithChildren) => {
             staleTime: Number.POSITIVE_INFINITY,
           },
         },
-        logger: {
-          log: console.log,
-          warn: console.warn,
-          error: console.error,
-        },
       }),
     []
   );

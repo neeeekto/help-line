@@ -1,17 +1,13 @@
 import { ComponentMeta } from '@storybook/react';
 import React, { ComponentProps } from 'react';
 import { MigrationsProvider } from './migrations-provider';
-import {
-  makeStoryFactory,
-  StorybookWrapper,
-} from '../../../../../libs/dev/storybook/src';
+import { makeStoryFactory } from '../../../../../libs/dev/storybook/src';
 import {
   adminMigrationsStubApi,
   AdminMigrationsStubs,
 } from '../../../../../libs/entities/admin/stubs/src';
 import { MswHandlers } from '../../../../../libs/dev/http-stubs/src';
 import { MigrationStatusType } from '../../../../../libs/entities/admin/api/src';
-import { DiProvider } from '../../di';
 
 export default {
   component: MigrationsProvider,

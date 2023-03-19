@@ -2,37 +2,41 @@ import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
-import { setupI18n, RootWrapper } from '@help-line/modules/application';
-import { environment } from './environments/environment';
+import {
+  setupI18n,
+  RootWrapper,
+  registryHttpInDi,
+} from '@help-line/modules/application';
 
 import './styles/global';
 import { ThemeProvider } from './styles/theme-provider';
-import { AuthGuard } from '@help-line/modules/auth';
+import { AuthGuard, registryAuthInDI } from '@help-line/modules/auth';
 import { AppRoutes } from './routes';
 import { MigrationsProvider } from './views/migrations';
 import { LayoutRoot } from './layout';
-import { DiProvider } from './di';
+import { setupAppDI } from './di';
+import { environment } from './environments/environment';
 
 setupI18n();
+const diContainer = setupAppDI(environment);
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <StrictMode>
-    <RootWrapper env={environment}>
-      <DiProvider apiUrl={environment.apiUrl}>
-        <ThemeProvider>
-          <AuthGuard>
-            <BrowserRouter>
-              <MigrationsProvider>
-                <LayoutRoot>
-                  <AppRoutes />
-                </LayoutRoot>
-              </MigrationsProvider>
-            </BrowserRouter>
-          </AuthGuard>
-        </ThemeProvider>
-      </DiProvider>
+    <RootWrapper container={diContainer}>
+      <ThemeProvider>
+        <AuthGuard>
+          <BrowserRouter>
+            <MigrationsProvider>
+              <LayoutRoot>
+                <AppRoutes />
+              </LayoutRoot>
+            </MigrationsProvider>
+          </BrowserRouter>
+        </AuthGuard>
+      </ThemeProvider>
     </RootWrapper>
   </StrictMode>
 );

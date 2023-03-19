@@ -43,6 +43,7 @@
       ],
       "@help-line/modules/auth": ["libs/modules/auth/src/index.ts"],
       "@help-line/modules/common": ["libs/modules/common/src/index.ts"],
+      "@help-line/modules/di": ["libs/modules/di/src/index.ts"],
       "@help-line/modules/events": ["libs/modules/events/src/index.ts"],
       "@help-line/modules/http": ["libs/modules/http/src/index.ts"],
       "@help-line/modules/query": ["libs/modules/query/src/index.ts"],

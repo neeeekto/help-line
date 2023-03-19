@@ -1,8 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import {
-  makeStoryFactory,
-  StorybookWrapper,
-} from '../../../../../../libs/dev/storybook/src';
+import { makeStoryFactory } from '../../../../../../libs/dev/storybook/src';
 import React, { ComponentProps } from 'react';
 import { MswHandlers } from '../../../../../../libs/dev/http-stubs/src';
 import { TagsDescriptions } from './tags-descriptions';
@@ -18,9 +15,7 @@ export default {
 
 const factory = makeStoryFactory(
   (args: ComponentProps<typeof TagsDescriptions>) => (
-    <StorybookWrapper>
-      <TagsDescriptions {...args} projectId={'test'} />
-    </StorybookWrapper>
+    <TagsDescriptions {...args} projectId={'test'} />
   )
 );
 

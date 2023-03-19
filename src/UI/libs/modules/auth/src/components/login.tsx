@@ -5,14 +5,21 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { Card } from 'antd';
 import { Button } from 'antd';
 import { LoginOutlined } from '@ant-design/icons';
-import { useLoginAction } from '../store';
+import { useAuthStore$ } from '../hooks';
+import { useBoolean } from 'ahooks';
 
 export const Login: React.FC = observer(() => {
-  const loginAction = useLoginAction();
+  const authStore$ = useAuthStore$();
+  const [loading, loadingCtrl] = useBoolean();
 
-  const onLogin = useCallback(() => {
-    loginAction.mutate();
-  }, []);
+  const onLogin = useCallback(async () => {
+    try {
+      loadingCtrl.setTrue();
+      await authStore$.login();
+    } finally {
+      loadingCtrl.setFalse();
+    }
+  }, [authStore$.login, loadingCtrl]);
 
   return (
     <Card
@@ -24,7 +31,7 @@ export const Login: React.FC = observer(() => {
           size="small"
           onClick={onLogin}
           type="primary"
-          loading={loginAction.isLoading}
+          loading={loading}
           icon={<LoginOutlined />}
         >
           Login

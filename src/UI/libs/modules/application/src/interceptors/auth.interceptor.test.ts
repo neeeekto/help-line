@@ -1,16 +1,17 @@
-import { AuthFacade, AuthInterceptor, AuthToken } from './auth.interceptor';
+import { AuthInterceptor } from './auth.interceptor';
 import { mock, instance, anything, when, reset, verify } from 'ts-mockito';
 import { HttpHandler, HttpRequest, HttpError } from '@help-line/modules/http';
+import { AuthStore } from '@help-line/modules/auth';
 
 describe('AuthInterceptor', () => {
-  const token: AuthToken = { type: 'test', value: '123' };
-  const authFacadeMock = mock<AuthFacade>();
+  const token = { type: 'test', value: '123' };
+  const authFacadeMock = mock<AuthStore>();
   const interceptor = new AuthInterceptor(instance(authFacadeMock));
   let nextMock: HttpHandler;
 
   beforeEach(() => {
     reset(authFacadeMock);
-    when(authFacadeMock.getToken()).thenReturn(token);
+    when(authFacadeMock.token).thenReturn(token);
     nextMock = mock<HttpHandler>();
     when(nextMock.handle(anything())).thenResolve({} as any);
   });
@@ -20,7 +21,7 @@ describe('AuthInterceptor', () => {
   });
 
   it('should do nothing if there is no token', async () => {
-    when(authFacadeMock.getToken()).thenReturn(null);
+    when(authFacadeMock.token).thenReturn(null);
     const req: HttpRequest = {};
     await interceptor.intercept(req, instance(nextMock));
 
@@ -38,7 +39,7 @@ describe('AuthInterceptor', () => {
     const req: HttpRequest = {};
     await interceptor.intercept(req, instance(nextMock));
 
-    verify(authFacadeMock.getToken()).once();
+    verify(authFacadeMock.token).called();
   });
 
   it('should handle 401 error', () => {
@@ -52,7 +53,7 @@ describe('AuthInterceptor', () => {
     return interceptor.intercept(req, instance(nextMock)).catch((e) => {
       const err = e as HttpError;
       expect(err.status).toBe(401);
-      verify(authFacadeMock.logout()).once();
+      verify(authFacadeMock.clearSession()).once();
     });
   });
 

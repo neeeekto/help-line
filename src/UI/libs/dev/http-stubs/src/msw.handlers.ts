@@ -12,10 +12,9 @@ export namespace MswHandlers {
   export const makeHandler =
     (handler: ResponseResolver<MockedRequest, RestContext, DefaultBodyType>) =>
     (req: HttpStubRequest) => {
-      const mockUrl = [
-        req.url,
-        new URLSearchParams(req.params).toString(),
-      ].join('?');
+      const mockUrl = [req.url, new URLSearchParams(req.params).toString()]
+        .filter(Boolean)
+        .join('?');
       return rest[req.method!.toLowerCase() as any as keyof typeof rest](
         mockUrl,
         handler

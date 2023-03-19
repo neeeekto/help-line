@@ -1,100 +1,77 @@
-import { useBoolean } from 'ahooks';
-import { useContext, useEffect, useMemo } from 'react';
-import { User, UserManager, UserManagerSettings } from 'oidc-client';
-import { message } from 'antd';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { observable, action, computed, values } from 'mobx';
+import { User, UserManager } from 'oidc-client';
 import { HelpLineUserProfile } from './types';
-import { AuthUserManagerContext } from './context';
+import { message } from 'antd';
 
-const authKeys = {
-  root: ['#auth'],
-  state: () => [...authKeys.root, 'state'],
-  user: () => [...authKeys.root, 'user'],
-};
-
-export const useAuthUserManager = () => useContext(AuthUserManagerContext);
-
-export const useAuthState = () => {
-  const query = useQuery(authKeys.state(), () => false, {
-    staleTime: Infinity,
+export class AuthStore {
+  private readonly state = observable({
+    isAuth: false,
+    loading: false,
+    user: null as null | User,
   });
-  return query.data!;
-};
 
-export const useAuthUser = () => {
-  const query = useQuery<null | User>(authKeys.user(), () => null, {
-    staleTime: Infinity,
-  });
-  return query.data as null | User;
-};
+  private readonly userManager: UserManager;
 
-export const useAuthProfile = () => {
-  const query = useAuthUser();
-  return query?.profile as HelpLineUserProfile | undefined;
-};
+  constructor(userManager: UserManager) {
+    this.userManager = userManager;
+  }
 
-export const useLogoutAction = () => {
-  const userManager = useAuthUserManager();
+  get profile() {
+    return this.state.user?.profile as HelpLineUserProfile;
+  }
 
-  return useMutation([...authKeys.root, 'logout'], () =>
-    userManager.signoutPopup()
-  );
-};
+  get isAuth() {
+    return this.state.isAuth;
+  }
 
-export const useLogoutByNetworkAction = () => {
-  const userManager = useAuthUserManager();
+  get loading() {
+    return this.state.loading;
+  }
 
-  return useMutation([...authKeys.root, 'logoutByNetwork'], async () => {
-    await userManager.clearStaleState();
-    await userManager.removeUser();
-  });
-};
-
-export const useLoginAction = () => {
-  const userManager = useAuthUserManager();
-
-  return useMutation([...authKeys.root, 'login'], () =>
-    userManager.signinPopup()
-  );
-};
-
-export const useAuthStartup = (userManager: UserManager) => {
-  const [loading, loadingActions] = useBoolean(true);
-  const client = useQueryClient();
-  useEffect(() => {
-    const userLoaded = (user: User) => {
-      client.setQueryData(authKeys.user(), user);
-      client.setQueryData(authKeys.state(), true);
+  get token() {
+    if (!this.state.user) {
+      return null;
+    }
+    return {
+      type: this.state.user?.token_type,
+      value: this.state.user?.access_token,
     };
+  }
 
-    const userUnloaded = () => {
-      client.setQueryData(authKeys.user(), null);
-      client.setQueryData(authKeys.state(), false);
-    };
-
-    userManager.events.addUserLoaded(userLoaded);
-
-    userManager.events.addUserUnloaded(userUnloaded);
-
-    loadingActions.setTrue();
-    userManager
-      .getUser()
-      .then((user) => {
-        if (user) {
-          userManager.events.load(user);
-        }
-        loadingActions.setFalse();
-      })
-      .catch(() => {
-        message.error({
-          content: 'Auth error',
-        });
+  readonly init = action('init', async () => {
+    this.userManager.events.addUserLoaded((user: User) => {
+      this.state.user = user;
+      this.state.isAuth = true;
+    });
+    this.userManager.events.addUserUnloaded(() => {
+      this.state.isAuth = false;
+      this.state.user = null;
+    });
+    this.state.loading = true;
+    try {
+      const user = await this.userManager.getUser();
+      if (user) {
+        this.userManager.events.load(user);
+      }
+    } catch (e) {
+      message.error({
+        content: 'Auth error',
       });
-    return () => {
-      userManager?.events?.removeUserLoaded(userLoaded);
-      userManager?.events?.removeUserLoaded(userUnloaded);
-    };
-  }, [userManager]);
+    } finally {
+      this.state.loading = false;
+    }
+  });
 
-  return loading;
-};
+  login = action('logout', async () => {
+    await this.userManager.signinPopup();
+  });
+
+  logout = action('logout', async () => {
+    await this.userManager.signoutPopup();
+  });
+
+  clearSession = action('clearSession', async () => {
+    await this.userManager.clearStaleState();
+    await this.userManager.removeUser();
+  });
+}

@@ -1,9 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import { MemoryRouter } from 'react-router-dom';
-import {
-  makeStoryFactory,
-  StorybookWrapper,
-} from '../../../../libs/dev/storybook/src';
+import { makeStoryFactory } from '../../../../libs/dev/storybook/src';
 import React, { ComponentProps } from 'react';
 import {
   adminMigrationsStubApi,

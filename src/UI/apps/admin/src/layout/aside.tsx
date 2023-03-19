@@ -1,17 +1,20 @@
 import React, { useCallback } from 'react';
-import { useLogoutAction } from '@help-line/modules/auth';
 import { Logo } from './logo';
 import { Button, Tooltip } from 'antd';
 import { OPEN_HELP_DELAY } from '@help-line/modules/application';
 import { LogoutOutlined } from '@ant-design/icons';
 import { NavigationMenu } from './navigation-menu';
 import css from './layout.module.scss';
+import { observer } from 'mobx-react-lite';
+import { useAuthStore$ } from '@help-line/modules/auth';
 
-export const Aside: React.FC<{
+interface Props {
   collapsed: boolean;
-}> = ({ collapsed }) => {
-  const logoutAction = useLogoutAction();
-  const onLogout = useCallback(() => logoutAction.mutate(), [logoutAction]);
+}
+
+export const Aside = observer(({ collapsed }: Props) => {
+  const authStore$ = useAuthStore$();
+  const onLogout = useCallback(() => authStore$.logout(), [authStore$]);
 
   return (
     <>
@@ -29,4 +32,4 @@ export const Aside: React.FC<{
       <NavigationMenu className={css.menu} children={collapsed} />
     </>
   );
-};
+});

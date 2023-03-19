@@ -1,8 +1,5 @@
 import { ComponentMeta } from '@storybook/react';
-import {
-  makeStoryFactory,
-  StorybookWrapper,
-} from '../../../../../libs/dev/storybook/src';
+import { makeStoryFactory } from '../../../../../libs/dev/storybook/src';
 import React from 'react';
 import { LayoutRoot } from '../../layout';
 import {

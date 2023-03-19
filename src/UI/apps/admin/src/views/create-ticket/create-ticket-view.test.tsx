@@ -8,21 +8,23 @@ import {
   within,
 } from '@testing-library/react';
 import userEvents from '@testing-library/user-event';
-import {
-  UnitTestWrapper,
-  setupMatchMedia,
-  setupMSW,
-} from '@help-line/dev/unit-tests';
+import { setupMatchMedia, setupMSW } from '@help-line/dev/unit-tests';
 import { expect } from '@storybook/jest';
 import {
   adminProjectsStubApi,
   AdminProjectStubs,
 } from '@help-line/entities/admin/stubs';
 import { MswHandlers } from '@help-line/dev/http-stubs';
+import { UnitTestWrapper } from '../../unit-test-wrapper';
 
 describe('create-ticket-view', () => {
   setupMatchMedia();
-  const msw = setupMSW();
+  const msw = setupMSW(
+    adminProjectsStubApi
+      .get()
+      .handle(MswHandlers.success([AdminProjectStubs.createProject()]))
+  );
+
   const renderComponent = (args?: ComponentProps<typeof CreateTicketView>) =>
     render(
       <UnitTestWrapper>

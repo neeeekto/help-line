@@ -1,18 +1,20 @@
 import React, { Fragment, PropsWithChildren, useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import { Login } from './login';
 import { LockContainer } from '@help-line/components';
-import { useAuthStartup, useAuthState, useAuthUserManager } from '../store';
+import { useAuthStore$ } from '../hooks';
 
-export const AuthGuard: React.FC<PropsWithChildren> = ({ children }) => {
-  const isAuth = useAuthState();
-  const userManager = useAuthUserManager();
-  const loading = useAuthStartup(userManager);
+export const AuthGuard = observer(({ children }: PropsWithChildren) => {
+  const authStore$ = useAuthStore$();
+  useEffect(() => {
+    authStore$.init();
+  }, [authStore$]);
 
-  if (loading) {
+  if (authStore$.loading) {
     return <LockContainer text="Login in...." />;
   }
 
-  if (!isAuth) {
+  if (!authStore$.isAuth) {
     return (
       <LockContainer>
         <Login />
@@ -20,4 +22,4 @@ export const AuthGuard: React.FC<PropsWithChildren> = ({ children }) => {
     );
   }
   return <Fragment>{children}</Fragment>;
-};
+});
