@@ -12,7 +12,7 @@ export default {
   addons: [
     '@storybook/addon-essentials',
     ...rootMain.addons,
-    '@nrwl/react/plugins/storybook',
+    '@nx/react/plugins/storybook',
     '@storybook/addon-interactions',
   ],
   /*webpackFinal: async (config, { configType }) => {

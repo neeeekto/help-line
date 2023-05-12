@@ -5,10 +5,10 @@
     "outDir": ""
   },
   "files": [
-    "../../../node_modules/@nrwl/react/typings/styled-jsx.d.ts",
-    "../../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
-    "../../../node_modules/@nrwl/react/typings/image.d.ts",
-    "../../../node_modules/@types/testing-library__jest-dom/index.d.ts",
+    "../../../node_modules/@nx/react/typings/styled-jsx.d.ts",
+    "../../../node_modules/@nx/react/typings/cssmodule.d.ts",
+    "../../../node_modules/@nx/react/typings/image.d.ts",
+    "../../../node_modules/@types/testing-library__jest-dom/index.d.ts"
   ],
 
   "exclude": [
@@ -19,7 +19,7 @@
     "../**/*.test.jsx",
     "../**/*.test.tsx",
     "../**/*.test.js",
-    "../**/*.test.jsx",
+    "../**/*.test.jsx"
   ],
   "include": [
     "../src/**/*.stories.ts",

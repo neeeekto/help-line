@@ -3,8 +3,6 @@ const { mergeConfig } = require('vite');
 import ViteTsConfigPathsPlugin from 'vite-tsconfig-paths';
 export default {
   ...rootMain,
-
-  core: { builder: '@storybook/builder-vite' },
   features: {
     interactionsDebugger: true,
   },
@@ -12,7 +10,7 @@ export default {
   addons: [
     '@storybook/addon-essentials',
     ...rootMain.addons,
-    '@nrwl/react/plugins/storybook',
+    '@nx/react/plugins/storybook',
     '@storybook/addon-interactions',
   ],
   /*webpackFinal: async (config, { configType }) => {
@@ -20,10 +18,8 @@ export default {
     if (rootMain.webpackFinal) {
       config = await rootMain.webpackFinal(config, { configType });
     }
-
-    // add your own webpack tweaks if needed
-
-    return config;
+     // add your own webpack tweaks if needed
+     return config;
   },*/
   async viteFinal(config: any) {
     // Merge custom configuration into the default config
@@ -39,5 +35,13 @@ export default {
         global: 'window',
       },
     });
+  },
+  framework: {
+    name: '@storybook/react-vite',
+    options: {
+      builder: {
+        viteConfigPath: 'apps/main/vite.config.ts',
+      },
+    },
   },
 };

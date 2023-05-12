@@ -5,18 +5,18 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/esbuild:esbuild",
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/libs/entities/admin/stubs",
         "main": "libs/entities/admin/stubs/src/index.ts",
         "tsConfig": "libs/entities/admin/stubs/tsconfig.lib.json",
-        "assets": []
+        "assets": [],
+        "thirdParty": true
       }
     },
-
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["libs/entities/admin/stubs/**/*.ts"]
