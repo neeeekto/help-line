@@ -6,7 +6,7 @@ export interface TemplateBase {
 
 export interface Component extends TemplateBase {
   content: string;
-  meta?: unknown;
+  meta?: any;
 }
 
 export interface Context extends TemplateBase {

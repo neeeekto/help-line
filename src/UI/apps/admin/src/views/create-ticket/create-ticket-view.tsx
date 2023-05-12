@@ -109,6 +109,7 @@ export const CreateTicketView: React.FC<CreateTicketViewProps> = ({
                   </Tag>
                 </div>
               )}
+
               <Button type="primary" htmlType="submit" loading={processing}>
                 Create
               </Button>

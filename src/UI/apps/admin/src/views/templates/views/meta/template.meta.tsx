@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { JSONTree } from 'react-json-tree';
 import groupBy from 'lodash/groupBy';
 import { observer } from 'mobx-react-lite';
-import { compile, registerPartial } from 'handlebars';
+import { compile } from 'handlebars';
 import { Icon } from '../../components/Icon';
 import {
   makeTemplatePropsValueAccessor,
@@ -34,12 +34,12 @@ export const TemplateMeta = observer(
         breadcrumb: [resource.type, resource.data.id, 'props'],
         value: makeTemplatePropsValueAccessor() as ValueAccessor,
       });
-    }, [open, resource]);
+    }, [resource]);
 
     const usedContexts = useMemo(() => {
       const current = store$.edit.get(resource, 'contexts');
       return contexts.filter((x) => current?.includes(x.id)) || [];
-    }, [resource, contexts]);
+    }, [store$.edit, resource, contexts]);
 
     const duplicateContextWithAlias = useMemo(() => {
       const group = groupBy(
@@ -96,7 +96,7 @@ export const TemplateMeta = observer(
                   }, {} as any),
                 }
               );
-            } catch (e) {
+            } catch (e: any) {
               return e.message;
             }
           },
@@ -225,10 +225,10 @@ export const TemplateMeta = observer(
         <div className={spacingCss.marginTopLg}>
           <Typography.Text strong>Description</Typography.Text>
         </div>
-        <div className={spacingCss.marginTopSm}>
-          {/*<Select
+        {/*<div className={spacingCss.marginTopSm}>
+          <Select
             className={boxCss.fullWidth}
-            value={edit.current.meta?.description}
+            value={store$.edit.get(resource, 'meta')?.description}
             onChange={updateDescription}
           >
             {Object.keys(descriptions.data || {}).map((x) => (
@@ -236,8 +236,8 @@ export const TemplateMeta = observer(
                 {x}
               </Select.Option>
             ))}
-          </Select>*/}
-        </div>
+          </Select>
+        </div>*/}
       </>
     );
   }
