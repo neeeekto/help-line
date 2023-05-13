@@ -40,6 +40,7 @@ internal class MongoFilterBuilder
             TicketMetaFilter ticketMetaFilter => Build(ticketMetaFilter),
             TicketProjectFilter ticketProjectFilter => Build(ticketProjectFilter),
             TicketStatusFilter ticketProjectFilter => Build(ticketProjectFilter),
+            TicketNoopFilter ticketNoopFilter => Build(ticketNoopFilter),
             TicketTagsFilter ticketTagsFilter => Build(ticketTagsFilter),
             TicketUserIdFilter ticketTagsFilter => Build(ticketTagsFilter),
             TicketUserMetaFilter ticketTagsFilter => Build(ticketTagsFilter),
@@ -147,13 +148,18 @@ internal class MongoFilterBuilder
     {
         return _filterBuilder.In(x => x.ProjectId, filter.Value);
     }
+    
+    private FilterDefinition<TicketView> Build(TicketNoopFilter filter)
+    {
+        return _filterBuilder.Empty;
+    }
 
     private FilterDefinition<TicketView> Build(TicketStatusFilter filter)
     {
         var typeFilter = _filterBuilder.In(x => x.Status.Type, filter.Type);
         if (filter.Kind is not null)
         {
-            return _filterBuilder.And(_filterBuilder.Eq(x => x.Status.Kind, filter.Kind), typeFilter);
+            return _filterBuilder.And(_filterBuilder.In(x => x.Status.Kind, filter.Kind), typeFilter);
         }
 
         return typeFilter;

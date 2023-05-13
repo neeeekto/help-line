@@ -352,7 +352,7 @@ export interface Ticket {
 
 export interface TicketReminderDataBase {
   delay: string; // TimeSpan
-  message: Message; // TimeSpan
+  message: Message;
 }
 
 export interface TicketSequentialReminderData
@@ -576,7 +576,7 @@ export interface TicketFilterDateValueAction {
 
 export interface TicketFilterDateValue extends WithType<'FilterDateValue'> {
   operator: TicketFilterOperators;
-  dateTime?: StringDate; // null - now
+  dateTime?: StringDate | null; // null - now
   action?: TicketFilterDateValueAction; // null - no actions
 }
 
@@ -587,13 +587,15 @@ export interface TicketAssigmentFilterUnassigned
 export interface TicketAssigmentFilterOperator extends WithType<'Operator'> {
   id: Operator['id'];
 }
+
+export type TicketAssigmentFilterValue =
+  | TicketAssigmentFilterCurrentOperator
+  | TicketAssigmentFilterUnassigned
+  | TicketAssigmentFilterOperator;
+
 export interface TicketAssigmentFilter
   extends WithType<'TicketAssigmentFilter'> {
-  values: Array<
-    | TicketAssigmentFilterCurrentOperator
-    | TicketAssigmentFilterUnassigned
-    | TicketAssigmentFilterOperator
-  >;
+  values: Array<TicketAssigmentFilterValue>;
 }
 
 export interface TicketAttachmentFilter
@@ -677,7 +679,7 @@ export interface TicketProjectFilter extends WithType<'TicketProjectFilter'> {
 }
 
 export interface TicketStatusFilter extends WithType<'TicketStatusFilter'> {
-  kind?: TicketStatusKind;
+  kind?: TicketStatusKind[];
   type: TicketStatusType[];
 }
 
@@ -698,6 +700,8 @@ export interface TicketUserMetaFilter extends WithType<'TicketUserMetaFilter'> {
   value: string[];
 }
 
+export interface TicketNoopFilter extends WithType<'TicketNoopFilter'> {}
+
 export type TicketFilterValue =
   | TicketAssigmentFilter
   | TicketAttachmentFilter
@@ -716,7 +720,8 @@ export type TicketFilterValue =
   | TicketStatusFilter
   | TicketTagsFilter
   | TicketUserIdFilter
-  | TicketUserMetaFilter;
+  | TicketUserMetaFilter
+  | TicketNoopFilter;
 
 // Ticket Sort
 
