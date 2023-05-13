@@ -3,13 +3,17 @@
 
 ## Примеры использования
 ```
-id=0-123345 assigment=none tags=[tag1]
+id=0-123345 & assigment=none & tags=[tag1]
+id=0-123345 and assigment=none and tags=[tag1]
 ```
 
 ## Синтаксис группировки
-- `filter1 filter2 filter3` = filter1 & filter2 & filter3
-- `(filter1 or filter2)` = filter1 | filter2
-- `(filter1 or filter2) filter3` = (filter1 | filter2) & filter3
+- `filter1 and filter2 and filter3` = пересечение фильтров
+- `(filter1 or filter2)` = объеденение фильтров
+
+Также для операторов присутствуют аналоги
+- `or` = `|` 
+- `and` = `&` 
 
 ## Синтаксис значений
 
