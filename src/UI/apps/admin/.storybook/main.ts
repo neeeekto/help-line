@@ -1,17 +1,18 @@
-const rootMain = require('../../../.storybook/main');
 const { mergeConfig } = require('vite');
 import ViteTsConfigPathsPlugin from 'vite-tsconfig-paths';
 export default {
-  ...rootMain,
+  core: { builder: '@storybook/builder-vite' },
 
-  core: { ...rootMain.core, builder: '@storybook/builder-vite' },
   features: {
     interactionsDebugger: true,
+  },
+  framework: {
+    name: '@storybook/react-vite',
+    options: {},
   },
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-essentials',
-    ...rootMain.addons,
     '@nx/react/plugins/storybook',
     '@storybook/addon-interactions',
   ],

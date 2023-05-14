@@ -20,7 +20,7 @@ describe('TicketsQueryParser', () => {
     'createDate=now+1h2s',
     'createDate=now+1h2s and id=2-1111111',
     'createDate=now+1h2s or id=2-1111111',
-    'createDate>now-1D and createDate<now',
+    'createDate>now-1d and createDate<now',
     'iterationCount>2 and createDate<now',
     'language=en',
     'language=[en, ru]',

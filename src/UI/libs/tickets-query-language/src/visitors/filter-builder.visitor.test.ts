@@ -1,8 +1,11 @@
 import { TicketsQueryParser } from '../parser';
 import { TicketFilterBuilderVisitor } from './ticket-filter-builder.visitor';
-import { TicketFilterValue } from '@help-line/entities/client/api';
+import {
+  TicketFilterDateValueActionOperation,
+  TicketFilterOperators,
+  TicketFilterValue,
+} from '@help-line/entities/client/api';
 import { TicketsQueryLexer } from '../lexer';
-import { findLastKey } from 'lodash';
 
 describe('FilterBuilderVisitor', () => {
   const parser = new TicketsQueryParser();
@@ -97,6 +100,35 @@ describe('FilterBuilderVisitor', () => {
         ],
       },
     ],
+    [
+      'createDate>now-1d and createDate<now',
+      {
+        $type: 'TicketFilterGroup',
+        intersection: true,
+        filters: [
+          {
+            $type: 'TicketCreateDateFilter',
+            value: {
+              $type: 'FilterDateValue',
+              action: {
+                amount: '1.0:0:0',
+                operation: TicketFilterDateValueActionOperation.Sub,
+              },
+              dateTime: null,
+              operator: TicketFilterOperators.Great,
+            },
+          },
+          {
+            $type: 'TicketCreateDateFilter',
+            value: {
+              $type: 'FilterDateValue',
+              dateTime: null,
+              operator: TicketFilterOperators.Less,
+            },
+          },
+        ],
+      },
+    ],
   ] as Array<[string, TicketFilterValue]>;
 
   it.each(cases)(`should correct parse: %s`, (query, expected) => {
@@ -105,6 +137,7 @@ describe('FilterBuilderVisitor', () => {
     parser.input = lexerResult.tokens;
     const root = parser.$expression();
     const result = visitor.visit(root);
+    console.log(result);
     expect(result).toEqual(expected);
   });
 });

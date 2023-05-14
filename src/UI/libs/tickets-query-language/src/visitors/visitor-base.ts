@@ -5,7 +5,6 @@ import {
   AssigmentFilterValueNode,
   AtomicExpressionNode,
   CreateDateFilterNode,
-  DateAmountNode,
   DateFilterValueNode,
   ExpressionNode,
   FilterNode,
@@ -26,7 +25,6 @@ const first = <T>(arr?: Array<T>) => arr?.[0] ?? undefined;
 
 export abstract class VisitorBase {
   visit(cstNode: CstNode | CstNode[]) {
-    debugger;
     const node = (Array.isArray(cstNode) ? first(cstNode) : cstNode) as Node;
     if (!node) {
       return null;
@@ -37,7 +35,6 @@ export abstract class VisitorBase {
     return (this as any)[`visit${methodName}`](node);
   }
 
-  protected abstract visitDateAmount(node: DateAmountNode): any;
   protected abstract visitDateFilterValue(node: DateFilterValueNode): any;
   protected abstract visitOperator(node: OperatorNode): any;
   protected abstract visitIdFilter(node: IdFilterNode): any;

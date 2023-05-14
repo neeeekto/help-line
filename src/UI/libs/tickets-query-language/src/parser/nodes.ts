@@ -1,13 +1,4 @@
 import { CstNode, IToken } from 'chevrotain';
-import { HardAssigmentFilterKeyToken } from '../lexer/tokens';
-
-export interface DateAmountNode extends CstNode {
-  name: 'dateAmount';
-  children: {
-    Integer?: IToken[];
-    DateKind?: IToken[];
-  };
-}
 
 export interface DateFilterValueNode extends CstNode {
   name: 'dateFilterValue';
@@ -18,7 +9,7 @@ export interface DateFilterValueNode extends CstNode {
     Unknown?: IToken[];
     Plus?: IToken[];
     Minus?: IToken[];
-    dateAmount?: DateAmountNode[];
+    DateDuration?: IToken[];
   };
 }
 
@@ -183,7 +174,6 @@ export interface ExpressionNode extends CstNode {
 }
 
 export type Node =
-  | DateAmountNode
   | DateFilterValueNode
   | OperatorNode
   | IdFilterNode

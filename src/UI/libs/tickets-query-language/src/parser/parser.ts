@@ -17,13 +17,6 @@ export class TicketsQueryParser extends CstParser {
     ]);
   });
 
-  protected dateAmount = this.RULE('dateAmount', () => {
-    this.AT_LEAST_ONE(() => {
-      this.CONSUME(tokens.IntegerToken);
-      this.CONSUME(tokens.DateKindToken);
-    });
-  });
-
   protected dateFilterValue = this.RULE('dateFilterValue', () => {
     this.SUBRULE(this.operator);
     this.OR([
@@ -40,7 +33,9 @@ export class TicketsQueryParser extends CstParser {
         { ALT: () => this.CONSUME(tokens.PlusToken) },
         { ALT: () => this.CONSUME(tokens.MinusToken) },
       ]);
-      this.SUBRULE(this.dateAmount);
+      this.AT_LEAST_ONE(() => {
+        this.CONSUME(tokens.DateDurationToken);
+      });
     });
   });
 

@@ -7,7 +7,7 @@ import {
   AssigmentNoneToken,
   StringValueToken,
   CreateDateFilterKeyToken,
-  DateKindToken,
+  DateDurationToken,
   DateNowToken,
   DateValueToken,
   EqualToken,
@@ -84,7 +84,7 @@ export class TicketsQueryLexer extends Lexer {
     StatusFilterKeyToken,
     TagFilterKeyToken,
     BooleanValueToken,
-    DateKindToken,
+    DateDurationToken,
     DotToken,
     CommaToken,
     IntegerToken,
@@ -92,6 +92,6 @@ export class TicketsQueryLexer extends Lexer {
     UnknownToken,
   ];
   constructor() {
-    super(TicketsQueryLexer.allTokens);
+    super(TicketsQueryLexer.allTokens, { positionTracking: 'full' });
   }
 }

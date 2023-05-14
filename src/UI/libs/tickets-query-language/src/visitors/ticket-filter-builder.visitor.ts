@@ -25,7 +25,6 @@ import {
   AssigmentFilterValueNode,
   AtomicExpressionNode,
   CreateDateFilterNode,
-  DateAmountNode,
   DateFilterValueNode,
   ExpressionNode,
   FilterNode,
@@ -124,16 +123,16 @@ export class TicketFilterBuilderVisitor extends VisitorBase {
   }
 
   protected visitDateFilterValue(node: DateFilterValueNode) {
-    return {
+    const result = {
       $type: 'FilterDateValue',
       operator: this.visit(node.children.operator),
       dateTime: this.extractDateValue(node),
-      action: this.extractDateAction(node),
     } as TicketFilterDateValue;
-  }
-
-  protected visitDateAmount(node: DateAmountNode) {
-    return null;
+    const action = this.extractDateAction(node);
+    if (action) {
+      result.action = action;
+    }
+    return result;
   }
 
   protected visitExpression(node: ExpressionNode) {
@@ -253,24 +252,28 @@ export class TicketFilterBuilderVisitor extends VisitorBase {
         operation: children.Plus
           ? TicketFilterDateValueActionOperation.Add
           : TicketFilterDateValueActionOperation.Sub,
-        amount: this.mapDateAmountNodesToDateSpan(children.dateAmount || []),
+        amount: this.mapDateDurationNodesToDateSpan(
+          children.DateDuration || []
+        ),
       } as TicketFilterDateValueAction;
     }
 
     return undefined;
   }
 
-  private mapDateAmountNodesToDateSpan(nodes: DateAmountNode[]) {
+  private mapDateDurationNodesToDateSpan(nodes: IToken[]) {
+    debugger;
     const tokens = nodes.reduce((res, node) => {
-      (res as any)[first(node.children.DateKind)!.image as any] =
-        this.extractIntegerValue(node.children.Integer || []);
+      const type = node.image.slice(-1);
+      const value = node.image.slice(0, -1);
+      (res as any)[type] = Number.parseInt(value);
       return res;
-    }, {} as Record<'h' | 'm' | 's' | 'D', number>);
+    }, {} as Record<'h' | 'm' | 's' | 'd', number>);
 
     const time = [tokens.h, tokens.m, tokens.s]
       .map((amount) => amount || 0)
       .join(':');
 
-    return `${tokens.D || 0}.${time}`;
+    return `${tokens.d || 0}.${time}`;
   }
 }
