@@ -71,7 +71,7 @@ export class TicketsQueryMonacoCompletionItemProvider
           result.push(
             this.createCompletionItem(
               range,
-              CompletionItemKind.Unit,
+              CompletionItemKind.Module,
               token.LABEL!,
               `${token.LABEL} `
             )
@@ -100,7 +100,7 @@ export class TicketsQueryMonacoCompletionItemProvider
           result.push(
             this.createCompletionItem(
               range,
-              CompletionItemKind.Value,
+              CompletionItemKind.Event,
               `current: ${now}`,
               `${now} `
             )
@@ -111,31 +111,31 @@ export class TicketsQueryMonacoCompletionItemProvider
           result.push(
             this.createCompletionItem(
               range,
-              CompletionItemKind.Value,
+              CompletionItemKind.Event,
               `1 Hour`,
               `1h`
             ),
             this.createCompletionItem(
               range,
-              CompletionItemKind.Value,
+              CompletionItemKind.Event,
               `1 Week`,
               `7d`
             ),
             this.createCompletionItem(
               range,
-              CompletionItemKind.Value,
+              CompletionItemKind.Event,
               `1 Day`,
               `1d`
             ),
             this.createCompletionItem(
               range,
-              CompletionItemKind.Value,
+              CompletionItemKind.Event,
               `1 Month`,
               `30d`
             ),
             this.createCompletionItem(
               range,
-              CompletionItemKind.Value,
+              CompletionItemKind.Event,
               `Half year`,
               `183d`
             )
@@ -204,7 +204,7 @@ export class TicketsQueryMonacoCompletionItemProvider
               range,
               CompletionItemKind.Variable,
               token.LABEL!,
-              `${token.LABEL} =`
+              `${token.LABEL} = `
             )
           );
       }
@@ -243,7 +243,7 @@ export class TicketsQueryMonacoCompletionItemProvider
           range,
           CompletionItemKind.Value,
           operator,
-          operator
+          operator + ' '
         )
       );
     }
