@@ -43,6 +43,7 @@ import {
   CommaToken,
   UnknownToken,
   AndToken,
+  EmailValueToken,
 } from './tokens';
 
 export class TicketsQueryLexer extends Lexer {
@@ -88,6 +89,7 @@ export class TicketsQueryLexer extends Lexer {
     DotToken,
     CommaToken,
     IntegerToken,
+    EmailValueToken,
     StringValueToken,
     UnknownToken,
   ];

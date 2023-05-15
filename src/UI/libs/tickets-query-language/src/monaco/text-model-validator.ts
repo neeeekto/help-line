@@ -1,11 +1,14 @@
 import { EditorState } from './editor-state';
 import { MismatchedTokenException } from 'chevrotain';
+import debounce from 'lodash/debounce';
 import { MarkerSeverity, editor } from 'monaco-editor';
 import type * as monaco from 'monaco-editor';
 type Monaco = typeof monaco;
 
 export class TextModelValidator {
   constructor(private readonly state: EditorState) {}
+
+  public debounceValidate = debounce(this.validate.bind(this), 500);
   public validate(monaco: Monaco, model: editor.ITextModel) {
     if (!model) return;
 

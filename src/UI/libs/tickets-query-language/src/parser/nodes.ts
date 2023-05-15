@@ -48,6 +48,7 @@ export interface AssigmentFilterValueNode extends CstNode {
     AssigmentNone?: IToken[];
     AssigmentMe?: IToken[];
     StringValue?: IToken[];
+    EmailValue?: IToken[];
   };
 }
 

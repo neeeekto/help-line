@@ -133,6 +133,12 @@ export const StringValueToken = createToken({
   label: 'string',
 });
 
+export const EmailValueToken = createToken({
+  name: 'EmailValue',
+  pattern: /[a-zA-Z]\w*@[a-zA-Z]\w*.[a-zA-Z]\w*/,
+  label: 'string',
+});
+
 export const HasAttachmentFilterKeyToken = createToken({
   name: 'HasAttachmentFilterKey',
   pattern: 'hasAttachment',
@@ -187,7 +193,7 @@ export const FromTicketKeyToken = createToken({
 
 export const TicketNumberToken = createToken({
   name: 'TicketNumber',
-  pattern: /[0-9]-[0-9]{7}/,
+  pattern: /[0-9]-[0-9]{2,7}/,
   label: 'X-XXXXXXX',
 });
 
@@ -231,6 +237,8 @@ export const DotToken = createToken({
 });
 
 export const CommaToken = createToken({ name: 'Comma', pattern: /,/ });
+
+// We need this token only for suggestion!
 export const UnknownToken = createToken({
   name: 'Unknown',
   pattern: String.fromCharCode(0),

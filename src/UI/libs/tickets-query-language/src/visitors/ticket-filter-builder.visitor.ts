@@ -100,7 +100,10 @@ export class TicketFilterBuilderVisitor extends VisitorBase {
     }
     return {
       $type: 'Operator',
-      id: first(children.StringValue)?.image || '',
+      id:
+        first(children.EmailValue)?.image ||
+        first(children.StringValue)?.image ||
+        '',
     } as TicketAssigmentFilterValue;
   }
 
@@ -262,7 +265,6 @@ export class TicketFilterBuilderVisitor extends VisitorBase {
   }
 
   private mapDateDurationNodesToDateSpan(nodes: IToken[]) {
-    debugger;
     const tokens = nodes.reduce((res, node) => {
       const type = node.image.slice(-1);
       const value = node.image.slice(0, -1);

@@ -3,7 +3,15 @@ import MonacoEditor, { Monaco } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
 import { TicketsQueryLanguage } from '@help-line/tickets-query-language';
 
-const lang = new TicketsQueryLanguage();
+const lang = new TicketsQueryLanguage({
+  async getLang(): Promise<string[]> {
+    return ['en', 'ru'];
+  },
+  async getOperators(search?: string): Promise<string[]> {
+    console.log('getOperators', search);
+    return ['yymoroz3@gmail.ru', 'save@test.te'];
+  },
+});
 
 export const TicketQueryFilterEditor = () => {
   const [query, setQuery] = useState('');

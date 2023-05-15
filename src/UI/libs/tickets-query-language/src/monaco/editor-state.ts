@@ -9,6 +9,7 @@ import { TicketsQueryParser } from '../parser';
 import { editor } from 'monaco-editor';
 import ITextModel = editor.ITextModel;
 import IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
+import { TicketFilterBuilderVisitor } from '../visitors';
 
 export interface TokenPosition {
   startColumn: number;
@@ -39,6 +40,11 @@ export class EditorState {
     this.lexerLastResult = this.lexer.tokenize(value);
     this.parser.input = this.lexerLastResult.tokens;
     this.cst = this.parser.$expression();
+    try {
+      console.log(new TicketFilterBuilderVisitor().visit(this.cst));
+    } catch (e) {
+      // ignore
+    }
   }
 
   get parsingErrors() {

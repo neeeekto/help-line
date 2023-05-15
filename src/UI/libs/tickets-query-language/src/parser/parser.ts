@@ -1,4 +1,4 @@
-import { CstParser, EOF } from 'chevrotain';
+import { CstParser } from 'chevrotain';
 import { TicketsQueryLexer, tokens } from '../lexer';
 
 export class TicketsQueryParser extends CstParser {
@@ -53,12 +53,18 @@ export class TicketsQueryParser extends CstParser {
       },
       {
         ALT: () => {
+          this.CONSUME(tokens.EmailValueToken);
+        },
+      },
+      {
+        ALT: () => {
           this.CONSUME(tokens.StringValueToken);
         },
       },
     ]);
   });
 
+  // Filters variants
   protected idFilter = this.RULE('idFilter', () => {
     this.CONSUME(tokens.TicketIdFilterKeyToken);
     this.CONSUME(tokens.EqualToken);
@@ -98,18 +104,29 @@ export class TicketsQueryParser extends CstParser {
   });
 
   protected languageFilter = this.RULE('languageFilter', () => {
-    this.CONSUME(tokens.LanguageFilterKeyToken);
+    this.CONSUME1(tokens.LanguageFilterKeyToken);
     this.CONSUME2(tokens.EqualToken);
-    this.OR([
+    this.OR1([
       {
         ALT: () => this.CONSUME3(tokens.StringValueToken),
+      },
+      {
+        ALT: () => this.CONSUME3(tokens.UnknownToken),
       },
       {
         ALT: () => {
           this.CONSUME3(tokens.ArrStartToken);
           this.MANY_SEP({
             SEP: tokens.CommaToken,
-            DEF: () => this.CONSUME4(tokens.StringValueToken),
+            DEF: () =>
+              this.OR2([
+                {
+                  ALT: () => this.CONSUME4(tokens.StringValueToken),
+                },
+                {
+                  ALT: () => this.CONSUME4(tokens.UnknownToken),
+                },
+              ]),
           });
           this.CONSUME5(tokens.ArrEndToken);
         },
@@ -125,12 +142,11 @@ export class TicketsQueryParser extends CstParser {
 
   protected lastReplyFilter = this.RULE('lastReplyFilter', () => {
     this.CONSUME(tokens.LastReplyFilterKeyToken);
-    this.SUBRULE(this.operator);
     this.SUBRULE(this.dateFilterValue);
   });
 
   // =======
-
+  // XXX=
   protected filter = this.RULE('filter', () => {
     this.OR([
       {
@@ -161,6 +177,7 @@ export class TicketsQueryParser extends CstParser {
     ]);
   });
 
+  // () or xxx=yyy
   protected atomicExpression = this.RULE('atomicExpression', () => {
     this.OR([
       { ALT: () => this.SUBRULE(this.parenthesisExpression) },
@@ -169,6 +186,7 @@ export class TicketsQueryParser extends CstParser {
     ]);
   });
 
+  // ( ... )
   protected parenthesisExpression = this.RULE('parenthesisExpression', () => {
     this.CONSUME(tokens.LParenToken);
     this.SUBRULE(this.andExpression);

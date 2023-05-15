@@ -1,5 +1,5 @@
 import { TicketsQueryParser } from './parser';
-import { TicketsQueryLexer } from '../lexer';
+import { TicketsQueryLexer, tokens } from '../lexer';
 
 describe('TicketsQueryParser', () => {
   const lexer = new TicketsQueryLexer();
@@ -24,13 +24,14 @@ describe('TicketsQueryParser', () => {
     'iterationCount>2 and createDate<now',
     'language=en',
     'language=[en, ru]',
+    `language=[en, ${tokens.UnknownToken.PATTERN}]`,
   ];
 
   cases.forEach((testCase) => {
     it(`should correct parse: ${testCase}`, () => {
       const parser = new TicketsQueryParser();
       parser.input = lexer.tokenize(testCase).tokens;
-      const parserResult = parser.$expression(); // Run parsing
+      parser.$expression(); // Run parsing
       expect(parser.errors).toHaveLength(0);
     });
   });

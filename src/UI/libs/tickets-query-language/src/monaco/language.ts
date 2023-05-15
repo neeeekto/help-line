@@ -9,6 +9,7 @@ import { editor } from 'monaco-editor';
 import IStandaloneCodeEditor = editor.IStandaloneCodeEditor;
 import { TextModelValidator } from './text-model-validator';
 import { TicketsQueryMonacoCompletionItemProvider } from './completion-item-provider';
+import { ISuggestProvider } from './suggest-provider';
 
 type Monaco = typeof monaco;
 export class TicketsQueryMonacoLanguage implements IDisposable {
@@ -22,6 +23,7 @@ export class TicketsQueryMonacoLanguage implements IDisposable {
   private readonly state = new EditorState(this.lexer, this.parser);
   private readonly validator = new TextModelValidator(this.state);
   constructor(
+    private readonly suggestProvider: ISuggestProvider,
     private readonly lexer: TicketsQueryLexer,
     private readonly parser: TicketsQueryParser
   ) {}
@@ -41,7 +43,7 @@ export class TicketsQueryMonacoLanguage implements IDisposable {
       this.installCompletionProvider(monaco),
       model.onDidChangeContent(() => {
         this.state.update(model);
-        this.validator.validate(monaco, model);
+        this.validator.debounceValidate(monaco, model);
       })
     );
   }
@@ -83,6 +85,7 @@ export class TicketsQueryMonacoLanguage implements IDisposable {
     return monaco.languages.registerCompletionItemProvider(
       TicketsQueryMonacoLanguage.ID,
       new TicketsQueryMonacoCompletionItemProvider(
+        this.suggestProvider,
         this.lexer,
         this.parser,
         this.state
